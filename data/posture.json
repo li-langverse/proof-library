@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-05-29T19:03Z",
+  "source": "/home/s4il0r/Documents/Cursor/li-langverse/lic-studio-ui/docs/verification/provability-gaps.md",
+  "rows": [
+    {
+      "id": "G-ann",
+      "status": "Missing",
+      "phase": "4"
+    },
+    {
+      "id": "G-async",
+      "status": "Partial",
+      "phase": "2+"
+    },
+    {
+      "id": "G-authz",
+      "status": "Missing",
+      "phase": "OS phase"
+    },
+    {
+      "id": "G-bnd",
+      "status": "Partial",
+      "phase": "2e"
+    },
+    {
+      "id": "G-dec",
+      "status": "Partial",
+      "phase": "7d"
+    },
+    {
+      "id": "G-def",
+      "status": "Partial+",
+      "phase": "2j"
+    },
+    {
+      "id": "G-gpu",
+      "status": "Missing",
+      "phase": "3+"
+    },
+    {
+      "id": "G-hw",
+      "status": "Axiomatic",
+      "phase": ""
+    },
+    {
+      "id": "G-lean",
+      "status": "Partial",
+      "phase": "2f"
+    },
+    {
+      "id": "G-math",
+      "status": "Partial",
+      "phase": "2i"
+    },
+    {
+      "id": "G-math-syn",
+      "status": "Partial",
+      "phase": "2h"
+    },
+    {
+      "id": "G-meta",
+      "status": "Missing",
+      "phase": "long-term"
+    },
+    {
+      "id": "G-narrow",
+      "status": "Partial",
+      "phase": "2e"
+    },
+    {
+      "id": "G-net",
+      "status": "Partial",
+      "phase": "H"
+    },
+    {
+      "id": "G-oop",
+      "status": "Partial",
+      "phase": "2j"
+    },
+    {
+      "id": "G-par",
+      "status": "Partial",
+      "phase": "7b"
+    },
+    {
+      "id": "G-physics",
+      "status": "Partial",
+      "phase": "Doc"
+    },
+    {
+      "id": "G-proof-db",
+      "status": "Partial",
+      "phase": "Doc"
+    },
+    {
+      "id": "G-stdlib",
+      "status": "Partial",
+      "phase": "4s"
+    },
+    {
+      "id": "G-test-verify",
+      "status": "Done",
+      "phase": "2f"
+    },
+    {
+      "id": "G-trust",
+      "status": "Stub",
+      "phase": "2f"
+    },
+    {
+      "id": "G-vc",
+      "status": "Partial",
+      "phase": "2e"
+    },
+    {
+      "id": "G-wrong-spec",
+      "status": "Social",
+      "phase": ""
+    }
+  ]
+}
