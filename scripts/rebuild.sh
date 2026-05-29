@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LIC="${LIC_ROOT:-}"
 if [[ -z "$LIC" ]]; then
-  for c in "$ROOT/../lic-studio-ui" "$ROOT/../lic"; do
+  for c in "$ROOT/../lic" "$ROOT/../lic-studio-ui"; do
     if [[ -d "$c/proof-db" || -d "$c/docs/verification/proof-database/entries" ]]; then
       LIC="$c"
       break

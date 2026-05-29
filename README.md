@@ -14,11 +14,13 @@ Dedicated repository for the Li **proof corpus UI** — catalog scientific opini
 
 ## Rebuild catalog JSON
 
-Requires a sibling `lic` or `lic-studio-ui` checkout with `proof-db/` and TOML entries:
+Requires a sibling **lic** checkout (`proof-db/` and TOML entries). Feature worktrees (`lic-studio-ui`) are optional overrides only:
 
 ```bash
-LIC_ROOT=../lic-studio-ui python3 scripts/build-library.py
-LIC_ROOT=../lic-studio-ui python3 scripts/build-posture.py
+LIC_ROOT=../lic ./scripts/rebuild.sh
+# or
+LIC_ROOT=../lic python3 scripts/build-library.py
+LIC_ROOT=../lic python3 scripts/build-posture.py
 ```
 
 Outputs:

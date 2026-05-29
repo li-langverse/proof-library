@@ -1,0 +1,29 @@
+---
+description: Proof-library repo owns published proof corpus UI — not compiler sources
+alwaysApply: true
+---
+
+# Repo boundaries (proof-library)
+
+This repo is the **published proof corpus dashboard** — catalog vs Lean scan, divergence, human votes.
+
+## Owns
+
+- `web/` Next.js static site (`basePath: /proof-library`)
+- `data/library.json`, `data/posture.json` (generated snapshots for Pages)
+- `scripts/build-library.py`, `build-posture.py`, `rebuild.sh`
+
+## Never add here
+
+- `proof-db/` specimens, Lean bridge, TOML entries → **lic**
+- Benchmark perf matrix, `summary.json`, tier CSV ingest → **benchmarks**
+- Compiler or semantics changes → **lic**
+
+## Ingest policy
+
+- Default `LIC_ROOT=../lic` (canonical). Feature-branch worktrees are read-only inputs, not a second home for proof-db.
+- Rebuild JSON from lic at CI/Pages time when possible; committed snapshots are fallback for offline builds.
+
+## Cross-repo
+
+- Benchmarks links here; do not copy UI back into benchmarks.
