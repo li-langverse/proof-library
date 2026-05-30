@@ -1,3 +1,4 @@
+﻿import { highlightLine } from "@/lib/code-highlight";
 import type { ProofCodeSnippet } from "@/lib/proof-library-types";
 
 type ProofCodeBlockProps = {
@@ -11,7 +12,9 @@ export function ProofCodeBlock({ snippet }: ProofCodeBlockProps) {
     <figure className="proof-code-block">
       <div className="proof-code-header">
         <span className="proof-code-label">{snippet.label}</span>
-        <span className="mono proof-code-path">{snippet.path}</span>
+        <span className="mono proof-code-path" title={snippet.path}>
+          {snippet.path}
+        </span>
       </div>
       <pre className="proof-code-pre">
         {lines.map((line, idx) => {
@@ -23,7 +26,12 @@ export function ProofCodeBlock({ snippet }: ProofCodeBlockProps) {
               className={highlighted ? "proof-code-line proof-code-line-hi" : "proof-code-line"}
             >
               <span className="proof-code-ln">{lineNo}</span>
-              <code>{line || " "}</code>
+              <code
+                className={`proof-code-src lang-${snippet.language}`}
+                dangerouslySetInnerHTML={{
+                  __html: highlightLine(snippet.language, line || " "),
+                }}
+              />
             </div>
           );
         })}
@@ -32,9 +40,11 @@ export function ProofCodeBlock({ snippet }: ProofCodeBlockProps) {
         {snippet.symbol ? (
           <>
             <code className="mono">{snippet.symbol}</code>
-            {" · "}
+            <span className="proof-code-caption-sep"> · </span>
           </>
-        ) : null}
+        ) : (
+          <span className="proof-code-caption-spacer" aria-hidden="true" />
+        )}
         <a href={snippet.github_url} target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
