@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 :root {
   --bg: #0d1117;
@@ -325,7 +325,160 @@ main {
   color: var(--muted);
 }
 
-/* Math proof drilldown + Carbon-style code */
+
+body {
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: hidden;
+  max-width: min(1400px, 100%);
+  box-sizing: border-box;
+}
+
+/* KaTeX + formal math (outside code blocks) */
+.proof-formal-math,
+.proof-statement-math {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.proof-formal-math .katex-display,
+.proof-statement-math .katex {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.proof-formal-section {
+  margin: 0.85rem 0 1rem;
+  padding: 0.85rem 1rem;
+  background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  border-radius: 8px;
+}
+.proof-formal-heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.proof-drilldown-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.proof-export-btn {
+  flex-shrink: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.proof-export-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.proof-export-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.proof-export-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Plain code blocks (no Carbon chrome) */
+.proof-code-block {
+  margin: 0;
+  min-width: 0;
+}
+.proof-code-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.35rem;
+}
+.proof-code-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.proof-code-path {
+  font-size: 0.72rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+.proof-code-pre {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+.proof-code-line {
+  display: flex;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.proof-code-line-hi {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: 4px;
+  margin: 0 -0.25rem;
+  padding: 0 0.25rem;
+}
+.proof-code-ln {
+  min-width: 2rem;
+  text-align: right;
+  color: var(--muted);
+  user-select: none;
+  flex-shrink: 0;
+}
+.proof-code-line code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.proof-code-caption {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.proof-library-table-wrap {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+.proof-library-table {
+  table-layout: fixed;
+  width: 100%;
+}
+.proof-statement {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Math proof drilldown */
+
+
 .math-proofs-section {
   margin: 1.5rem 0 2rem;
 }
@@ -348,6 +501,8 @@ main {
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
+  max-width: 100%;
+  min-width: 0;
 }
 .proof-drilldown-divergent {
   border-color: color-mix(in srgb, var(--red) 45%, var(--border));
@@ -359,7 +514,6 @@ main {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  width: 100%;
   background: none;
   border: none;
   color: var(--text);
@@ -378,6 +532,8 @@ main {
 .proof-drilldown-statement {
   margin: 0.5rem 0 0.65rem;
   font-size: 0.92rem;
+  max-width: 100%;
+  overflow-x: auto;
 }
 .proof-drilldown-badges {
   display: flex;
@@ -387,6 +543,8 @@ main {
 .proof-drilldown-body {
   padding: 0 1rem 1rem;
   border-top: 1px solid var(--border);
+  max-width: 100%;
+  min-width: 0;
 }
 .proof-drilldown-meta {
   display: grid;
@@ -401,6 +559,7 @@ main {
 }
 .proof-drilldown-meta dd {
   margin: 0;
+  word-break: break-word;
 }
 .proof-drilldown-notes {
   margin: 0 0 0.85rem;
@@ -410,97 +569,10 @@ main {
 .proof-drilldown-code-grid {
   display: grid;
   gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
 }
 @media (min-width: 960px) {
   .proof-drilldown-code-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   }
-}
-
-.carbon-block {
-  margin: 0;
-}
-.carbon-window {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #1f2937;
-  background: linear-gradient(180deg, #0f1419 0%, #0d1117 100%);
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-.carbon-titlebar {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.55rem 0.75rem;
-  background: linear-gradient(180deg, #1a2332 0%, #151b24 100%);
-  border-bottom: 1px solid #243041;
-}
-.carbon-dots {
-  display: flex;
-  gap: 0.35rem;
-}
-.carbon-dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #3d4f66;
-}
-.carbon-dots span:nth-child(1) {
-  background: #ff5f57;
-}
-.carbon-dots span:nth-child(2) {
-  background: #febc2e;
-}
-.carbon-dots span:nth-child(3) {
-  background: #28c840;
-}
-.carbon-filename {
-  flex: 1;
-  font-size: 0.75rem;
-  color: #9ba3af;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.carbon-lang {
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: #6e7681;
-  font-weight: 600;
-}
-.carbon-code {
-  margin: 0;
-  padding: 0.65rem 0;
-  overflow-x: auto;
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.78rem;
-  line-height: 1.55;
-}
-.carbon-line {
-  display: flex;
-  gap: 0.75rem;
-  padding: 0 0.75rem;
-}
-.carbon-line-hi {
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-  border-left: 2px solid var(--accent);
-  padding-left: calc(0.75rem - 2px);
-}
-.carbon-ln {
-  min-width: 2rem;
-  text-align: right;
-  color: #484f58;
-  user-select: none;
-  flex-shrink: 0;
-}
-.carbon-line code {
-  color: #e6edf3;
-  white-space: pre;
-}
-.carbon-caption {
-  margin: 0.45rem 0 0;
-  font-size: 0.75rem;
-  color: var(--muted);
 }

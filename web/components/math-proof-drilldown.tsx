@@ -1,11 +1,14 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
-import { CarbonCodeBlock } from "@/components/carbon-code-block";
+import { useCallback, useRef, useState } from "react";
+import { toPng } from "html-to-image";
+import { ProofCodeBlock } from "@/components/proof-code-block";
+import { ProofFormalMath } from "@/components/proof-formal-math";
 import {
   proofStatusBadgeClass,
   type ProofLibraryEntry,
 } from "@/lib/proof-library-types";
+import { leanFormalToLatex, statementToLatex } from "@/lib/lean-formal-latex";
 
 function StatusBadge({ status }: { status: string }) {
   const tone = proofStatusBadgeClass(status);
@@ -19,25 +22,71 @@ type ProofDrilldownPanelProps = {
 
 export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldownPanelProps) {
   const [open, setOpen] = useState(defaultOpen);
+  const [exporting, setExporting] = useState(false);
+  const exportRef = useRef<HTMLElement>(null);
   const drill = entry.drilldown;
 
   if (!drill?.implementations?.length) {
     return null;
   }
 
+  const leanSnippet = drill.implementations.find((s) => s.role === "lean_formal");
+  const formalLatex = leanSnippet ? leanFormalToLatex(leanSnippet.content) : null;
+  const statementLatex = statementToLatex(entry.statement);
+
+  const exportPng = useCallback(async () => {
+    const node = exportRef.current;
+    if (!node) return;
+    setExporting(true);
+    try {
+      const dataUrl = await toPng(node, {
+        backgroundColor: "#161b22",
+        pixelRatio: 2,
+        cacheBust: true,
+        filter: (el) => !(el instanceof HTMLElement && el.dataset.exportIgnore === "true"),
+      });
+      const link = document.createElement("a");
+      link.download = `${entry.id}-proof.png`;
+      link.href = dataUrl;
+      link.click();
+    } finally {
+      setExporting(false);
+    }
+  }, [entry.id]);
+
   return (
-    <article className={`proof-drilldown ${entry.diverges ? "proof-drilldown-divergent" : ""}`}>
+    <article
+      ref={exportRef}
+      className={`proof-drilldown ${entry.diverges ? "proof-drilldown-divergent" : ""}`}
+    >
       <header className="proof-drilldown-header">
-        <button
-          type="button"
-          className="proof-drilldown-toggle"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="mono proof-drilldown-id">{entry.id}</span>
-          <span className="proof-drilldown-chevron">{open ? "▾" : "▸"}</span>
-        </button>
-        <p className="proof-drilldown-statement">{entry.statement}</p>
+        <div className="proof-drilldown-header-row">
+          <button
+            type="button"
+            className="proof-drilldown-toggle"
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="mono proof-drilldown-id">{entry.id}</span>
+            <span className="proof-drilldown-chevron">{open ? "\u25BE" : "\u25B8"}</span>
+          </button>
+          {open ? (
+            <button
+              type="button"
+              className="proof-export-btn"
+              data-export-ignore="true"
+              disabled={exporting}
+              onClick={() => void exportPng()}
+            >
+              {exporting ? "Exporting\u2026" : "Export PNG"}
+            </button>
+          ) : null}
+        </div>
+
+        <div className="proof-drilldown-statement">
+          <ProofFormalMath latex={statementLatex} display={false} className="proof-statement-math" />
+        </div>
+
         <div className="proof-drilldown-badges">
           <StatusBadge status={entry.catalog_status} />
           <StatusBadge status={entry.lean_status} />
@@ -47,6 +96,13 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
 
       {open ? (
         <div className="proof-drilldown-body">
+          {formalLatex ? (
+            <section className="proof-formal-section" aria-label="Formal statement">
+              <h4 className="proof-formal-heading">Formal (Lean \u2192 LaTeX)</h4>
+              <ProofFormalMath latex={formalLatex} />
+            </section>
+          ) : null}
+
           <dl className="proof-drilldown-meta">
             {entry.lean_theorem ? (
               <>
@@ -72,9 +128,14 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
 
           <div className="proof-drilldown-code-grid">
             {drill.implementations.map((snippet) => (
-              <CarbonCodeBlock key={`${entry.id}-${snippet.role}`} snippet={snippet} />
+              <ProofCodeBlock key={`${entry.id}-${snippet.role}`} snippet={snippet} />
             ))}
           </div>
+
+          <footer className="proof-export-footer">
+            <span className="mono">{entry.id}</span>
+            <span>proofs.lilangverse.xyz</span>
+          </footer>
         </div>
       ) : null}
     </article>
@@ -96,12 +157,11 @@ export function MathProofDrilldownSection({ entries }: MathProofDrilldownSection
 
   return (
     <section className="math-proofs-section">
-      <h3>Math proofs — formal drilldown</h3>
+      <h3>Math proofs \u2014 formal drilldown</h3>
       <p className="math-proofs-intro">
-        Each classical-math row shows how we implemented it in{" "}
-        <strong>Lean</strong> (formal layer), <strong>Li</strong> (specimen contracts), and{" "}
-        <strong>TOML catalog</strong> (scientific opinion). Carbon-style panes mirror the source
-        files in <code>lic/proof-db/math/</code>.
+        Each classical-math row shows the <strong>LaTeX formal statement</strong> (from Lean), then
+        source for <strong>Lean</strong>, <strong>Li</strong>, and <strong>TOML catalog</strong>.
+        Use <strong>Export PNG</strong> on an expanded row to share on X.
       </p>
       <div className="math-proofs-list">
         {mathEntries.map((entry, i) => (
