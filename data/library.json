@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-30T07:14Z",
+  "generated_at": "2026-05-30T07:28Z",
   "lic_root": "C:\\Users\\Julian\\Documents\\Programming\\li\\lic",
-  "lic_commit": "5672694822310a3db218778175d5a6bdf18956a8",
+  "lic_commit": "29c5f7c2df99bdfae8f4c0858be8bce94e8372d3",
   "sources": {
     "toml_entries": "docs/verification/proof-database/entries/",
     "proof_db_index": "proof-db/index.json",
@@ -17,22 +17,22 @@
     "discrepancies": "proof-database/discrepancies.json"
   },
   "summary": {
-    "total": 70,
-    "divergent": 15,
+    "total": 84,
+    "divergent": 20,
     "by_catalog_status": {
       "axiomatic": 10,
-      "target": 13,
-      "open": 29,
+      "target": 23,
+      "open": 33,
       "proved": 16,
       "discrepancy": 1,
       "sorry": 1
     },
     "by_lean_status": {
-      "axiomatic": 22,
-      "unknown": 32,
-      "proved": 10,
-      "placeholder": 4,
-      "open": 2
+      "axiomatic": 26,
+      "unknown": 39,
+      "open": 4,
+      "proved": 11,
+      "placeholder": 4
     },
     "discrepancy_register_count": 15
   },
@@ -80,6 +80,50 @@
       }
     },
     {
+      "id": "BIO-AX-ALIGNMENT-SCORING",
+      "kind": "axiom",
+      "field": "biology",
+      "domain": "sequence_alignment",
+      "statement": "Pairwise alignment score is additive over matched columns under substitution matrix S (modeling stub).",
+      "catalog_status": "target",
+      "lean_status": "axiomatic",
+      "diverges": true,
+      "gap_id": "G-bio",
+      "gap_kind": "modeling_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Biology.alignmentScore",
+      "lean_module": "proof-db/biology/BioAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [
+        "benchmarks/tier2_physics/bio_proteinmpnn"
+      ],
+      "source": "docs\\verification\\proof-database\\entries\\biology-axioms.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\biology-axioms.toml",
+            "start_line": 20,
+            "highlight_line": 21,
+            "content": "[[entry]]\nid = \"BIO-AX-ALIGNMENT-SCORING\"\nkind = \"axiom\"\nfield = \"biology\"\ndomain = \"sequence_alignment\"\nstatement = \"Pairwise alignment score is additive over matched columns under substitution matrix S (modeling stub).\"\nproof_status = \"target\"\ngap_id = \"G-bio\"\ngap_kind = \"modeling_gap\"\nlean_module = \"proof-db/biology/BioAxioms.lean\"\nlean_thm = \"Li.ProofDb.Biology.alignmentScore\"\nbench_refs = [\n  \"benchmarks/tier2_physics/bio_proteinmpnn\",\n]\nlast_verified_lic_commit = \"940e93e\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\biology-axioms.toml#L20",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
       "id": "BIO-AX-FOLDING-ENERGY",
       "kind": "axiom",
       "field": "biology",
@@ -93,15 +137,18 @@
       "erdos_id": null,
       "erdos_status": null,
       "convergence_class": null,
-      "benchmark_ref": "benchmarks/tier2_biology/protein_folding_stub",
+      "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Biology.folding_energy_minimization",
+      "lean_module": "proof-db/biology/BioAxioms.lean",
       "li_specimen": null,
-      "bench_refs": [],
+      "bench_refs": [
+        "benchmarks/tier2_physics/bio_rosetta_energy",
+        "benchmarks/tier2_physics/bio_rotamer_packing"
+      ],
       "source": "docs\\verification\\proof-database\\entries\\biology-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -109,12 +156,79 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/biology/BioAxioms.lean",
+            "symbol": "folding_energy_minimization",
+            "start_line": 9,
+            "highlight_line": 9,
+            "content": "axiom folding_energy_minimization (E_native E_alt : \u211d) : E_native \u2264 E_alt\n\n/-- BIO-LM-NEEDLEMAN-WUNSCH / alignment score: DP yields optimal global alignment score (target). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean#L9",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\biology-axioms.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"BIO-AX-FOLDING-ENERGY\"\nkind = \"axiom\"\nfield = \"biology\"\ndomain = \"structural_biology\"\nstatement = \"Protein folding energy landscape: native state minimizes effective free energy (modeling stub).\"\nproof_status = \"target\"\ngap_id = \"G-bio\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nbenchmark_ref = \"benchmarks/tier2_biology/protein_folding_stub\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"BIO-AX-FOLDING-ENERGY\"\nkind = \"axiom\"\nfield = \"biology\"\ndomain = \"structural_biology\"\nstatement = \"Protein folding energy landscape: native state minimizes effective free energy (modeling stub).\"\nproof_status = \"target\"\ngap_id = \"G-bio\"\ngap_kind = \"modeling_gap\"\nlean_module = \"proof-db/biology/BioAxioms.lean\"\nlean_thm = \"Li.ProofDb.Biology.folding_energy_minimization\"\nbench_refs = [\n  \"benchmarks/tier2_physics/bio_rosetta_energy\",\n  \"benchmarks/tier2_physics/bio_rotamer_packing\",\n]\nlast_verified_lic_commit = \"940e93e\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\biology-axioms.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "BIO-LM-ALIGNMENT-SCORE-OPTIMAL",
+      "kind": "lemma",
+      "field": "biology",
+      "domain": "sequence_alignment",
+      "statement": "Global alignment DP score is maximal among all valid alignments (alignment score target).",
+      "catalog_status": "target",
+      "lean_status": "unknown",
+      "diverges": false,
+      "gap_id": "G-bio",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Biology.alignment_score_optimal",
+      "lean_module": "proof-db/biology/BioAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [
+        "benchmarks/tier2_physics/bio_proteinmpnn",
+        "benchmarks/tier2_physics/bio_rfdiffusion"
+      ],
+      "source": "docs\\verification\\proof-database\\entries\\biology-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/biology/BioAxioms.lean",
+            "symbol": "alignment_score_optimal",
+            "start_line": 12,
+            "highlight_line": 12,
+            "content": "axiom alignment_score_optimal {m n : Nat} (a : Fin m \u2192 Char) (b : Fin n \u2192 Char) (S : Char \u2192 Char \u2192 \u2124)\n    (score_dp score_ref : \u2124) (hdp : score_dp = alignmentScore a b S) :\n    score_dp \u2265 score_ref\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean#L12",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\biology-lemmas.toml",
+            "start_line": 19,
+            "highlight_line": 20,
+            "content": "[[entry]]\nid = \"BIO-LM-ALIGNMENT-SCORE-OPTIMAL\"\nkind = \"lemma\"\nfield = \"biology\"\ndomain = \"sequence_alignment\"\nstatement = \"Global alignment DP score is maximal among all valid alignments (alignment score target).\"\nproof_status = \"target\"\ngap_id = \"G-bio\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/biology/BioAxioms.lean\"\nlean_thm = \"Li.ProofDb.Biology.alignment_score_optimal\"\nbench_refs = [\n  \"benchmarks/tier2_physics/bio_proteinmpnn\",\n  \"benchmarks/tier2_physics/bio_rfdiffusion\",\n]\nlast_verified_lic_commit = \"940e93e\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\biology-lemmas.toml#L19",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
           }
@@ -135,15 +249,17 @@
       "erdos_id": null,
       "erdos_status": null,
       "convergence_class": null,
-      "benchmark_ref": "benchmarks/tier2_biology/sequence_align",
+      "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Biology.alignment_score_optimal",
+      "lean_module": "proof-db/biology/BioAxioms.lean",
       "li_specimen": null,
-      "bench_refs": [],
+      "bench_refs": [
+        "benchmarks/tier2_physics/bio_proteinmpnn"
+      ],
       "source": "docs\\verification\\proof-database\\entries\\biology-lemmas.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -151,11 +267,22 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/biology/BioAxioms.lean",
+            "symbol": "alignment_score_optimal",
+            "start_line": 12,
+            "highlight_line": 12,
+            "content": "axiom alignment_score_optimal {m n : Nat} (a : Fin m \u2192 Char) (b : Fin n \u2192 Char) (S : Char \u2192 Char \u2192 \u2124)\n    (score_dp score_ref : \u2124) (hdp : score_dp = alignmentScore a b S) :\n    score_dp \u2265 score_ref\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/biology/BioAxioms.lean#L12",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\biology-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"BIO-LM-NEEDLEMAN-WUNSCH\"\nkind = \"lemma\"\nfield = \"biology\"\ndomain = \"sequence_alignment\"\nstatement = \"Needleman-Wunsch dynamic programming yields optimal global alignment score.\"\nproof_status = \"target\"\ngap_id = \"G-bio\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nbenchmark_ref = \"benchmarks/tier2_biology/sequence_align\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"BIO-LM-NEEDLEMAN-WUNSCH\"\nkind = \"lemma\"\nfield = \"biology\"\ndomain = \"sequence_alignment\"\nstatement = \"Needleman-Wunsch dynamic programming yields optimal global alignment score.\"\nproof_status = \"target\"\ngap_id = \"G-bio\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/biology/BioAxioms.lean\"\nlean_thm = \"Li.ProofDb.Biology.alignment_score_optimal\"\nbench_refs = [\n  \"benchmarks/tier2_physics/bio_proteinmpnn\",\n]\nlast_verified_lic_commit = \"940e93e\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\biology-lemmas.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -177,15 +304,74 @@
       "erdos_id": null,
       "erdos_status": null,
       "convergence_class": null,
-      "benchmark_ref": "benchmarks/tier2_chemistry/qm_dft_scf_energy",
+      "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Chemistry.hf_variational_axiom",
+      "lean_module": "proof-db/chemistry/ChemAxioms.lean",
       "li_specimen": null,
-      "bench_refs": [],
+      "bench_refs": [
+        "benchmarks/tier2_physics/qm_dft_scf_energy",
+        "benchmarks/tier2_physics/qm_scf_solver"
+      ],
       "source": "docs\\verification\\proof-database\\entries\\chemistry-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/ChemAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/chemistry/ChemAxioms.lean",
+            "symbol": "hf_variational_axiom",
+            "start_line": 9,
+            "highlight_line": 9,
+            "content": "axiom hf_variational_axiom (E_hf E_exact : \u211d) : E_hf \u2265 E_exact\n\n/-- CHEM-LM-SCF-ENERGY-DECREASE: SCF iteration energy decreases or stalls under standard mixing (target). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/ChemAxioms.lean#L9",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\chemistry-axioms.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"CHEM-AX-HARTREE-FOCK\"\nkind = \"axiom\"\nfield = \"chemistry\"\ndomain = \"quantum_chemistry\"\nstatement = \"Hartree-Fock: variational ground-state energy under single-determinant ansatz (modeling stub).\"\nproof_status = \"target\"\ngap_id = \"G-chem\"\ngap_kind = \"modeling_gap\"\nlean_module = \"proof-db/chemistry/ChemAxioms.lean\"\nlean_thm = \"Li.ProofDb.Chemistry.hf_variational_axiom\"\nbench_refs = [\n  \"benchmarks/tier2_physics/qm_dft_scf_energy\",\n  \"benchmarks/tier2_physics/qm_scf_solver\",\n]\nlast_verified_lic_commit = \"940e93e\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\chemistry-axioms.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHEM-AX-SCF-ENERGY-MODEL",
+      "kind": "axiom",
+      "field": "chemistry",
+      "domain": "quantum_chemistry",
+      "statement": "SCF energy functional E_k at iteration k is well-defined on the HF/DFT ansatz (modeling stub).",
+      "catalog_status": "target",
+      "lean_status": "axiomatic",
+      "diverges": true,
+      "gap_id": "G-chem",
+      "gap_kind": "modeling_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Chemistry.scfEnergy",
+      "lean_module": "proof-db/chemistry/ChemAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [
+        "benchmarks/tier2_physics/qm_dft_scf_energy",
+        "benchmarks/tier2_physics/qm_hf_fock_build"
+      ],
+      "source": "docs\\verification\\proof-database\\entries\\chemistry-axioms.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/ChemAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -195,10 +381,66 @@
           {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\chemistry-axioms.toml",
-            "start_line": 3,
-            "highlight_line": 4,
-            "content": "[[entry]]\nid = \"CHEM-AX-HARTREE-FOCK\"\nkind = \"axiom\"\nfield = \"chemistry\"\ndomain = \"quantum_chemistry\"\nstatement = \"Hartree-Fock: variational ground-state energy under single-determinant ansatz (modeling stub).\"\nproof_status = \"target\"\ngap_id = \"G-chem\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nbenchmark_ref = \"benchmarks/tier2_chemistry/qm_dft_scf_energy\"\nlast_verified_lic_commit = \"35fe7f99\"",
-            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\chemistry-axioms.toml#L3",
+            "start_line": 20,
+            "highlight_line": 21,
+            "content": "[[entry]]\nid = \"CHEM-AX-SCF-ENERGY-MODEL\"\nkind = \"axiom\"\nfield = \"chemistry\"\ndomain = \"quantum_chemistry\"\nstatement = \"SCF energy functional E_k at iteration k is well-defined on the HF/DFT ansatz (modeling stub).\"\nproof_status = \"target\"\ngap_id = \"G-chem\"\ngap_kind = \"modeling_gap\"\nlean_module = \"proof-db/chemistry/ChemAxioms.lean\"\nlean_thm = \"Li.ProofDb.Chemistry.scfEnergy\"\nbench_refs = [\n  \"benchmarks/tier2_physics/qm_dft_scf_energy\",\n  \"benchmarks/tier2_physics/qm_hf_fock_build\",\n]\nlast_verified_lic_commit = \"940e93e\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\chemistry-axioms.toml#L20",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHEM-LM-DIIS-CONVERGENCE",
+      "kind": "lemma",
+      "field": "chemistry",
+      "domain": "quantum_chemistry",
+      "statement": "DIIS extrapolation accelerates SCF convergence toward fixed-point energy (target).",
+      "catalog_status": "target",
+      "lean_status": "unknown",
+      "diverges": false,
+      "gap_id": "G-chem",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Chemistry.scf_energy_decrease",
+      "lean_module": "proof-db/chemistry/ChemAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [
+        "benchmarks/tier2_physics/qm_hf_diis",
+        "benchmarks/tier2_physics/qm_scf_solver"
+      ],
+      "source": "docs\\verification\\proof-database\\entries\\chemistry-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/ChemAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/chemistry/ChemAxioms.lean",
+            "symbol": "scf_energy_decrease",
+            "start_line": 12,
+            "highlight_line": 12,
+            "content": "axiom scf_energy_decrease (k : Nat) (E_k E_k1 : \u211d) (hE : E_k = scfEnergy k \u2227 E_k1 = scfEnergy (k + 1)) :\n    E_k1 \u2264 E_k\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/ChemAxioms.lean#L12",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\chemistry-lemmas.toml",
+            "start_line": 21,
+            "highlight_line": 22,
+            "content": "[[entry]]\nid = \"CHEM-LM-DIIS-CONVERGENCE\"\nkind = \"lemma\"\nfield = \"chemistry\"\ndomain = \"quantum_chemistry\"\nstatement = \"DIIS extrapolation accelerates SCF convergence toward fixed-point energy (target).\"\nproof_status = \"target\"\ngap_id = \"G-chem\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/chemistry/ChemAxioms.lean\"\nlean_thm = \"Li.ProofDb.Chemistry.scf_energy_decrease\"\nbench_refs = [\n  \"benchmarks/tier2_physics/qm_hf_diis\",\n  \"benchmarks/tier2_physics/qm_scf_solver\",\n]\nlast_verified_lic_commit = \"940e93e\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\chemistry-lemmas.toml#L21",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
           }
@@ -219,15 +461,18 @@
       "erdos_id": null,
       "erdos_status": null,
       "convergence_class": null,
-      "benchmark_ref": "benchmarks/tier2_chemistry/qm_dft_scf_energy",
+      "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
-      "li_specimen": null,
-      "bench_refs": [],
+      "lean_theorem": "Li.ProofDb.Chemistry.scf_energy_decrease",
+      "lean_module": "proof-db/chemistry/ChemAxioms.lean",
+      "li_specimen": "proof-db/chemistry/lemmas/scf_energy_decrease_stub.li",
+      "bench_refs": [
+        "benchmarks/tier2_physics/qm_dft_scf_energy",
+        "benchmarks/tier2_physics/qm_scf_solver"
+      ],
       "source": "docs\\verification\\proof-database\\entries\\chemistry-lemmas.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/lemmas/scf_energy_decrease_stub.li",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -235,11 +480,33 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/chemistry/ChemAxioms.lean",
+            "symbol": "scf_energy_decrease",
+            "start_line": 12,
+            "highlight_line": 12,
+            "content": "axiom scf_energy_decrease (k : Nat) (E_k E_k1 : \u211d) (hE : E_k = scfEnergy k \u2227 E_k1 = scfEnergy (k + 1)) :\n    E_k1 \u2264 E_k\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/ChemAxioms.lean#L12",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/chemistry/lemmas/scf_energy_decrease_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# CHEM-LM-SCF-ENERGY-DECREASE \u2014 toy SCF energy step (WP7 stub; open target).\n\ndef scf_energy(iter: int) -> float\n  requires iter >= 0\n  ensures result >= 0.0\n  decreases 0\n:=\n  return 1.0 / (1.0 + float(iter))\n\ndef scf_step_energy(iter: int) -> float\n  requires iter >= 0\n  ensures result <= scf_energy(iter)\n  decreases 0\n:=\n  return scf_energy(iter + 1)\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n:=\n  discard scf_step_energy(0)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/chemistry/lemmas/scf_energy_decrease_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\chemistry-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"CHEM-LM-SCF-ENERGY-DECREASE\"\nkind = \"lemma\"\nfield = \"chemistry\"\ndomain = \"quantum_chemistry\"\nstatement = \"SCF iteration: energy decreases (or stalls) under standard mixing (convergence target).\"\nproof_status = \"target\"\ngap_id = \"G-chem\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nbenchmark_ref = \"benchmarks/tier2_chemistry/qm_dft_scf_energy\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"CHEM-LM-SCF-ENERGY-DECREASE\"\nkind = \"lemma\"\nfield = \"chemistry\"\ndomain = \"quantum_chemistry\"\nstatement = \"SCF iteration: energy decreases (or stalls) under standard mixing (convergence target).\"\nproof_status = \"target\"\ngap_id = \"G-chem\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/chemistry/ChemAxioms.lean\"\nlean_thm = \"Li.ProofDb.Chemistry.scf_energy_decrease\"\nli_specimen = \"proof-db/chemistry/lemmas/scf_energy_decrease_stub.li\"\nbench_refs = [\n  \"benchmarks/tier2_physics/qm_dft_scf_energy\",\n  \"benchmarks/tier2_physics/qm_scf_solver\",\n]\nlast_verified_lic_commit = \"940e93e\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\chemistry-lemmas.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -264,12 +531,12 @@
       "benchmark_ref": null,
       "mathlib_ref": "Mathlib.Data.Int.Basic",
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
-      "li_specimen": null,
+      "lean_theorem": "Li.ProofDb.Discrete.int_add_comm",
+      "lean_module": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+      "li_specimen": "proof-db/discrete/lemmas/int_ring_stub.li",
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\discrete-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -277,11 +544,33 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+            "symbol": "int_add_comm",
+            "start_line": 6,
+            "highlight_line": 6,
+            "content": "axiom int_add_comm : \u2200 a b : Int, a + b = b + a\n\n/-- Int addition associative (D-AX-INT-RING). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/axioms/DiscreteAxioms.lean#L6",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/discrete/lemmas/int_ring_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# D-LM-ADD-COMM-INT / D-LM-MUL-DIST-INT: integer ring law specimens (WP1 discrete).\ndef add_comm_int(a: int, b: int) -> int\n  requires true\n  ensures result == a + b\n  decreases 0\n=\n  return b + a\n\ndef mul_distrib_int(a: int, b: int, c: int) -> int\n  requires true\n  ensures result == a * (b + c)\n  decreases 0\n=\n  return a * b + a * c\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var x: int = add_comm_int(2, 3)\n  var y: int = mul_distrib_int(2, 3, 4)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\discrete-axioms.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"D-AX-INT-RING\"\nkind = \"axiom\"\nfield = \"discrete\"\ndomain = \"integer_algebra\"\nstatement = \"Integers form a commutative ring (addition commutative/associative, multiplication distributes).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"axiom_layer\"\nlean_module = \"docs/semantics/Discharge.lean\"\nmathlib_ref = \"Mathlib.Data.Int.Basic\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"D-AX-INT-RING\"\nkind = \"axiom\"\nfield = \"discrete\"\ndomain = \"integer_algebra\"\nstatement = \"Integers form a commutative ring (addition commutative/associative, multiplication distributes).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/discrete/axioms/DiscreteAxioms.lean\"\nlean_thm = \"Li.ProofDb.Discrete.int_add_comm\"\nli_specimen = \"proof-db/discrete/lemmas/int_ring_stub.li\"\nmathlib_ref = \"Mathlib.Data.Int.Basic\"\nlast_verified_lic_commit = \"56726948\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\discrete-axioms.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -306,12 +595,12 @@
       "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
-      "li_specimen": null,
+      "lean_theorem": "Li.ProofDb.Discrete.int_add_assoc",
+      "lean_module": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+      "li_specimen": "proof-db/discrete/lemmas/int_ring_stub.li",
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
       "notes": null,
       "drilldown": {
         "discharged_from": [
@@ -321,12 +610,294 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+            "symbol": "int_add_assoc",
+            "start_line": 9,
+            "highlight_line": 9,
+            "content": "axiom int_add_assoc : \u2200 a b c : Int, (a + b) + c = a + (b + c)\n\n/-- Int multiplication distributes over addition (D-AX-INT-RING). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/axioms/DiscreteAxioms.lean#L9",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/discrete/lemmas/int_ring_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# D-LM-ADD-COMM-INT / D-LM-MUL-DIST-INT: integer ring law specimens (WP1 discrete).\ndef add_comm_int(a: int, b: int) -> int\n  requires true\n  ensures result == a + b\n  decreases 0\n=\n  return b + a\n\ndef mul_distrib_int(a: int, b: int, c: int) -> int\n  requires true\n  ensures result == a * (b + c)\n  decreases 0\n=\n  return a * b + a * c\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var x: int = add_comm_int(2, 3)\n  var y: int = mul_distrib_int(2, 3, 4)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"D-LM-ADD-ASSOC-INT\"\nkind = \"lemma\"\nfield = \"discrete\"\ndomain = \"integer_algebra\"\nstatement = \"Int addition associative (discharge target from D-AX-INT-RING).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"D-LM-ADD-ASSOC-INT\"\nkind = \"lemma\"\nfield = \"discrete\"\ndomain = \"integer_algebra\"\nstatement = \"Int addition associative (discharge target from D-AX-INT-RING).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/discrete/axioms/DiscreteAxioms.lean\"\nlean_thm = \"Li.ProofDb.Discrete.int_add_assoc\"\nli_specimen = \"proof-db/discrete/lemmas/int_ring_stub.li\"\nlast_verified_lic_commit = \"56726948\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\discrete-lemmas.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "D-LM-ADD-COMM-INT",
+      "kind": "lemma",
+      "field": "discrete",
+      "domain": "integer_algebra",
+      "statement": "Int addition commutative (D-AX-INT-RING discharge target).",
+      "catalog_status": "target",
+      "lean_status": "unknown",
+      "diverges": false,
+      "gap_id": "G-discrete",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Discrete.int_add_comm",
+      "lean_module": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+      "li_specimen": "proof-db/discrete/lemmas/int_ring_stub.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [
+          "D-AX-INT-RING"
+        ],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+            "symbol": "int_add_comm",
+            "start_line": 6,
+            "highlight_line": 6,
+            "content": "axiom int_add_comm : \u2200 a b : Int, a + b = b + a\n\n/-- Int addition associative (D-AX-INT-RING). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/axioms/DiscreteAxioms.lean#L6",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/discrete/lemmas/int_ring_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# D-LM-ADD-COMM-INT / D-LM-MUL-DIST-INT: integer ring law specimens (WP1 discrete).\ndef add_comm_int(a: int, b: int) -> int\n  requires true\n  ensures result == a + b\n  decreases 0\n=\n  return b + a\n\ndef mul_distrib_int(a: int, b: int, c: int) -> int\n  requires true\n  ensures result == a * (b + c)\n  decreases 0\n=\n  return a * b + a * c\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var x: int = add_comm_int(2, 3)\n  var y: int = mul_distrib_int(2, 3, 4)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"D-LM-ADD-COMM-INT\"\nkind = \"lemma\"\nfield = \"discrete\"\ndomain = \"integer_algebra\"\nstatement = \"Int addition commutative (D-AX-INT-RING discharge target).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/discrete/axioms/DiscreteAxioms.lean\"\nlean_thm = \"Li.ProofDb.Discrete.int_add_comm\"\nli_specimen = \"proof-db/discrete/lemmas/int_ring_stub.li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\discrete-lemmas.toml#L17",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "D-LM-DOT4-INT-CLOSED",
+      "kind": "lemma",
+      "field": "discrete",
+      "domain": "finite_sums",
+      "statement": "Closed-form 4-term int dot (discrete specimen link to math/linalg).",
+      "catalog_status": "target",
+      "lean_status": "open",
+      "diverges": false,
+      "gap_id": "G-discrete",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.Discharge.dot4_int_spec",
+      "lean_module": "docs/semantics/Discharge.lean",
+      "li_specimen": "proof-db/math/lemmas/linalg_dot4_int_closed.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/linalg_dot4_int_closed.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "dot4_int_spec",
+            "start_line": 25,
+            "highlight_line": 25,
+            "content": "def dot4_int_spec (a b : LiArray Int 4) (result : Int) : Prop :=\n  result = (((((a[0]!) * (b[0]!)) + ((a[1]!) * (b[1]!))) + ((a[2]!) * (b[2]!))) + ((a[3]!) * (b[3]!)))\n\n/-- Semantic value of the 4-iteration `while i < 4` dot loop (`witness_dot4_int_loop`). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L25",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/lemmas/linalg_dot4_int_closed.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# P-linalg seed: fixed-size int dot \u2014 closed AutoVC (from contracts_verify corpus).\ndef dot4_int(a: array[4, int], b: array[4, int]) -> int\n  requires true\n  ensures result == a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n  decreases 0\n=\n  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var a: array[4, int]\n  var b: array[4, int]\n  a[0] = 1\n  a[1] = 2\n  a[2] = 3\n  a[3] = 4\n  b[0] = 1\n  b[1] = 1\n  b[2] = 1\n  b[3] = 1\n  var s: int = dot4_int(a, b)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/linalg_dot4_int_closed.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+            "start_line": 59,
+            "highlight_line": 60,
+            "content": "[[entry]]\nid = \"D-LM-DOT4-INT-CLOSED\"\nkind = \"lemma\"\nfield = \"discrete\"\ndomain = \"finite_sums\"\nstatement = \"Closed-form 4-term int dot (discrete specimen link to math/linalg).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.dot4_int_spec\"\nli_specimen = \"proof-db/math/lemmas/linalg_dot4_int_closed.li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\discrete-lemmas.toml#L59",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "D-LM-DOT4-INT-LOOP",
+      "kind": "lemma",
+      "field": "discrete",
+      "domain": "finite_sums",
+      "statement": "Loop dot4 over int arrays matches closed form (discrete / P-linalg bridge).",
+      "catalog_status": "open",
+      "lean_status": "proved",
+      "diverges": true,
+      "gap_id": "G-discrete",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.Discharge.dot4_int_loop_eval_spec",
+      "lean_module": "docs/semantics/Discharge.lean",
+      "li_specimen": "proof-db/discrete/lemmas/dot4_int_loop_stub.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/dot4_int_loop_stub.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "dot4_int_loop_eval_spec",
+            "start_line": 33,
+            "highlight_line": 33,
+            "content": "theorem dot4_int_loop_eval_spec (a b : LiArray Int 4) : dot4_int_spec a b (dot4_loop_eval a b) := rfl\n\n/-- One entry of 2\u00d72 int matmul (matches `linalg_mat2_entry00_int_closed.li`). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L33",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/discrete/lemmas/dot4_int_loop_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# D-LM-DOT4-INT-LOOP: loop dot specimen (links P-linalg / Li.Discharge.dot4_int_loop_eval_spec).\ndef dot4_int_loop(a: array[4, int], b: array[4, int]) -> int\n  requires true\n  ensures result == a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n  decreases 4\n=\n  var i: int = 0\n  var s: int = 0\n  while i < 4\n    invariant 0 <= i and i <= 4\n    decreases 4 - i\n  =\n    s = s + a[i] * b[i]\n    i = i + 1\n  return s\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var a: array[4, int]\n  var b: array[4, int]\n  a[0] = 1\n  a[1] = 2\n  a[2] = 3\n  a[3] = 4\n  b[0] = 1\n  b[1] = 1\n  b[2] = 1\n  b[3] = 1\n  var s: int = dot4_int_loop(a, b)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/dot4_int_loop_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+            "start_line": 45,
+            "highlight_line": 46,
+            "content": "[[entry]]\nid = \"D-LM-DOT4-INT-LOOP\"\nkind = \"lemma\"\nfield = \"discrete\"\ndomain = \"finite_sums\"\nstatement = \"Loop dot4 over int arrays matches closed form (discrete / P-linalg bridge).\"\nproof_status = \"open\"\ngap_id = \"G-discrete\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.dot4_int_loop_eval_spec\"\nli_specimen = \"proof-db/discrete/lemmas/dot4_int_loop_stub.li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\discrete-lemmas.toml#L45",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "D-LM-MUL-DIST-INT",
+      "kind": "lemma",
+      "field": "discrete",
+      "domain": "integer_algebra",
+      "statement": "Int multiplication distributes over addition (D-AX-INT-RING).",
+      "catalog_status": "target",
+      "lean_status": "unknown",
+      "diverges": false,
+      "gap_id": "G-discrete",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Discrete.int_mul_distrib",
+      "lean_module": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+      "li_specimen": "proof-db/discrete/lemmas/int_ring_stub.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [
+          "D-AX-INT-RING"
+        ],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/discrete/axioms/DiscreteAxioms.lean",
+            "symbol": "int_mul_distrib",
+            "start_line": 12,
+            "highlight_line": 12,
+            "content": "axiom int_mul_distrib : \u2200 a b c : Int, a * (b + c) = a * b + a * c\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/axioms/DiscreteAxioms.lean#L12",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/discrete/lemmas/int_ring_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# D-LM-ADD-COMM-INT / D-LM-MUL-DIST-INT: integer ring law specimens (WP1 discrete).\ndef add_comm_int(a: int, b: int) -> int\n  requires true\n  ensures result == a + b\n  decreases 0\n=\n  return b + a\n\ndef mul_distrib_int(a: int, b: int, c: int) -> int\n  requires true\n  ensures result == a * (b + c)\n  decreases 0\n=\n  return a * b + a * c\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var x: int = add_comm_int(2, 3)\n  var y: int = mul_distrib_int(2, 3, 4)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/discrete/lemmas/int_ring_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\discrete-lemmas.toml",
+            "start_line": 31,
+            "highlight_line": 32,
+            "content": "[[entry]]\nid = \"D-LM-MUL-DIST-INT\"\nkind = \"lemma\"\nfield = \"discrete\"\ndomain = \"integer_algebra\"\nstatement = \"Int multiplication distributes over addition (D-AX-INT-RING).\"\nproof_status = \"target\"\ngap_id = \"G-discrete\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/discrete/axioms/DiscreteAxioms.lean\"\nlean_thm = \"Li.ProofDb.Discrete.int_mul_distrib\"\nli_specimen = \"proof-db/discrete/lemmas/int_ring_stub.li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\discrete-lemmas.toml#L31",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
           }
@@ -1227,14 +1798,67 @@
       }
     },
     {
-      "id": "GT-AX-DEGREE-SUM",
+      "id": "GT-AX-SIMPLE-GRAPH",
       "kind": "axiom",
+      "field": "graph",
+      "domain": "combinatorics",
+      "statement": "Simple graph: adjacency is irreflexive (no self-loops) and symmetric.",
+      "catalog_status": "target",
+      "lean_status": "axiomatic",
+      "diverges": true,
+      "gap_id": "G-graph",
+      "gap_kind": "axiom_layer",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Graph.simple_graph_axiom",
+      "lean_module": "proof-db/graph/GraphAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\graph-axioms.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/graph/GraphAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/graph/GraphAxioms.lean",
+            "symbol": "simple_graph_axiom",
+            "start_line": 11,
+            "highlight_line": 11,
+            "content": "axiom simple_graph_axiom (G : SimpleGraph V) :\n    (\u2200 v, \u00ac G.Adj v v) \u2227 Symmetric G.Adj\n\n/-- GT-LM-HANDSHAKING (target): sum of vertex degrees equals twice the edge count. -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/graph/GraphAxioms.lean#L11",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\graph-axioms.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"GT-AX-SIMPLE-GRAPH\"\nkind = \"axiom\"\nfield = \"graph\"\ndomain = \"combinatorics\"\nstatement = \"Simple graph: adjacency is irreflexive (no self-loops) and symmetric.\"\nproof_status = \"target\"\ngap_id = \"G-graph\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/graph/GraphAxioms.lean\"\nlean_thm = \"Li.ProofDb.Graph.simple_graph_axiom\"\nmathlib_ref = \"Mathlib.Combinatorics.SimpleGraph.Basic\"\nlast_verified_lic_commit = \"17b150a\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\graph-axioms.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "GT-LM-HANDSHAKING",
+      "kind": "lemma",
       "field": "graph",
       "domain": "combinatorics",
       "statement": "Handshaking lemma: sum of vertex degrees equals twice the number of edges.",
       "catalog_status": "target",
-      "lean_status": "axiomatic",
-      "diverges": true,
+      "lean_status": "unknown",
+      "diverges": false,
       "gap_id": "G-graph",
       "gap_kind": "proof_gap",
       "erdos_id": null,
@@ -1243,12 +1867,12 @@
       "benchmark_ref": null,
       "mathlib_ref": "Mathlib.Combinatorics.SimpleGraph.DegreeSum",
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Graph.gt_lm_handshaking",
+      "lean_module": "proof-db/graph/GraphAxioms.lean",
       "li_specimen": null,
       "bench_refs": [],
-      "source": "docs\\verification\\proof-database\\entries\\graph-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "source": "docs\\verification\\proof-database\\entries\\graph-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/graph/GraphAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -1256,12 +1880,23 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/graph/GraphAxioms.lean",
+            "symbol": "gt_lm_handshaking",
+            "start_line": 15,
+            "highlight_line": 15,
+            "content": "axiom gt_lm_handshaking (G : SimpleGraph V) :\n    \u2211 v : V, G.degree v = 2 * G.edgeFinset.card\n\n/-- GT-LM-TREE-EDGES (open): a tree on `n` vertices has exactly `n - 1` edges. -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/graph/GraphAxioms.lean#L15",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
             "language": "toml",
-            "path": "docs\\verification\\proof-database\\entries\\graph-axioms.toml",
+            "path": "docs\\verification\\proof-database\\entries\\graph-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"GT-AX-DEGREE-SUM\"\nkind = \"axiom\"\nfield = \"graph\"\ndomain = \"combinatorics\"\nstatement = \"Handshaking lemma: sum of vertex degrees equals twice the number of edges.\"\nproof_status = \"target\"\ngap_id = \"G-graph\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nmathlib_ref = \"Mathlib.Combinatorics.SimpleGraph.DegreeSum\"\nlast_verified_lic_commit = \"35fe7f99\"",
-            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\graph-axioms.toml#L3",
+            "content": "[[entry]]\nid = \"GT-LM-HANDSHAKING\"\nkind = \"lemma\"\nfield = \"graph\"\ndomain = \"combinatorics\"\nstatement = \"Handshaking lemma: sum of vertex degrees equals twice the number of edges.\"\nproof_status = \"target\"\ngap_id = \"G-graph\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/graph/GraphAxioms.lean\"\nlean_thm = \"Li.ProofDb.Graph.gt_lm_handshaking\"\nmathlib_ref = \"Mathlib.Combinatorics.SimpleGraph.DegreeSum\"\nlast_verified_lic_commit = \"17b150a\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\graph-lemmas.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
           }
@@ -1274,7 +1909,7 @@
       "field": "graph",
       "domain": "combinatorics",
       "statement": "Tree on n vertices has exactly n - 1 edges.",
-      "catalog_status": "target",
+      "catalog_status": "open",
       "lean_status": "unknown",
       "diverges": false,
       "gap_id": "G-graph",
@@ -1283,14 +1918,14 @@
       "erdos_status": null,
       "convergence_class": null,
       "benchmark_ref": null,
-      "mathlib_ref": null,
+      "mathlib_ref": "Mathlib.Combinatorics.SimpleGraph.Tree",
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Graph.gt_lm_tree_edges",
+      "lean_module": "proof-db/graph/GraphAxioms.lean",
       "li_specimen": null,
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\graph-lemmas.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/graph/GraphAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -1298,12 +1933,23 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/graph/GraphAxioms.lean",
+            "symbol": "gt_lm_tree_edges",
+            "start_line": 19,
+            "highlight_line": 19,
+            "content": "axiom gt_lm_tree_edges (n : Nat) (G : SimpleGraph (Fin n)) (htree : G.IsTree) :\n    G.edgeFinset.card = n - 1\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/graph/GraphAxioms.lean#L19",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\graph-lemmas.toml",
-            "start_line": 3,
-            "highlight_line": 4,
-            "content": "[[entry]]\nid = \"GT-LM-TREE-EDGES\"\nkind = \"lemma\"\nfield = \"graph\"\ndomain = \"combinatorics\"\nstatement = \"Tree on n vertices has exactly n - 1 edges.\"\nproof_status = \"target\"\ngap_id = \"G-graph\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlast_verified_lic_commit = \"35fe7f99\"",
-            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\graph-lemmas.toml#L3",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"GT-LM-TREE-EDGES\"\nkind = \"lemma\"\nfield = \"graph\"\ndomain = \"combinatorics\"\nstatement = \"Tree on n vertices has exactly n - 1 edges.\"\nproof_status = \"open\"\ngap_id = \"G-graph\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/graph/GraphAxioms.lean\"\nlean_thm = \"Li.ProofDb.Graph.gt_lm_tree_edges\"\nmathlib_ref = \"Mathlib.Combinatorics.SimpleGraph.Tree\"\nlast_verified_lic_commit = \"17b150a\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\graph-lemmas.toml#L17",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
           }
@@ -2277,11 +2923,11 @@
       }
     },
     {
-      "id": "ML-AX-L-SMOOTH",
+      "id": "ML-AX-CONVEX-DOM",
       "kind": "axiom",
       "field": "ml",
       "domain": "optimization",
-      "statement": "L-smoothness: ||grad f(x) - grad f(y)|| <= L ||x - y|| for convex f.",
+      "statement": "Training domain S subset R^n is convex and contains the GD iterate path.",
       "catalog_status": "target",
       "lean_status": "axiomatic",
       "diverges": true,
@@ -2293,12 +2939,12 @@
       "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.ML.convex_domain_axiom",
+      "lean_module": "proof-db/ml/Convex.lean",
       "li_specimen": null,
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\ml-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/Convex.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -2306,11 +2952,75 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/ml/Convex.lean",
+            "symbol": "convex_domain_axiom",
+            "start_line": 11,
+            "highlight_line": 11,
+            "content": "axiom convex_domain_axiom {n : Nat} (S : Set (Fin n \u2192 \u211d)) : ConvexDomain S \u2192 Prop\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/Convex.lean#L11",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\ml-axioms.toml",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"ML-AX-CONVEX-DOM\"\nkind = \"axiom\"\nfield = \"ml\"\ndomain = \"optimization\"\nstatement = \"Training domain S subset R^n is convex and contains the GD iterate path.\"\nproof_status = \"target\"\ngap_id = \"G-ml\"\ngap_kind = \"axiom_layer\"\nconvergence_class = \"convex_first_order\"\nlean_module = \"proof-db/ml/Convex.lean\"\nlean_thm = \"Li.ProofDb.ML.convex_domain_axiom\"\nlast_verified_lic_commit = \"7e64ba8\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\ml-axioms.toml#L17",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ML-AX-L-SMOOTH",
+      "kind": "axiom",
+      "field": "ml",
+      "domain": "optimization",
+      "statement": "L-smoothness: ||grad f(x) - grad f(y)|| <= L ||x - y||.",
+      "catalog_status": "target",
+      "lean_status": "axiomatic",
+      "diverges": true,
+      "gap_id": "G-ml",
+      "gap_kind": "axiom_layer",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": "convex_first_order",
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.ML.l_smooth_axiom",
+      "lean_module": "proof-db/ml/OptAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\ml-axioms.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/OptAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/ml/OptAxioms.lean",
+            "symbol": "l_smooth_axiom",
+            "start_line": 10,
+            "highlight_line": 10,
+            "content": "axiom l_smooth_axiom\n  (L : \u211d) (n : Nat) (f : (Fin n \u2192 \u211d) \u2192 \u211d) (grad : (Fin n \u2192 \u211d) \u2192 (Fin n \u2192 \u211d)) :\n  0 < L \u2192\n  \u2200 x y : Fin n \u2192 \u211d, \u2016grad x - grad y\u2016 \u2264 L * \u2016x - y\u2016\n\n/-- \u03bc-strong convexity: f(y) \u2265 f(x) + \u27e8\u2207f(x), y\u2212x\u27e9 + (\u03bc/2)\u2016y\u2212x\u2016\u00b2. -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/OptAxioms.lean#L10",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\ml-axioms.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"ML-AX-L-SMOOTH\"\nkind = \"axiom\"\nfield = \"ml\"\ndomain = \"optimization\"\nstatement = \"L-smoothness: ||grad f(x) - grad f(y)|| <= L ||x - y|| for convex f.\"\nproof_status = \"target\"\ngap_id = \"G-ml\"\ngap_kind = \"axiom_layer\"\nconvergence_class = \"convex_first_order\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"ML-AX-L-SMOOTH\"\nkind = \"axiom\"\nfield = \"ml\"\ndomain = \"optimization\"\nstatement = \"L-smoothness: ||grad f(x) - grad f(y)|| <= L ||x - y||.\"\nproof_status = \"target\"\ngap_id = \"G-ml\"\ngap_kind = \"axiom_layer\"\nconvergence_class = \"convex_first_order\"\nlean_module = \"proof-db/ml/OptAxioms.lean\"\nlean_thm = \"Li.ProofDb.ML.l_smooth_axiom\"\nlast_verified_lic_commit = \"7e64ba8\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\ml-axioms.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -2324,7 +3034,7 @@
       "field": "ml",
       "domain": "optimization",
       "statement": "Gradient descent on L-smooth convex f: f(x_k) - f* <= O(1/k) (rate lemma target).",
-      "catalog_status": "target",
+      "catalog_status": "open",
       "lean_status": "unknown",
       "diverges": false,
       "gap_id": "G-ml",
@@ -2335,12 +3045,12 @@
       "benchmark_ref": "benchmarks/tier3_ml/sgd_convergence",
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
-      "li_specimen": null,
+      "lean_theorem": "Li.ProofDb.ML.ml_lm_grad_descent_rate",
+      "lean_module": "proof-db/ml/SGD.lean",
+      "li_specimen": "proof-db/ml/lemmas/grad_descent_step.li",
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\ml-lemmas.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/lemmas/grad_descent_step.li",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -2348,11 +3058,33 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/ml/SGD.lean",
+            "symbol": "ml_lm_grad_descent_rate",
+            "start_line": 13,
+            "highlight_line": 13,
+            "content": "axiom ml_lm_grad_descent_rate\n  (L : \u211d) (n k : Nat) (f : (Fin n \u2192 \u211d) \u2192 \u211d) (grad : (Fin n \u2192 \u211d) \u2192 (Fin n \u2192 \u211d))\n  (x\u2080 x\u22c6 : Fin n \u2192 \u211d) :\n  0 < L \u2192 0 < k \u2192\n  (\u2200 x, f x\u22c6 \u2264 f x) \u2192\n  \u2203 C : \u211d, 0 < C \u2227\n    f (Nat.rec x\u2080 (fun _ x => gradDescentStep (1 / L) grad x) k) - f x\u22c6 \u2264 C / k\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/SGD.lean#L13",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/ml/lemmas/grad_descent_step.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# ML-LM-GRAD-DESCENT-RATE \u2014 toy 1D GD step on x^2 (open specimen; WP3-A stub).\n\ndef quadratic_loss(x: float) -> float\n  requires true\n  ensures result == x * x\n  decreases 0\n:=\n  return x * x\n\ndef quadratic_grad(x: float) -> float\n  requires true\n  ensures result == 2.0 * x\n  decreases 0\n:=\n  return 2.0 * x\n\ndef grad_descent_step(x: float, eta: float) -> float\n  requires eta > 0.0\n  requires eta <= 1.0\n  ensures abs(result) <= abs(x)\n  decreases 0\n:=\n  var g: float = quadratic_grad(x)\n  return x - eta * g\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n:=\n  discard grad_descent_step(1.0, 0.5)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/ml/lemmas/grad_descent_step.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\ml-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"ML-LM-GRAD-DESCENT-RATE\"\nkind = \"lemma\"\nfield = \"ml\"\ndomain = \"optimization\"\nstatement = \"Gradient descent on L-smooth convex f: f(x_k) - f* <= O(1/k) (rate lemma target).\"\nproof_status = \"target\"\ngap_id = \"G-ml\"\ngap_kind = \"proof_gap\"\nconvergence_class = \"convex_first_order\"\nlean_module = \"docs/semantics/Discharge.lean\"\nbenchmark_ref = \"benchmarks/tier3_ml/sgd_convergence\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"ML-LM-GRAD-DESCENT-RATE\"\nkind = \"lemma\"\nfield = \"ml\"\ndomain = \"optimization\"\nstatement = \"Gradient descent on L-smooth convex f: f(x_k) - f* <= O(1/k) (rate lemma target).\"\nproof_status = \"open\"\ngap_id = \"G-ml\"\ngap_kind = \"proof_gap\"\nconvergence_class = \"convex_first_order\"\nlean_module = \"proof-db/ml/SGD.lean\"\nlean_thm = \"Li.ProofDb.ML.ml_lm_grad_descent_rate\"\nli_specimen = \"proof-db/ml/lemmas/grad_descent_step.li\"\nbenchmark_ref = \"benchmarks/tier3_ml/sgd_convergence\"\nlast_verified_lic_commit = \"7e64ba8\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\ml-lemmas.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -2377,12 +3109,12 @@
       "benchmark_ref": "benchmarks/tier1_numerics/horner_pure_li",
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
-      "li_specimen": null,
+      "lean_theorem": "Li.ProofDb.Numerics.fp_round_axiom",
+      "lean_module": "proof-db/numerics/axioms/NumericsAxioms.lean",
+      "li_specimen": "proof-db/numerics/lemmas/fp_horner_round_stub.li",
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\numerics-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/lemmas/fp_horner_round_stub.li",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -2390,12 +3122,228 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/numerics/axioms/NumericsAxioms.lean",
+            "symbol": "fp_round_axiom",
+            "start_line": 7,
+            "highlight_line": 7,
+            "content": "axiom fp_round_axiom (exact result : Float) : Float\n\n/-- Square-root accuracy stub \u2014 discharge target `Li.Discharge.sqrt_open_bound_spec`\n    and specimen `li-tests/contracts_verify/sqrt_open_bound.li` (N-LM-SQRT-BOUND). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/axioms/NumericsAxioms.lean#L7",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/numerics/lemmas/fp_horner_round_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# N-LM-HORNER-FP-ROUND: Horner-style FP accumulation (target; G-hw rounding layer).\ndef horner_step(c: float, x: float, acc: float) -> float\n  requires true\n  ensures true\n  decreases 0\n=\n  return acc * x + c\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var y: float = horner_step(1.0, 0.5, 0.0)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/lemmas/fp_horner_round_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\numerics-axioms.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"N-AX-FP-ROUND\"\nkind = \"axiom\"\nfield = \"numerics\"\ndomain = \"floating_point\"\nstatement = \"IEEE-style rounding: result of float op equals exact result rounded to nearest representable (axiomatic under G-hw).\"\nproof_status = \"target\"\ngap_id = \"G-num\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nbenchmark_ref = \"benchmarks/tier1_numerics/horner_pure_li\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"N-AX-FP-ROUND\"\nkind = \"axiom\"\nfield = \"numerics\"\ndomain = \"floating_point\"\nstatement = \"IEEE-style rounding: result of float op equals exact result rounded to nearest representable (axiomatic under G-hw).\"\nproof_status = \"target\"\ngap_id = \"G-num\"\ngap_kind = \"modeling_gap\"\nlean_module = \"proof-db/numerics/axioms/NumericsAxioms.lean\"\nlean_thm = \"Li.ProofDb.Numerics.fp_round_axiom\"\nli_specimen = \"proof-db/numerics/lemmas/fp_horner_round_stub.li\"\nbenchmark_ref = \"benchmarks/tier1_numerics/horner_pure_li\"\nlast_verified_lic_commit = \"56726948\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\numerics-axioms.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "N-LM-DOT4-INT-CLOSED",
+      "kind": "lemma",
+      "field": "numerics",
+      "domain": "linalg_int",
+      "statement": "Fixed 4-term int dot closed form (numerics cross-link to P-linalg specimen).",
+      "catalog_status": "target",
+      "lean_status": "open",
+      "diverges": false,
+      "gap_id": "G-num",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.Discharge.dot4_int_spec",
+      "lean_module": "docs/semantics/Discharge.lean",
+      "li_specimen": "proof-db/math/lemmas/linalg_dot4_int_closed.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/linalg_dot4_int_closed.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "dot4_int_spec",
+            "start_line": 25,
+            "highlight_line": 25,
+            "content": "def dot4_int_spec (a b : LiArray Int 4) (result : Int) : Prop :=\n  result = (((((a[0]!) * (b[0]!)) + ((a[1]!) * (b[1]!))) + ((a[2]!) * (b[2]!))) + ((a[3]!) * (b[3]!)))\n\n/-- Semantic value of the 4-iteration `while i < 4` dot loop (`witness_dot4_int_loop`). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L25",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/lemmas/linalg_dot4_int_closed.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# P-linalg seed: fixed-size int dot \u2014 closed AutoVC (from contracts_verify corpus).\ndef dot4_int(a: array[4, int], b: array[4, int]) -> int\n  requires true\n  ensures result == a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n  decreases 0\n=\n  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var a: array[4, int]\n  var b: array[4, int]\n  a[0] = 1\n  a[1] = 2\n  a[2] = 3\n  a[3] = 4\n  b[0] = 1\n  b[1] = 1\n  b[2] = 1\n  b[3] = 1\n  var s: int = dot4_int(a, b)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/linalg_dot4_int_closed.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
+            "start_line": 18,
+            "highlight_line": 19,
+            "content": "[[entry]]\nid = \"N-LM-DOT4-INT-CLOSED\"\nkind = \"lemma\"\nfield = \"numerics\"\ndomain = \"linalg_int\"\nstatement = \"Fixed 4-term int dot closed form (numerics cross-link to P-linalg specimen).\"\nproof_status = \"target\"\ngap_id = \"G-num\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.dot4_int_spec\"\nli_specimen = \"proof-db/math/lemmas/linalg_dot4_int_closed.li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\numerics-lemmas.toml#L18",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "N-LM-DOT4-INT-LOOP",
+      "kind": "lemma",
+      "field": "numerics",
+      "domain": "linalg_int",
+      "statement": "Loop implementation of dot4 matches closed form (Li.Discharge.dot4_int_loop_eval_spec).",
+      "catalog_status": "open",
+      "lean_status": "proved",
+      "diverges": true,
+      "gap_id": "G-num",
+      "gap_kind": "proof_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.Discharge.dot4_int_loop_eval_spec",
+      "lean_module": "docs/semantics/Discharge.lean",
+      "li_specimen": "proof-db/math/lemmas/linalg_dot4_int_loop_open.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/linalg_dot4_int_loop_open.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "dot4_int_loop_eval_spec",
+            "start_line": 33,
+            "highlight_line": 33,
+            "content": "theorem dot4_int_loop_eval_spec (a b : LiArray Int 4) : dot4_int_spec a b (dot4_loop_eval a b) := rfl\n\n/-- One entry of 2\u00d72 int matmul (matches `linalg_mat2_entry00_int_closed.li`). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L33",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/lemmas/linalg_dot4_int_loop_open.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# P-linalg seed: 4-iteration dot loop \u2014 static witness + Li.Discharge.dot4_int_loop_eval_spec.\ndef dot4_int_loop(a: array[4, int], b: array[4, int]) -> int\n  requires true\n  ensures result == a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n  decreases 4\n=\n  var acc: int = 0\n  var i: int = 0\n  while i < 4\n    acc = acc + a[i] * b[i]\n    i = i + 1\n  return acc\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var a: array[4, int]\n  var b: array[4, int]\n  a[0] = 1\n  a[1] = 0\n  a[2] = 0\n  a[3] = 0\n  b[0] = 1\n  b[1] = 0\n  b[2] = 0\n  b[3] = 0\n  var s: int = dot4_int_loop(a, b)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/linalg_dot4_int_loop_open.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
+            "start_line": 32,
+            "highlight_line": 33,
+            "content": "[[entry]]\nid = \"N-LM-DOT4-INT-LOOP\"\nkind = \"lemma\"\nfield = \"numerics\"\ndomain = \"linalg_int\"\nstatement = \"Loop implementation of dot4 matches closed form (Li.Discharge.dot4_int_loop_eval_spec).\"\nproof_status = \"open\"\ngap_id = \"G-num\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.dot4_int_loop_eval_spec\"\nli_specimen = \"proof-db/math/lemmas/linalg_dot4_int_loop_open.li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\numerics-lemmas.toml#L32",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "N-LM-HORNER-FP-ROUND",
+      "kind": "lemma",
+      "field": "numerics",
+      "domain": "floating_point",
+      "statement": "Horner evaluation respects FP rounding axiom layer (N-AX-FP-ROUND target).",
+      "catalog_status": "target",
+      "lean_status": "unknown",
+      "diverges": false,
+      "gap_id": "G-num",
+      "gap_kind": "modeling_gap",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": "benchmarks/tier1_numerics/horner_pure_li",
+      "mathlib_ref": null,
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Numerics.fp_round_axiom",
+      "lean_module": "proof-db/numerics/axioms/NumericsAxioms.lean",
+      "li_specimen": "proof-db/numerics/lemmas/fp_horner_round_stub.li",
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/lemmas/fp_horner_round_stub.li",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [
+          "N-AX-FP-ROUND"
+        ],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/numerics/axioms/NumericsAxioms.lean",
+            "symbol": "fp_round_axiom",
+            "start_line": 7,
+            "highlight_line": 7,
+            "content": "axiom fp_round_axiom (exact result : Float) : Float\n\n/-- Square-root accuracy stub \u2014 discharge target `Li.Discharge.sqrt_open_bound_spec`\n    and specimen `li-tests/contracts_verify/sqrt_open_bound.li` (N-LM-SQRT-BOUND). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/axioms/NumericsAxioms.lean#L7",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/numerics/lemmas/fp_horner_round_stub.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# N-LM-HORNER-FP-ROUND: Horner-style FP accumulation (target; G-hw rounding layer).\ndef horner_step(c: float, x: float, acc: float) -> float\n  requires true\n  ensures true\n  decreases 0\n=\n  return acc * x + c\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var y: float = horner_step(1.0, 0.5, 0.0)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/lemmas/fp_horner_round_stub.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
+            "start_line": 46,
+            "highlight_line": 47,
+            "content": "[[entry]]\nid = \"N-LM-HORNER-FP-ROUND\"\nkind = \"lemma\"\nfield = \"numerics\"\ndomain = \"floating_point\"\nstatement = \"Horner evaluation respects FP rounding axiom layer (N-AX-FP-ROUND target).\"\nproof_status = \"target\"\ngap_id = \"G-num\"\ngap_kind = \"modeling_gap\"\nlean_module = \"proof-db/numerics/axioms/NumericsAxioms.lean\"\nlean_thm = \"Li.ProofDb.Numerics.fp_round_axiom\"\nli_specimen = \"proof-db/numerics/lemmas/fp_horner_round_stub.li\"\nbenchmark_ref = \"benchmarks/tier1_numerics/horner_pure_li\"\nlast_verified_lic_commit = \"56726948\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\numerics-lemmas.toml#L46",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
           }
@@ -2409,8 +3357,8 @@
       "domain": "floating_point",
       "statement": "Float sqrt: |result^2 - x| < epsilon for x >= 0 (extends sqrt_open_bound specimen).",
       "catalog_status": "open",
-      "lean_status": "proved",
-      "diverges": true,
+      "lean_status": "unknown",
+      "diverges": false,
       "gap_id": "G-num",
       "gap_kind": "proof_gap",
       "erdos_id": null,
@@ -2419,8 +3367,8 @@
       "benchmark_ref": "benchmarks/tier1_numerics/sqrt_pure_li",
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": "Li.Discharge.sqrt_open_bound_spec",
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Numerics.sqrt_bound_axiom",
+      "lean_module": "proof-db/numerics/axioms/NumericsAxioms.lean",
       "li_specimen": "li-tests/contracts_verify/sqrt_open_bound.li",
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
@@ -2433,12 +3381,12 @@
         "implementations": [
           {
             "language": "lean",
-            "path": "docs/semantics/Discharge.lean",
-            "symbol": "sqrt_open_bound_spec",
-            "start_line": 75,
-            "highlight_line": 75,
-            "content": "def sqrt_open_bound_spec (x : Float) : Prop :=\n  Float.abs (Li.TrustedMath.li_rt_sqrt x * Li.TrustedMath.li_rt_sqrt x - x) < (1e-12 : Float)\n",
-            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L75",
+            "path": "proof-db/numerics/axioms/NumericsAxioms.lean",
+            "symbol": "sqrt_bound_axiom",
+            "start_line": 11,
+            "highlight_line": 11,
+            "content": "axiom sqrt_bound_axiom (x : Float) (hx : x \u2265 (0 : Float)) : Prop\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/numerics/axioms/NumericsAxioms.lean#L11",
             "role": "lean_formal",
             "label": "Lean formalization"
           },
@@ -2458,7 +3406,7 @@
             "path": "docs\\verification\\proof-database\\entries\\numerics-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"N-LM-SQRT-BOUND\"\nkind = \"lemma\"\nfield = \"numerics\"\ndomain = \"floating_point\"\nstatement = \"Float sqrt: |result^2 - x| < epsilon for x >= 0 (extends sqrt_open_bound specimen).\"\nproof_status = \"open\"\ngap_id = \"G-num\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.sqrt_open_bound_spec\"\nli_specimen = \"li-tests/contracts_verify/sqrt_open_bound.li\"\nbenchmark_ref = \"benchmarks/tier1_numerics/sqrt_pure_li\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"N-LM-SQRT-BOUND\"\nkind = \"lemma\"\nfield = \"numerics\"\ndomain = \"floating_point\"\nstatement = \"Float sqrt: |result^2 - x| < epsilon for x >= 0 (extends sqrt_open_bound specimen).\"\nproof_status = \"open\"\ngap_id = \"G-num\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/numerics/axioms/NumericsAxioms.lean\"\nlean_thm = \"Li.ProofDb.Numerics.sqrt_bound_axiom\"\nli_specimen = \"li-tests/contracts_verify/sqrt_open_bound.li\"\nbenchmark_ref = \"benchmarks/tier1_numerics/sqrt_pure_li\"\nlast_verified_lic_commit = \"56726948\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\numerics-lemmas.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -3256,12 +4204,65 @@
       "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Statistics.expect_linear",
+      "lean_module": "proof-db/statistics/StatsAxioms.lean",
       "li_specimen": null,
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\statistics-axioms.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/statistics/StatsAxioms.lean",
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/statistics/StatsAxioms.lean",
+            "symbol": "expect_linear",
+            "start_line": 16,
+            "highlight_line": 16,
+            "content": "axiom expect_linear\n  {n : Nat} (\u03a9 : FiniteProbSpace n) (a b : \u211d) (X Y : Fin n \u2192 \u211d) :\n  expect \u03a9 (fun i => a * X i + b * Y i) = a * expect \u03a9 X + b * expect \u03a9 Y\n\n/-- Sample mean of `n` observations (ST-LM-SAMPLE-MEAN-UNBIASED discharge target). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/statistics/StatsAxioms.lean#L16",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs\\verification\\proof-database\\entries\\statistics-axioms.toml",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"ST-AX-EXPECT-LINEAR\"\nkind = \"axiom\"\nfield = \"statistics\"\ndomain = \"probability\"\nstatement = \"Expectation is linear: E[aX + bY] = a E[X] + b E[Y] (finite discrete sample space).\"\nproof_status = \"target\"\ngap_id = \"G-stats\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/statistics/StatsAxioms.lean\"\nlean_thm = \"Li.ProofDb.Statistics.expect_linear\"\nlast_verified_lic_commit = \"17b150a\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\statistics-axioms.toml#L17",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ST-AX-PROB-FINITE",
+      "kind": "axiom",
+      "field": "statistics",
+      "domain": "probability",
+      "statement": "Finite probability space: sample space Fin n, mass function p with p_i >= 0 and sum p_i = 1.",
+      "catalog_status": "target",
+      "lean_status": "axiomatic",
+      "diverges": true,
+      "gap_id": "G-stats",
+      "gap_kind": "axiom_layer",
+      "erdos_id": null,
+      "erdos_status": null,
+      "convergence_class": null,
+      "benchmark_ref": null,
+      "mathlib_ref": "Mathlib.Probability.ProbabilityMassFunction.Basic",
+      "priority_tier": null,
+      "lean_theorem": "Li.ProofDb.Statistics.FiniteProbSpace",
+      "lean_module": "proof-db/statistics/StatsAxioms.lean",
+      "li_specimen": null,
+      "bench_refs": [],
+      "source": "docs\\verification\\proof-database\\entries\\statistics-axioms.toml",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/statistics/StatsAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -3273,7 +4274,7 @@
             "path": "docs\\verification\\proof-database\\entries\\statistics-axioms.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"ST-AX-EXPECT-LINEAR\"\nkind = \"axiom\"\nfield = \"statistics\"\ndomain = \"probability\"\nstatement = \"Expectation is linear: E[aX + bY] = a E[X] + b E[Y] (finite discrete sample space).\"\nproof_status = \"target\"\ngap_id = \"G-stats\"\ngap_kind = \"axiom_layer\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"ST-AX-PROB-FINITE\"\nkind = \"axiom\"\nfield = \"statistics\"\ndomain = \"probability\"\nstatement = \"Finite probability space: sample space Fin n, mass function p with p_i >= 0 and sum p_i = 1.\"\nproof_status = \"target\"\ngap_id = \"G-stats\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/statistics/StatsAxioms.lean\"\nlean_thm = \"Li.ProofDb.Statistics.FiniteProbSpace\"\nmathlib_ref = \"Mathlib.Probability.ProbabilityMassFunction.Basic\"\nlast_verified_lic_commit = \"17b150a\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\statistics-axioms.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
@@ -3298,12 +4299,12 @@
       "benchmark_ref": null,
       "mathlib_ref": null,
       "priority_tier": null,
-      "lean_theorem": null,
-      "lean_module": "docs/semantics/Discharge.lean",
+      "lean_theorem": "Li.ProofDb.Statistics.sample_mean_unbiased",
+      "lean_module": "proof-db/statistics/StatsAxioms.lean",
       "li_specimen": null,
       "bench_refs": [],
       "source": "docs\\verification\\proof-database\\entries\\statistics-lemmas.toml",
-      "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
+      "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/statistics/StatsAxioms.lean",
       "notes": null,
       "drilldown": {
         "discharged_from": [],
@@ -3311,11 +4312,22 @@
         "backlog_ref": null,
         "implementations": [
           {
+            "language": "lean",
+            "path": "proof-db/statistics/StatsAxioms.lean",
+            "symbol": "sample_mean_unbiased",
+            "start_line": 25,
+            "highlight_line": 25,
+            "content": "axiom sample_mean_unbiased\n  {n : Nat} (hn : 0 < n) (\u03bc : \u211d) (\u03a9 : FiniteProbSpace n) (draws : Fin n \u2192 \u211d) :\n  expect \u03a9 draws = \u03bc \u2192 expect \u03a9 (fun _ => sampleMean hn draws) = \u03bc\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/statistics/StatsAxioms.lean#L25",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
             "language": "toml",
             "path": "docs\\verification\\proof-database\\entries\\statistics-lemmas.toml",
             "start_line": 3,
             "highlight_line": 4,
-            "content": "[[entry]]\nid = \"ST-LM-SAMPLE-MEAN-UNBIASED\"\nkind = \"lemma\"\nfield = \"statistics\"\ndomain = \"estimation\"\nstatement = \"Sample mean is an unbiased estimator of population mean (finite variance target).\"\nproof_status = \"target\"\ngap_id = \"G-stats\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlast_verified_lic_commit = \"35fe7f99\"",
+            "content": "[[entry]]\nid = \"ST-LM-SAMPLE-MEAN-UNBIASED\"\nkind = \"lemma\"\nfield = \"statistics\"\ndomain = \"estimation\"\nstatement = \"Sample mean is an unbiased estimator of population mean (finite variance target).\"\nproof_status = \"target\"\ngap_id = \"G-stats\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/statistics/StatsAxioms.lean\"\nlean_thm = \"Li.ProofDb.Statistics.sample_mean_unbiased\"\nlast_verified_lic_commit = \"17b150a\"",
             "github_url": "https://github.com/li-langverse/lic/blob/main/docs\\verification\\proof-database\\entries\\statistics-lemmas.toml#L3",
             "role": "catalog",
             "label": "Catalog entry (TOML)"
