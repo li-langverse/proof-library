@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-30T07:12Z",
+  "generated_at": "2026-05-30T07:14Z",
   "lic_root": "C:\\Users\\Julian\\Documents\\Programming\\li\\lic",
-  "lic_commit": "d617f0d8dfcebd431205c992949ea77a89bdb2a4",
+  "lic_commit": "5672694822310a3db218778175d5a6bdf18956a8",
   "sources": {
     "toml_entries": "docs/verification/proof-database/entries/",
     "proof_db_index": "proof-db/index.json",

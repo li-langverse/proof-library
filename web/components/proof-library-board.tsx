@@ -210,6 +210,16 @@ export function ProofLibraryBoard({
           />
           Divergent only
         </label>
+        {fields.includes("erdos") ? (
+          <label className="proof-filter-check">
+            <input
+              type="checkbox"
+              checked={fieldFilter === "erdos"}
+              onChange={(e) => setFieldFilter(e.target.checked ? "erdos" : "")}
+            />
+            Erdos only
+          </label>
+        ) : null}
         <span className="mono proof-filter-count">
           {filtered.length} / {entries.length} shown
         </span>
