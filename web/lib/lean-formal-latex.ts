@@ -1,22 +1,24 @@
+/** Lightweight Lean → KaTeX conversion for formal drilldown blocks. */
+
 const UNICODE_TO_LATEX: Record<string, string> = {
-  "∀": "\\forall ",
-  "∃": "\\exists ",
-  "→": "\\to ",
-  "↔": "\\leftrightarrow ",
-  "∧": "\\land ",
-  "∨": "\\lor ",
-  "≤": "\\leq ",
-  "≥": "\\geq ",
-  "≠": "\\neq ",
-  "∈": "\\in ",
-  "⊆": "\\subseteq ",
-  "⊂": "\\subset ",
-  "×": "\\times ",
-  "·": "\\cdot ",
-  "ℝ": "\\mathbb{R}",
-  "ℕ": "\\mathbb{N}",
-  "ℤ": "\\mathbb{Z}",
-  "ℚ": "\\mathbb{Q}",
+  "\u2200": "\\forall ",
+  "\u2203": "\\exists ",
+  "\u2192": "\\to ",
+  "\u2194": "\\leftrightarrow ",
+  "\u2227": "\\land ",
+  "\u2228": "\\lor ",
+  "\u2264": "\\leq ",
+  "\u2265": "\\geq ",
+  "\u2260": "\\neq ",
+  "\u2208": "\\in ",
+  "\u2286": "\\subseteq ",
+  "\u2282": "\\subset ",
+  "\u00d7": "\\times ",
+  "\u22c5": "\\cdot ",
+  "\u211d": "\\mathbb{R}",
+  "\u2115": "\\mathbb{N}",
+  "\u2124": "\\mathbb{Z}",
+  "\u211a": "\\mathbb{Q}",
 };
 
 function replaceUnicodeMath(input: string): string {
@@ -52,7 +54,6 @@ export function extractLeanTypeExpr(content: string): string | null {
   const body = decl.slice(colonIdx + 1).trim();
   if (!body || body === "Prop") return null;
 
-  // Drop binders in the head for display-only math (body keeps quantifiers).
   if (/^(axiom|theorem|lemma)\s+\S+\s*\(/.test(head) && body.startsWith("(")) {
     return body;
   }
@@ -64,27 +65,4 @@ export function leanFormalToLatex(content: string): string | null {
   const expr = extractLeanTypeExpr(content);
   if (!expr) return null;
   return replaceLeanTokens(replaceUnicodeMath(expr));
-}
-
-/** Turn catalog statement text into inline LaTeX where math symbols appear. */
-export function statementToLatex(statement: string): string {
-  const parts: string[] = [];
-  let buf = "";
-  for (const ch of statement) {
-    if (UNICODE_TO_LATEX[ch]) {
-      if (buf) {
-        parts.push(`\\text{${escapeText(buf)}}`);
-        buf = "";
-      }
-      parts.push(UNICODE_TO_LATEX[ch].trim());
-    } else {
-      buf += ch;
-    }
-  }
-  if (buf) parts.push(`\\text{${escapeText(buf)}}`);
-  return parts.join(" ");
-}
-
-function escapeText(text: string): string {
-  return text.replace(/\\/g, "\\\\").replace(/[{}]/g, "\\$&");
 }

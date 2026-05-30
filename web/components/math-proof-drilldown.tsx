@@ -8,7 +8,7 @@ import {
   proofStatusBadgeClass,
   type ProofLibraryEntry,
 } from "@/lib/proof-library-types";
-import { leanFormalToLatex, statementToLatex } from "@/lib/lean-formal-latex";
+import { leanFormalToLatex } from "@/lib/lean-formal-latex";
 
 function StatusBadge({ status }: { status: string }) {
   const tone = proofStatusBadgeClass(status);
@@ -32,7 +32,6 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
 
   const leanSnippet = drill.implementations.find((s) => s.role === "lean_formal");
   const formalLatex = leanSnippet ? leanFormalToLatex(leanSnippet.content) : null;
-  const statementLatex = statementToLatex(entry.statement);
 
   const exportPng = useCallback(async () => {
     const node = exportRef.current;
@@ -83,9 +82,7 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
           ) : null}
         </div>
 
-        <div className="proof-drilldown-statement">
-          <ProofFormalMath latex={statementLatex} display={false} className="proof-statement-math" />
-        </div>
+        <p className="proof-drilldown-statement">{entry.statement}</p>
 
         <div className="proof-drilldown-badges">
           <StatusBadge status={entry.catalog_status} />
