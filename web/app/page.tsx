@@ -37,7 +37,8 @@ export default function HomePage() {
             <strong>Lean</strong> — static scan of theorem bodies in <code>lic</code> semantics
           </li>
           <li>
-            <strong>Red row</strong> — catalog and Lean disagree
+            <strong>Math drilldown</strong> — expand each <code>M-AX-*</code> / <code>M-LM-*</code> row
+            for Lean, Li, and catalog source panes
           </li>
         </ul>
         <p>
