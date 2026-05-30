@@ -23,12 +23,19 @@ export type ProofLibraryEntry = {
   id: string;
   kind: string;
   field: string;
+  domain?: string | null;
   statement: string;
   catalog_status: string;
   lean_status: string;
   diverges: boolean;
   gap_id?: string | null;
   gap_kind?: string | null;
+  erdos_id?: number | null;
+  erdos_status?: string | null;
+  convergence_class?: string | null;
+  benchmark_ref?: string | null;
+  mathlib_ref?: string | null;
+  priority_tier?: string | null;
   lean_theorem?: string | null;
   lean_module?: string | null;
   li_specimen?: string | null;
@@ -62,8 +69,8 @@ export type ProofLibrary = {
 export function proofStatusBadgeClass(status: string): string {
   const key = status.toLowerCase();
   if (key === "proved" || key === "axiomatic") return "green";
-  if (key === "discrepancy") return "yellow";
-  if (key === "open" || key === "target") return "red";
+  if (key === "discrepancy" || key === "target") return "yellow";
+  if (key === "open") return "red";
   if (key === "placeholder") return "yellow";
   return "unknown";
 }

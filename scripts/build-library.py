@@ -278,10 +278,24 @@ def github_blob(rel: str, line: int | None = None) -> str:
     return url
 
 
+ID_PREFIX_PATTERN = (
+    r"M-AX-[A-Z0-9-]+|M-LM-[A-Z0-9-]+"
+    r"|N-AX-[A-Z0-9-]+|N-LM-[A-Z0-9-]+"
+    r"|D-AX-[A-Z0-9-]+|D-LM-[A-Z0-9-]+"
+    r"|ST-AX-[A-Z0-9-]+|ST-LM-[A-Z0-9-]+"
+    r"|ML-AX-[A-Z0-9-]+|ML-LM-[A-Z0-9-]+"
+    r"|GT-AX-[A-Z0-9-]+|GT-LM-[A-Z0-9-]+"
+    r"|E-[A-Z0-9-]+"
+    r"|CHEM-AX-[A-Z0-9-]+|CHEM-LM-[A-Z0-9-]+"
+    r"|BIO-AX-[A-Z0-9-]+|BIO-LM-[A-Z0-9-]+"
+    r"|P-AX-[A-Z0-9-]+|P-LM-[A-Z0-9-]+"
+)
+
+
 def parse_discharged_from(statement: str) -> list[str]:
     if not statement:
         return []
-    return re.findall(r"M-AX-[A-Z0-9-]+|M-LM-[A-Z0-9-]+", statement)
+    return re.findall(ID_PREFIX_PATTERN, statement)
 
 
 def extract_toml_entry_block(lic: Path, toml_rel: str, entry_id: str) -> dict | None:
@@ -463,12 +477,19 @@ def build_entry(row: dict, lean: dict[str, dict], lic: Path) -> dict:
         "id": row.get("id"),
         "kind": row.get("kind", "lemma"),
         "field": row.get("field", ""),
+        "domain": row.get("domain"),
         "statement": row.get("statement", ""),
         "catalog_status": catalog,
         "lean_status": lean_st,
         "diverges": div,
         "gap_id": row.get("gap_id"),
         "gap_kind": row.get("gap_kind"),
+        "erdos_id": row.get("erdos_id"),
+        "erdos_status": row.get("erdos_status"),
+        "convergence_class": row.get("convergence_class"),
+        "benchmark_ref": row.get("benchmark_ref"),
+        "mathlib_ref": row.get("mathlib_ref"),
+        "priority_tier": row.get("priority_tier"),
         "lean_theorem": row.get("lean_theorem") or row.get("lean_thm"),
         "lean_module": row.get("lean_module"),
         "li_specimen": row.get("li_specimen"),
