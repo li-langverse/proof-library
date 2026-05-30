@@ -107,6 +107,18 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
           ) : null}
 
           <dl className="proof-drilldown-meta">
+            {entry.domain ? (
+              <>
+                <dt>Domain</dt>
+                <dd className="mono">{entry.domain}</dd>
+              </>
+            ) : null}
+            {entry.priority_tier ? (
+              <>
+                <dt>Priority tier</dt>
+                <dd className="mono">{entry.priority_tier}</dd>
+              </>
+            ) : null}
             {entry.lean_theorem ? (
               <>
                 <dt>Lean theorem</dt>
@@ -165,6 +177,35 @@ export function MathProofDrilldownSection({ entries }: MathProofDrilldownSection
       <div className="math-proofs-list">
         {mathEntries.map((entry, i) => (
           <ProofDrilldownPanel key={entry.id} entry={entry} defaultOpen={i === 0} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function ErdosProofDrilldownSection({ entries }: MathProofDrilldownSectionProps) {
+  const erdosEntries = entries.filter(
+    (e) => e.field === "erdos" && e.drilldown?.implementations?.length,
+  );
+
+  if (erdosEntries.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="math-proofs-section erdos-proofs-section">
+      <h3>Erdos problems</h3>
+      <p className="math-proofs-intro">
+        Open and resolved entries from the{" "}
+        <a href="https://www.erdosproblems.com/" target="_blank" rel="noopener noreferrer">
+          Erdos problem register
+        </a>
+        . Each row shows <strong>domain</strong> and <strong>priority tier</strong> when cataloged,
+        plus TOML source. Filter the full table by field <code>erdos</code> below.
+      </p>
+      <div className="math-proofs-list">
+        {erdosEntries.map((entry) => (
+          <ProofDrilldownPanel key={entry.id} entry={entry} />
         ))}
       </div>
     </section>

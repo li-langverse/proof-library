@@ -72,6 +72,7 @@ export function ProofLibraryBoard({
 }: ProofLibraryBoardProps) {
   const [query, setQuery] = useState("");
   const [fieldFilter, setFieldFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [divergentOnly, setDivergentOnly] = useState(false);
   const [votes, setVotes] = useState<Record<string, ProofVoteOption>>({});
 
@@ -84,11 +85,17 @@ export function ProofLibraryBoard({
     return [...set].sort();
   }, [entries]);
 
+  const catalogStatuses = useMemo(() => {
+    const set = new Set(entries.map((e) => e.catalog_status).filter(Boolean));
+    return [...set].sort();
+  }, [entries]);
+
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return entries.filter((e) => {
       if (divergentOnly && !e.diverges) return false;
       if (fieldFilter && e.field !== fieldFilter) return false;
+      if (statusFilter && e.catalog_status !== statusFilter) return false;
       if (!needle) return true;
       return (
         e.id.toLowerCase().includes(needle) ||
@@ -97,7 +104,7 @@ export function ProofLibraryBoard({
         (e.lean_theorem ?? "").toLowerCase().includes(needle)
       );
     });
-  }, [entries, query, fieldFilter, divergentOnly]);
+  }, [entries, query, fieldFilter, statusFilter, divergentOnly]);
 
   const setVote = useCallback((id: string, option: ProofVoteOption) => {
     setVotes((prev) => {
@@ -184,6 +191,17 @@ export function ProofLibraryBoard({
             ))}
           </select>
         </label>
+        <label>
+          Catalog status
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="">All</option>
+            {catalogStatuses.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </label>
         <label className="proof-filter-check">
           <input
             type="checkbox"
@@ -192,6 +210,16 @@ export function ProofLibraryBoard({
           />
           Divergent only
         </label>
+        {fields.includes("erdos") ? (
+          <label className="proof-filter-check">
+            <input
+              type="checkbox"
+              checked={fieldFilter === "erdos"}
+              onChange={(e) => setFieldFilter(e.target.checked ? "erdos" : "")}
+            />
+            Erdos only
+          </label>
+        ) : null}
         <span className="mono proof-filter-count">
           {filtered.length} / {entries.length} shown
         </span>
@@ -221,7 +249,9 @@ export function ProofLibraryBoard({
                     <div>{entry.id}</div>
                     <div className="proof-id-meta">
                       {entry.field}
+                      {entry.domain ? ` · ${entry.domain}` : ""}
                       {entry.kind ? ` · ${entry.kind}` : ""}
+                      {entry.priority_tier ? ` · ${entry.priority_tier}` : ""}
                     </div>
                     {entry.github_url ? (
                       <a href={entry.github_url} target="_blank" rel="noopener noreferrer">
