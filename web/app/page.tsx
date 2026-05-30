@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/shell/header";
 import { ProofLibraryBoard } from "@/components/proof-library-board";
@@ -8,7 +8,7 @@ import { loadProofPosture } from "@/lib/proof-posture";
 
 export const metadata: Metadata = {
   title: "Li Proof Library",
-  description: "Lemma and axiom catalog â€” catalog opinion vs Lean scan, with human votes",
+  description: "Lemma and axiom catalog — catalog opinion vs Lean scan, with human votes",
 };
 
 const PROVABILITY_GAPS_URL =
@@ -23,22 +23,22 @@ export default function HomePage() {
       <section className="placeholder">
         <h2>Proof library</h2>
         <p>
-          Dedicated home for Li&apos;s proof corpus â€” separate from{" "}
-          <a href="https://li-langverse.github.io/benchmarks/">benchmark wall-clock ratios</a>.
+          Dedicated home for Li&apos;s proof corpus — separate from{" "}
+          <a href="https://benchmarks.lilangverse.xyz/">benchmark wall-clock ratios</a>.
           Compare <strong>scientific catalog opinion</strong> (TOML / proof-db) vs{" "}
           <strong>Lean scan</strong>, then vote what you believe.
         </p>
         <ul className="intro-list">
           <li>
-            <strong>Catalog</strong> â€” <code>proof_status</code> in{" "}
+            <strong>Catalog</strong> — <code>proof_status</code> in{" "}
             <code>lic/docs/verification/proof-database/</code>
           </li>
           <li>
-            <strong>Lean</strong> â€” static scan of theorem bodies in <code>lic</code> semantics
+            <strong>Lean</strong> — static scan of theorem bodies in <code>lic</code> semantics
           </li>
           <li>
-            <strong>Math drilldown</strong> â€” expand each <code>M-AX-*</code> / <code>M-LM-*</code> row
-            for Lean, Li, and catalog source panes
+            <strong>Math drilldown</strong> — LaTeX formal statements, source panes, and PNG export
+            for each <code>M-AX-*</code> / <code>M-LM-*</code> row
           </li>
         </ul>
         <p>

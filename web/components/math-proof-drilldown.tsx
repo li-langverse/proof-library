@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
@@ -98,7 +98,7 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
         <div className="proof-drilldown-body">
           {formalLatex ? (
             <section className="proof-formal-section" aria-label="Formal statement">
-              <h4 className="proof-formal-heading">Formal (Lean \u2192 LaTeX)</h4>
+              <h4 className="proof-formal-heading">Formal (Lean → LaTeX)</h4>
               <ProofFormalMath latex={formalLatex} />
             </section>
           ) : null}
@@ -153,7 +153,7 @@ export function MathProofDrilldownSection({ entries }: MathProofDrilldownSection
 
   return (
     <section className="math-proofs-section">
-      <h3>Math proofs \u2014 formal drilldown</h3>
+      <h3>Math proofs — formal drilldown</h3>
       <p className="math-proofs-intro">
         Each classical-math row shows the <strong>LaTeX formal statement</strong> (from Lean), then
         source for <strong>Lean</strong>, <strong>Li</strong>, and <strong>TOML catalog</strong>.
