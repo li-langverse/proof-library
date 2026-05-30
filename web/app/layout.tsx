@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/shell/header";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://proofs.lilangverse.xyz"),
   title: "Li Proof Library",
   description: "Lemma and axiom catalog — catalog opinion vs Lean scan",
 };

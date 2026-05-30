@@ -9,7 +9,7 @@ This repo is the **published proof corpus dashboard** — catalog vs Lean scan, 
 
 ## Owns
 
-- `web/` Next.js static site (`basePath: /proof-library`)
+- `web/` Next.js static site (deployed at https://proofs.lilangverse.xyz/)
 - `data/library.json`, `data/posture.json` (generated snapshots for Pages)
 - `scripts/build-library.py`, `build-posture.py`, `rebuild.sh`
 

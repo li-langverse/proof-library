@@ -33,12 +33,16 @@ jobs:
 
       - name: Install and build site
         working-directory: web
+        env:
+          # Custom domain proofs.lilangverse.xyz serves at site root (no /proof-library prefix).
+          NEXT_PUBLIC_BASE_PATH: ""
         run: |
           npm ci
           npm run build
           mkdir -p out/data
           cp ../data/library.json out/data/ 2>/dev/null || true
           cp ../data/posture.json out/data/ 2>/dev/null || true
+          echo "proofs.lilangverse.xyz" > out/CNAME
 
       - name: Verify artifact
         run: test -s web/out/index.html

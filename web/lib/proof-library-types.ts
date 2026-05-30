@@ -74,7 +74,9 @@ export const VOTE_LABELS: Record<ProofVoteOption, string> = {
   undecided: "Neither / need evidence",
 };
 
-export const LIBRARY_PUBLIC_URL = "/proof-library/data/library.json";
+import { withBasePath } from "./base-path";
+
+export const LIBRARY_PUBLIC_URL = withBasePath("/data/library.json");
 
 export function isMathProof(entry: ProofLibraryEntry): boolean {
   return entry.field === "math" && /^M-(AX|LM)-/.test(entry.id);

@@ -2,7 +2,7 @@
 
 Dedicated repository for the Li **proof corpus UI** — catalog scientific opinion vs Lean scan, divergence highlighting, and browser-local human votes.
 
-**Live site (after Pages deploy):** [https://li-langverse.github.io/proof-library/](https://li-langverse.github.io/proof-library/)
+**Live site:** [https://proofs.lilangverse.xyz/](https://proofs.lilangverse.xyz/)
 
 ## What lives here vs elsewhere
 
@@ -34,7 +34,7 @@ Outputs:
 cd web && npm ci && npm run dev
 ```
 
-Open with base path `/proof-library` (see `web/next.config.ts`).
+Open at [proofs.lilangverse.xyz](https://proofs.lilangverse.xyz/) (site root). For GitHub Pages subpath builds only: `NEXT_PUBLIC_BASE_PATH=/proof-library npm run build`.
 
 ## Deploy
 
