@@ -1,4 +1,4 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 :root {
   --bg: #0d1117;
@@ -601,6 +601,11 @@ main {
   font-size: 0.92rem;
   max-width: 100%;
   overflow-x: auto;
+}
+.proof-discrepancy-note {
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  color: var(--yellow);
 }
 .proof-drilldown-badges {
   display: flex;

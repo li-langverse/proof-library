@@ -62,7 +62,8 @@ export type ProofLibrary = {
 export function proofStatusBadgeClass(status: string): string {
   const key = status.toLowerCase();
   if (key === "proved" || key === "axiomatic") return "green";
-  if (key === "discrepancy" || key === "open" || key === "target") return "red";
+  if (key === "discrepancy") return "yellow";
+  if (key === "open" || key === "target") return "red";
   if (key === "placeholder") return "yellow";
   return "unknown";
 }

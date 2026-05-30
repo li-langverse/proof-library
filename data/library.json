@@ -18,7 +18,7 @@
   },
   "summary": {
     "total": 36,
-    "divergent": 8,
+    "divergent": 7,
     "by_catalog_status": {
       "axiomatic": 10,
       "open": 9,
@@ -755,7 +755,7 @@
       "statement": "Float add_commutative specimen vs \u211d axiom (catalog discrepancy).",
       "catalog_status": "discrepancy",
       "lean_status": "axiomatic",
-      "diverges": true,
+      "diverges": false,
       "gap_id": "G-math",
       "gap_kind": "numerics_gap",
       "lean_theorem": "Li.ProofDb.Math.real_add_comm",

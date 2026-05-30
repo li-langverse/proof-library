@@ -84,6 +84,12 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
 
         <p className="proof-drilldown-statement">{entry.statement}</p>
 
+        {entry.catalog_status === "discrepancy" ? (
+          <p className="proof-discrepancy-note">
+            Known modeling gap (not a CI failure) — catalog registers float vs&nbsp;ℝ triage under backlog{" "}
+            {drill.backlog_ref ? <code className="mono">{drill.backlog_ref}</code> : null}.
+          </p>
+        ) : null}
         <div className="proof-drilldown-badges">
           <StatusBadge status={entry.catalog_status} />
           <StatusBadge status={entry.lean_status} />
