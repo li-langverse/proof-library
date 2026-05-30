@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-29T19:03Z",
-  "lic_root": "/home/s4il0r/Documents/Cursor/li-langverse/lic-studio-ui",
-  "lic_commit": "3e21dd9af7849bb15c02c40d3350801bfb21ed21",
+  "generated_at": "2026-05-30T05:09Z",
+  "lic_root": "/home/s4il0r/Documents/Cursor/li-langverse/lic-vulkan-spirv-5b3a",
+  "lic_commit": "48202055c91364d899c43c8b2ac9419529099fae",
   "sources": {
     "toml_entries": "docs/verification/proof-database/entries/",
     "proof_db_index": "proof-db/index.json",
@@ -18,20 +18,22 @@
   },
   "summary": {
     "total": 36,
-    "divergent": 6,
+    "divergent": 8,
     "by_catalog_status": {
       "axiomatic": 10,
       "open": 9,
-      "proved": 16,
-      "discrepancy": 1
+      "proved": 15,
+      "discrepancy": 1,
+      "sorry": 1
     },
     "by_lean_status": {
       "axiomatic": 15,
       "unknown": 6,
-      "proved": 11,
-      "placeholder": 4
+      "proved": 9,
+      "placeholder": 4,
+      "open": 2
     },
-    "discrepancy_register_count": 24
+    "discrepancy_register_count": 15
   },
   "entries": [
     {
@@ -50,7 +52,24 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/contracts-verify.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Core.lean",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/contracts-verify.toml",
+            "start_line": 58,
+            "highlight_line": 59,
+            "content": "[[entry]]\nid = \"A-trusted-getelem\"\nkind = \"axiom\"\nfield = \"trust\"\ngap_id = \"G-trust\"\nstatement = \"typing_getElem trusted.\"\nproof_status = \"axiomatic\"\nlean_module = \"docs/semantics/Core.lean\"\nlast_verified_lic_commit = \"main\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/contracts-verify.toml#L58",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "G-lean-autovc-strict",
@@ -68,7 +87,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/contracts-verify.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/discharge_trivial.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "li-tests/contracts_verify/discharge_trivial.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "def main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n\ndef const_zero() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n\ndef const_forty_two() -> int\n  requires true\n  ensures result == 42\n  decreases 1\n=\n  return 42\n\ndef identity_int(x: int) -> int\n  requires true\n  ensures result == x\n  decreases 0\n=\n  return x",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/discharge_trivial.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/contracts-verify.toml",
+            "start_line": 36,
+            "highlight_line": 37,
+            "content": "[[entry]]\nid = \"G-lean-autovc-strict\"\nkind = \"lemma\"\nfield = \"compiler\"\ngap_id = \"G-lean\"\nstatement = \"No open Prop without _proved.\"\nproof_status = \"open\"\nlean_module = \"build/generated/AutoVC.lean\"\nli_specimen = \"li-tests/contracts_verify/discharge_trivial.li\"\nlast_verified_lic_commit = \"main\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/contracts-verify.toml#L36",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-ORDER-ANTISYM",
@@ -86,7 +133,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "order_antisym",
+            "start_line": 7,
+            "highlight_line": 7,
+            "content": "axiom order_antisym : \u2200 a b : Nat, a \u2264 b \u2192 b \u2264 a \u2192 a = b",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L7",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 59,
+            "highlight_line": 60,
+            "content": "[[entry]]\nid = \"M-AX-ORDER-ANTISYM\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"Order: antisymmetry on Nat (\u2264).\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.order_antisym\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L59",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-ORDER-TRICHOTOMY",
@@ -104,7 +190,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "order_trichotomy_nat",
+            "start_line": 6,
+            "highlight_line": 6,
+            "content": "axiom order_trichotomy_nat : \u2200 a b : Nat, a < b \u2228 a = b \u2228 b < a",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L6",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 45,
+            "highlight_line": 46,
+            "content": "[[entry]]\nid = \"M-AX-ORDER-TRICHOTOMY\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"Order: trichotomy on Nat (<, =, >).\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.order_trichotomy_nat\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L45",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-PEANO-IND",
@@ -122,7 +247,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "peano_induction",
+            "start_line": 5,
+            "highlight_line": 5,
+            "content": "axiom peano_induction (P : Nat \u2192 Prop) : P 0 \u2192 (\u2200 n, P n \u2192 P (Nat.succ n)) \u2192 \u2200 n, P n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L5",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 31,
+            "highlight_line": 32,
+            "content": "[[entry]]\nid = \"M-AX-PEANO-IND\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"Peano: induction schema on Nat.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.peano_induction\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L31",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-PEANO-SUCC-INJ",
@@ -140,7 +304,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "peano_succ_injective",
+            "start_line": 4,
+            "highlight_line": 4,
+            "content": "axiom peano_succ_injective : \u2200 a b : Nat, Nat.succ a = Nat.succ b \u2192 a = b",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L4",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"M-AX-PEANO-SUCC-INJ\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"Peano: successor is injective on Nat.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.peano_succ_injective\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L17",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-PEANO-ZERO-NOT-SUCC",
@@ -158,7 +361,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "peano_zero_not_succ",
+            "start_line": 2,
+            "highlight_line": 3,
+            "content": "namespace Li.ProofDb.Math\naxiom peano_zero_not_succ : Prop",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L3",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": "proof_db_peano_zero_not_succ",
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li#L1",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"M-AX-PEANO-ZERO-NOT-SUCC\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"Peano: zero is not a successor.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.peano_zero_not_succ\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-REAL-ADD-ASSOC",
@@ -176,7 +418,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "real_add_assoc",
+            "start_line": 9,
+            "highlight_line": 9,
+            "content": "axiom real_add_assoc : \u2200 a b c : \u211d, a + b + c = a + (b + c)",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L9",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 87,
+            "highlight_line": 88,
+            "content": "[[entry]]\nid = \"M-AX-REAL-ADD-ASSOC\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"\u211d field: addition associative.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.real_add_assoc\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L87",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-REAL-ADD-COMM",
@@ -194,7 +475,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "real_add_comm",
+            "start_line": 8,
+            "highlight_line": 8,
+            "content": "axiom real_add_comm : \u2200 a b : \u211d, a + b = b + a",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L8",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": "proof_db_real_add_comm",
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li#L1",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 73,
+            "highlight_line": 74,
+            "content": "[[entry]]\nid = \"M-AX-REAL-ADD-COMM\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"\u211d field: addition commutative.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.real_add_comm\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L73",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-REAL-MUL-DIST",
@@ -212,7 +532,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "real_mul_distrib",
+            "start_line": 10,
+            "highlight_line": 10,
+            "content": "axiom real_mul_distrib : \u2200 a b c : \u211d, a * (b + c) = a * b + a * c",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L10",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 101,
+            "highlight_line": 102,
+            "content": "[[entry]]\nid = \"M-AX-REAL-MUL-DIST\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"\u211d field: multiplication distributes over addition.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.real_mul_distrib\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L101",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-AX-REAL-MUL-ONE",
@@ -230,7 +589,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-axioms.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "real_mul_one",
+            "start_line": 11,
+            "highlight_line": 11,
+            "content": "axiom real_mul_one : \u2200 a : \u211d, a * 1 = a",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L11",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-axioms.toml",
+            "start_line": 115,
+            "highlight_line": 116,
+            "content": "[[entry]]\nid = \"M-AX-REAL-MUL-ONE\"\nkind = \"axiom\"\nfield = \"math\"\nstatement = \"\u211d field: multiplicative identity 1.\"\nproof_status = \"axiomatic\"\ngap_id = \"G-math\"\ngap_kind = \"axiom_layer\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.real_mul_one\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-axioms.toml#L115",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-LM-ADD-ASSOC",
@@ -248,7 +646,48 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [
+          "M-AX-REAL-ADD-ASSOC"
+        ],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathLemmas.lean",
+            "symbol": "m_lm_add_assoc",
+            "start_line": 7,
+            "highlight_line": 7,
+            "content": "theorem m_lm_add_assoc (a b c : \u211d) : a + b + c = a + (b + c) := real_add_assoc a b c",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathLemmas.lean#L7",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-lemmas.toml",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"M-LM-ADD-ASSOC\"\nkind = \"lemma\"\nfield = \"math\"\nstatement = \"Real addition associative (discharged from M-AX-REAL-ADD-ASSOC).\"\nproof_status = \"proved\"\ngap_id = \"G-math\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/math/axioms/MathLemmas.lean\"\nlean_thm = \"Li.ProofDb.Math.m_lm_add_assoc\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-lemmas.toml#L17",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-LM-ADD-COMM",
@@ -266,7 +705,48 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [
+          "M-AX-REAL-ADD-COMM"
+        ],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathLemmas.lean",
+            "symbol": "m_lm_add_comm",
+            "start_line": 6,
+            "highlight_line": 6,
+            "content": "theorem m_lm_add_comm (a b : \u211d) : a + b = b + a := real_add_comm a b",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathLemmas.lean#L6",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-lemmas.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"M-LM-ADD-COMM\"\nkind = \"lemma\"\nfield = \"math\"\nstatement = \"Real addition commutative (discharged from M-AX-REAL-ADD-COMM).\"\nproof_status = \"proved\"\ngap_id = \"G-math\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/math/axioms/MathLemmas.lean\"\nlean_thm = \"Li.ProofDb.Math.m_lm_add_comm\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-lemmas.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-LM-FLOAT-ADD-COMM",
@@ -284,7 +764,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/add_commutative.li",
-      "notes": "Specimen ensures float add comm; triage under backlog P-float \u2014 not a compiler wrongness verdict."
+      "notes": "Specimen ensures float add comm; triage under backlog P-float \u2014 not a compiler wrongness verdict.",
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": "P-float",
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathAxioms.lean",
+            "symbol": "real_add_comm",
+            "start_line": 8,
+            "highlight_line": 8,
+            "content": "axiom real_add_comm : \u2200 a b : \u211d, a + b = b + a",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathAxioms.lean#L8",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/lemmas/add_commutative.li",
+            "symbol": "add_commutative",
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "def add_commutative(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/lemmas/add_commutative.li#L1",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-lemmas.toml",
+            "start_line": 73,
+            "highlight_line": 74,
+            "content": "[[entry]]\nid = \"M-LM-FLOAT-ADD-COMM\"\nkind = \"lemma\"\nfield = \"math\"\nstatement = \"Float add_commutative specimen vs \u211d axiom (catalog discrepancy).\"\nproof_status = \"discrepancy\"\ngap_id = \"G-math\"\ngap_kind = \"numerics_gap\"\nbacklog_ref = \"P-float\"\nlean_module = \"proof-db/math/axioms/MathAxioms.lean\"\nlean_thm = \"Li.ProofDb.Math.real_add_comm\"\nli_specimen = \"proof-db/math/lemmas/add_commutative.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"\nnotes = \"Specimen ensures float add comm; triage under backlog P-float \u2014 not a compiler wrongness verdict.\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-lemmas.toml#L73",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-LM-MUL-ONE",
@@ -302,7 +821,48 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [
+          "M-AX-REAL-MUL-ONE"
+        ],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathLemmas.lean",
+            "symbol": "m_lm_mul_one",
+            "start_line": 8,
+            "highlight_line": 8,
+            "content": "theorem m_lm_mul_one (a : \u211d) : a * 1 = a := real_mul_one a",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathLemmas.lean#L8",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/reals_field.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_real_add_comm(a: float, b: float) -> float\n  requires true\n  ensures result == b + a\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/reals_field.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-lemmas.toml",
+            "start_line": 31,
+            "highlight_line": 32,
+            "content": "[[entry]]\nid = \"M-LM-MUL-ONE\"\nkind = \"lemma\"\nfield = \"math\"\nstatement = \"Real multiply-by-one (discharged from M-AX-REAL-MUL-ONE).\"\nproof_status = \"proved\"\ngap_id = \"G-math\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/math/axioms/MathLemmas.lean\"\nlean_thm = \"Li.ProofDb.Math.m_lm_mul_one\"\nli_specimen = \"proof-db/math/axioms/reals_field.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-lemmas.toml#L31",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-LM-NAT-ADD-COMM",
@@ -320,7 +880,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathLemmas.lean",
+            "symbol": "m_lm_nat_add_comm",
+            "start_line": 10,
+            "highlight_line": 10,
+            "content": "theorem m_lm_nat_add_comm (a b : Nat) : a + b = b + a := Nat.add_comm a b\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathLemmas.lean#L10",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-lemmas.toml",
+            "start_line": 59,
+            "highlight_line": 60,
+            "content": "[[entry]]\nid = \"M-LM-NAT-ADD-COMM\"\nkind = \"lemma\"\nfield = \"math\"\nstatement = \"Nat: addition commutative (Peano + order layer).\"\nproof_status = \"proved\"\ngap_id = \"G-math\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/math/axioms/MathLemmas.lean\"\nlean_thm = \"Li.ProofDb.Math.m_lm_nat_add_comm\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-lemmas.toml#L59",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "M-LM-NAT-ADD-ZERO",
@@ -338,7 +937,46 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/math-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": "2026-05-25",
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "proof-db/math/axioms/MathLemmas.lean",
+            "symbol": "m_lm_nat_add_zero",
+            "start_line": 9,
+            "highlight_line": 9,
+            "content": "theorem m_lm_nat_add_zero (n : Nat) : n + 0 = n := Nat.add_zero n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/MathLemmas.lean#L9",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/math/axioms/peano_order.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "extern proc proof_db_peano_zero_not_succ() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/math/axioms/peano_order.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/math-lemmas.toml",
+            "start_line": 45,
+            "highlight_line": 46,
+            "content": "[[entry]]\nid = \"M-LM-NAT-ADD-ZERO\"\nkind = \"lemma\"\nfield = \"math\"\nstatement = \"Nat: n + 0 = n (Peano layer target).\"\nproof_status = \"proved\"\ngap_id = \"G-math\"\ngap_kind = \"proof_gap\"\nlean_module = \"proof-db/math/axioms/MathLemmas.lean\"\nlean_thm = \"Li.ProofDb.Math.m_lm_nat_add_zero\"\nli_specimen = \"proof-db/math/axioms/peano_order.li\"\nrelease_pin = \"2026-05-25\"\nlast_verified_lic_commit = \"5360dbab\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/math-lemmas.toml#L45",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-CONS-001",
@@ -358,7 +996,35 @@
       ],
       "source": "docs/verification/proof-database/entries/physics-conservation.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/conservation.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "proof-db/physics/axioms/conservation.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# AX-PHYS-004..005\nextern proc proof_db_relative_energy_drift(e0: float, e1: float, rel_tol: float) -> int\n  requires e0 != 0.0\n  requires rel_tol > 0.0\n  ensures abs(e1 - e0) / abs(e0) <= rel_tol or result == 0\n  decreases 0\n\nextern proc total_momentum() -> float\n\nextern proc proof_db_momentum_invariant() -> int\n  requires total_momentum() == 0.0\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/conservation.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-conservation.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"P-AX-CONS-001\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"Energy drift within a bounded window over one MD step (tier-0 smoke + tier-2 MD).\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nli_specimen = \"proof-db/physics/axioms/conservation.li\"\nli_tests = [\"li-tests/benchmarks/tier0_correctness/md_energy_single_step.li\"]\nbench_refs = [\"benchmarks/tier2_physics/md_lennard_jones\"]\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-conservation.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-CONS-002",
@@ -379,7 +1045,35 @@
       ],
       "source": "docs/verification/proof-database/entries/physics-conservation.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/conservation.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "proof-db/physics/axioms/conservation.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# AX-PHYS-004..005\nextern proc proof_db_relative_energy_drift(e0: float, e1: float, rel_tol: float) -> int\n  requires e0 != 0.0\n  requires rel_tol > 0.0\n  ensures abs(e1 - e0) / abs(e0) <= rel_tol or result == 0\n  decreases 0\n\nextern proc total_momentum() -> float\n\nextern proc proof_db_momentum_invariant() -> int\n  requires total_momentum() == 0.0\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/conservation.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-conservation.toml",
+            "start_line": 17,
+            "highlight_line": 18,
+            "content": "[[entry]]\nid = \"P-AX-CONS-002\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"Linear/angular momentum invariants for N-body integration (tier-0 + tier-2).\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nli_specimen = \"proof-db/physics/axioms/conservation.li\"\nli_tests = [\"li-tests/benchmarks/tier0_correctness/three_body_invariants.li\"]\nbench_refs = [\n  \"benchmarks/tier2_physics/three_body\",\n  \"benchmarks/tier2_physics/nbody_gravity\",\n]\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-conservation.toml#L17",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-DIM-001",
@@ -397,7 +1091,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/physics-dimensions.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "dimensional_homogeneity_placeholder",
+            "start_line": 117,
+            "highlight_line": 117,
+            "content": "theorem dimensional_homogeneity_placeholder : True := trivial\n\n/-!\n## Parallel disjointness (**P-par** / **G-par** partial)\n\nAST `policy_module` accepts `disjoint_*` on `parallel for`; AutoVC `_par*` obligations discharge here.\n-/\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L117",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-dimensions.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"P-AX-DIM-001\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"Dimensional homogeneity: only dimensionally consistent combinations are well-formed.\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.dimensional_homogeneity_placeholder\"\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-dimensions.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-DIM-002",
@@ -415,7 +1137,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/physics-dimensions.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "dimensional_homogeneity_placeholder",
+            "start_line": 117,
+            "highlight_line": 117,
+            "content": "theorem dimensional_homogeneity_placeholder : True := trivial\n\n/-!\n## Parallel disjointness (**P-par** / **G-par** partial)\n\nAST `policy_module` accepts `disjoint_*` on `parallel for`; AutoVC `_par*` obligations discharge here.\n-/\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L117",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-dimensions.toml",
+            "start_line": 15,
+            "highlight_line": 16,
+            "content": "[[entry]]\nid = \"P-AX-DIM-002\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"SI coherence: base quantities map to a consistent unit system (placeholder).\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.dimensional_homogeneity_placeholder\"\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-dimensions.toml#L15",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-MECH-001",
@@ -437,7 +1187,35 @@
       ],
       "source": "docs/verification/proof-database/entries/physics-mechanics.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/newton_laws.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "proof-db/physics/axioms/newton_laws.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# AX-PHYS-001..003\nextern proc proof_db_net_force_zero_preserves() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef force_from_mass_accel(m: float, a: float) -> float\n  requires m > 0.0\n  ensures result == m * a\n  decreases 0\n=\n  return m * a\n\nextern proc proof_db_pairwise_force_reciprocal(f_ij: float, f_ji: float) -> int\n  requires f_ij + f_ji == 0.0\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/newton_laws.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-mechanics.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"P-AX-MECH-001\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"Newton I (inertia): isolated body with zero net force has constant velocity.\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nli_specimen = \"proof-db/physics/axioms/newton_laws.li\"\nbench_refs = [\n  \"benchmarks/tier2_physics/three_body\",\n  \"benchmarks/tier2_physics/nbody_gravity\",\n  \"benchmarks/tier2_physics/md_lennard_jones\",\n]\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-mechanics.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-MECH-002",
@@ -459,7 +1237,46 @@
       ],
       "source": "docs/verification/proof-database/entries/physics-mechanics.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/newton_laws.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "force_equals_mass_accel_stub",
+            "start_line": 113,
+            "highlight_line": 113,
+            "content": "theorem force_equals_mass_accel_stub (m a : Float) :\n    force_equals_mass_accel_spec m a (m * a) := rfl\n\n/-- Dimensional homogeneity \u2014 placeholder until unit types exist (P-AX-DIM-001). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L113",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "li",
+            "path": "proof-db/physics/axioms/newton_laws.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# AX-PHYS-001..003\nextern proc proof_db_net_force_zero_preserves() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef force_from_mass_accel(m: float, a: float) -> float\n  requires m > 0.0\n  ensures result == m * a\n  decreases 0\n=\n  return m * a\n\nextern proc proof_db_pairwise_force_reciprocal(f_ij: float, f_ji: float) -> int\n  requires f_ij + f_ji == 0.0\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/newton_laws.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-mechanics.toml",
+            "start_line": 20,
+            "highlight_line": 21,
+            "content": "[[entry]]\nid = \"P-AX-MECH-002\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"Newton II: net force equals mass times acceleration (scalar stub).\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"proof_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"Li.Discharge.force_equals_mass_accel_stub\"\nli_specimen = \"proof-db/physics/axioms/newton_laws.li\"\nbench_refs = [\n  \"benchmarks/tier2_physics/three_body\",\n  \"benchmarks/tier2_physics/nbody_gravity\",\n  \"benchmarks/tier2_physics/md_lennard_jones\",\n]\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-mechanics.toml#L20",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-AX-MECH-003",
@@ -481,7 +1298,35 @@
       ],
       "source": "docs/verification/proof-database/entries/physics-mechanics.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/newton_laws.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "proof-db/physics/axioms/newton_laws.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# AX-PHYS-001..003\nextern proc proof_db_net_force_zero_preserves() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n\ndef force_from_mass_accel(m: float, a: float) -> float\n  requires m > 0.0\n  ensures result == m * a\n  decreases 0\n=\n  return m * a\n\nextern proc proof_db_pairwise_force_reciprocal(f_ij: float, f_ji: float) -> int\n  requires f_ij + f_ji == 0.0\n  ensures result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/axioms/newton_laws.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-mechanics.toml",
+            "start_line": 38,
+            "highlight_line": 39,
+            "content": "[[entry]]\nid = \"P-AX-MECH-003\"\nkind = \"axiom\"\nfield = \"physics\"\nstatement = \"Newton III (action\u2013reaction): interaction forces on a pair sum to zero.\"\nproof_status = \"open\"\ngap_id = \"G-physics\"\ngap_kind = \"modeling_gap\"\nlean_module = \"docs/semantics/Discharge.lean\"\nli_specimen = \"proof-db/physics/axioms/newton_laws.li\"\nbench_refs = [\n  \"benchmarks/tier2_physics/three_body\",\n  \"benchmarks/tier2_physics/nbody_gravity\",\n  \"benchmarks/tier2_physics/md_lennard_jones\",\n]\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-mechanics.toml#L38",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-LM-CONS-001",
@@ -502,7 +1347,35 @@
       ],
       "source": "docs/verification/proof-database/entries/physics-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/lemmas/energy_drift_bound.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "proof-db/physics/lemmas/energy_drift_bound.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# LEM-PHYS-001 | Bench: md_lennard_jones | li-tests: md_energy_single_step.li\ndef lj_single_step_energy_reference() -> float\n  requires true\n  ensures abs(result - (-1.234567)) < 1e-6\n  decreases 0\n=\n  return -1.234567\n\nextern proc proof_db_relative_energy_drift(e0: float, e1: float, rel_tol: float) -> int\n  requires e0 != 0.0\n  requires rel_tol > 0.0\n  ensures abs(e1 - e0) / abs(e0) <= rel_tol or result == 0\n  decreases 0\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var e0: float = lj_single_step_energy_reference()\n  return proof_db_relative_energy_drift(e0, e0, 0.001)\n",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/proof-db/physics/lemmas/energy_drift_bound.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-lemmas.toml",
+            "start_line": 29,
+            "highlight_line": 30,
+            "content": "[[entry]]\nid = \"P-LM-CONS-001\"\nkind = \"lemma\"\nfield = \"physics\"\nstatement = \"Closed-system energy and momentum invariants compose from MECH + CONS axioms (integrator window).\"\nproof_status = \"open\"\ngap_kind = \"modeling_gap\"\ngap_id = \"G-physics\"\nlean_module = \"proof-db/physics/lemmas/energy_drift_bound.li\"\nlean_thm = \"\"\nli_specimen = \"proof-db/physics/lemmas/energy_drift_bound.li\"\nli_tests = [\n  \"li-tests/benchmarks/tier0_correctness/md_energy_single_step.li\",\n  \"li-tests/benchmarks/tier0_correctness/three_body_invariants.li\",\n]\nbench_refs = [\n  \"benchmarks/tier2_physics/md_lennard_jones\",\n  \"benchmarks/tier2_physics/three_body\",\n]\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-lemmas.toml#L29",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-LM-ENERGY-001",
@@ -520,7 +1393,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/physics-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "kinetic_energy_def_consistent",
+            "start_line": 99,
+            "highlight_line": 99,
+            "content": "theorem kinetic_energy_def_consistent (m v : Float) :\n    kinetic_energy_spec m v ((0.5 : Float) * m * v * v) := rfl\n\n/-- Linear momentum p = m v (P-LM-MOM-001). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L99",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-lemmas.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"P-LM-ENERGY-001\"\nkind = \"lemma\"\nfield = \"physics\"\nstatement = \"Kinetic energy T = \u00bd m v\u00b2 consistent with scalar speed squared.\"\nproof_status = \"proved\"\ngap_kind = \"none\"\ngap_id = \"G-physics\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"kinetic_energy_def_consistent\"\nli_specimen = \"\"\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-lemmas.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-LM-MOM-001",
@@ -538,7 +1439,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/physics-lemmas.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "lean",
+            "path": "docs/semantics/Discharge.lean",
+            "symbol": "linear_momentum_linear_stub",
+            "start_line": 106,
+            "highlight_line": 106,
+            "content": "theorem linear_momentum_linear_stub (m v : Float) :\n    linear_momentum_spec m v (m * v) := rfl\n\n/-- Newton second law scalar stub (P-AX-MECH-002 witness). -/",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/semantics/Discharge.lean#L106",
+            "role": "lean_formal",
+            "label": "Lean formalization"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/physics-lemmas.toml",
+            "start_line": 16,
+            "highlight_line": 17,
+            "content": "[[entry]]\nid = \"P-LM-MOM-001\"\nkind = \"lemma\"\nfield = \"physics\"\nstatement = \"Linear momentum p = m v for point mass.\"\nproof_status = \"proved\"\ngap_kind = \"none\"\ngap_id = \"G-physics\"\nlean_module = \"docs/semantics/Discharge.lean\"\nlean_thm = \"linear_momentum_linear_stub\"\nli_specimen = \"\"\nlast_verified_lic_commit = \"a9542bfc\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/physics-lemmas.toml#L16",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-discharge-trivial",
@@ -556,7 +1485,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/contracts-verify.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/discharge_trivial.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "li-tests/contracts_verify/discharge_trivial.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "def main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n\ndef const_zero() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  return 0\n\ndef const_forty_two() -> int\n  requires true\n  ensures result == 42\n  decreases 1\n=\n  return 42\n\ndef identity_int(x: int) -> int\n  requires true\n  ensures result == x\n  decreases 0\n=\n  return x",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/discharge_trivial.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/contracts-verify.toml",
+            "start_line": 47,
+            "highlight_line": 48,
+            "content": "[[entry]]\nid = \"P-discharge-trivial\"\nkind = \"lemma\"\nfield = \"compiler\"\ngap_id = \"G-lean\"\nstatement = \"Trivial discharge.\"\nproof_status = \"proved\"\nlean_module = \"build/generated/AutoVC.lean\"\nli_specimen = \"li-tests/contracts_verify/discharge_trivial.li\"\nlast_verified_lic_commit = \"main\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/contracts-verify.toml#L47",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-float-sqrt-open-bound",
@@ -574,7 +1531,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/contracts-verify.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/sqrt_open_bound.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "li-tests/contracts_verify/sqrt_open_bound.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# P-float: `li_rt_sqrt` + abs error bound \u2014 closed in Lean via `Li.Discharge.sqrt_open_bound_spec`.\nextern proc li_rt_sqrt(x: float) -> float\n  requires true\n  ensures true\n  decreases 0\n\ndef sqrt_open(x: float) raises IO -> float\n  requires x >= 0.0\n  ensures abs(result * result - x) < 1e-12\n  decreases 0\n=\n  return li_rt_sqrt(x)",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/sqrt_open_bound.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/contracts-verify.toml",
+            "start_line": 25,
+            "highlight_line": 26,
+            "content": "[[entry]]\nid = \"P-float-sqrt-open-bound\"\nkind = \"lemma\"\nfield = \"math\"\ngap_id = \"G-math\"\nstatement = \"sqrt_open_bound.\"\nproof_status = \"proved\"\nlean_module = \"docs/semantics/Discharge.lean\"\nli_specimen = \"li-tests/contracts_verify/sqrt_open_bound.li\"\nlast_verified_lic_commit = \"main\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/contracts-verify.toml#L25",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-linalg-dot4-int-closed",
@@ -592,7 +1577,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/contracts-verify.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/linalg_dot4_int_closed.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "li-tests/contracts_verify/linalg_dot4_int_closed.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# P-linalg: fixed-size int dot \u2014 closed AutoVC (return matches ensures formula).\ndef dot4_int(a: array[4, int], b: array[4, int]) -> int\n  requires true\n  ensures result == a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n  decreases 0\n=\n  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var a: array[4, int]\n  var b: array[4, int]\n  a[0] = 1\n  a[1] = 2\n  a[2] = 3\n  a[3] = 4\n  b[0] = 1\n  b[1] = 1\n  b[2] = 1\n  b[3] = 1\n  var s: int = dot4_int(a, b)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/linalg_dot4_int_closed.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/contracts-verify.toml",
+            "start_line": 3,
+            "highlight_line": 4,
+            "content": "[[entry]]\nid = \"P-linalg-dot4-int-closed\"\nkind = \"lemma\"\nfield = \"linalg\"\ngap_id = \"G-math\"\nstatement = \"Fixed 4-term int dot closed witness.\"\nproof_status = \"proved\"\nlean_module = \"build/generated/AutoVC.lean\"\nli_specimen = \"li-tests/contracts_verify/linalg_dot4_int_closed.li\"\nlast_verified_lic_commit = \"main\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/contracts-verify.toml#L3",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "P-linalg-dot4-int-loop-open",
@@ -610,7 +1623,35 @@
       "bench_refs": [],
       "source": "docs/verification/proof-database/entries/contracts-verify.toml",
       "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/linalg_dot4_int_loop_open.li",
-      "notes": null
+      "notes": null,
+      "drilldown": {
+        "discharged_from": [],
+        "release_pin": null,
+        "backlog_ref": null,
+        "implementations": [
+          {
+            "language": "li",
+            "path": "li-tests/contracts_verify/linalg_dot4_int_loop_open.li",
+            "symbol": null,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "# P-linalg: 4-iteration dot loop \u2014 static witness + Li.Discharge.dot4_int_loop_eval_spec.\ndef dot4_int_loop(a: array[4, int], b: array[4, int]) -> int\n  requires true\n  ensures result == a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]\n  decreases 4\n=\n  var acc: int = 0\n  var i: int = 0\n  while i < 4\n    acc = acc + a[i] * b[i]\n    i = i + 1\n  return acc\n\ndef main() -> int\n  requires true\n  ensures result == 0\n  decreases 0\n=\n  var a: array[4, int]\n  var b: array[4, int]\n  a[0] = 1\n  a[1] = 0\n  a[2] = 0\n  a[3] = 0\n  b[0] = 1\n  b[1] = 0\n  b[2] = 0\n  b[3] = 0\n  var s: int = dot4_int_loop(a, b)\n  return 0",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/li-tests/contracts_verify/linalg_dot4_int_loop_open.li",
+            "role": "li_specimen",
+            "label": "Li specimen / contract"
+          },
+          {
+            "language": "toml",
+            "path": "docs/verification/proof-database/entries/contracts-verify.toml",
+            "start_line": 14,
+            "highlight_line": 15,
+            "content": "[[entry]]\nid = \"P-linalg-dot4-int-loop-open\"\nkind = \"lemma\"\nfield = \"linalg\"\ngap_id = \"G-math\"\nstatement = \"Loop dot4 int closed.\"\nproof_status = \"proved\"\nlean_module = \"build/generated/AutoVC.lean\"\nli_specimen = \"li-tests/contracts_verify/linalg_dot4_int_loop_open.li\"\nlast_verified_lic_commit = \"main\"",
+            "github_url": "https://github.com/li-langverse/lic/blob/main/docs/verification/proof-database/entries/contracts-verify.toml#L14",
+            "role": "catalog",
+            "label": "Catalog entry (TOML)"
+          }
+        ]
+      }
     },
     {
       "id": "std_add_comm",
@@ -636,8 +1677,8 @@
       "field": "stdlib",
       "statement": "\u27e8a,b+c\u27e9 = \u27e8a,b\u27e9+\u27e8a,c\u27e9",
       "catalog_status": "proved",
-      "lean_status": "proved",
-      "diverges": false,
+      "lean_status": "open",
+      "diverges": true,
       "gap_id": null,
       "gap_kind": null,
       "lean_theorem": "Li.ProofDB.std_dot4_bilinear_right",
@@ -689,10 +1730,10 @@
       "kind": "lemma",
       "field": "stdlib",
       "statement": "\u2200 a b, |a+b| \u2264 |a|+|b|",
-      "catalog_status": "proved",
-      "lean_status": "proved",
-      "diverges": false,
-      "gap_id": "G-hw",
+      "catalog_status": "sorry",
+      "lean_status": "open",
+      "diverges": true,
+      "gap_id": "P-float",
       "gap_kind": null,
       "lean_theorem": "Li.ProofDB.std_triangle_ineq_float_scalar",
       "lean_module": null,
@@ -705,41 +1746,15 @@
   ],
   "discrepancies": [
     {
-      "id": "disc-G-lean-autovc-strict-missing-lean",
+      "id": "disc-P-float-sqrt-open-bound-missing-lean",
       "kind": "missing_lemma",
-      "gap_id": "G-lean",
-      "backlog_id": "P-meta",
-      "summary": "`check-autovc-open-goals.sh` missing",
-      "proof_db_ref": "proof-db/lemmas/G-lean-autovc-strict.toml",
-      "reference_ref": "Discharge.lean",
-      "evidence": [
-        "check-autovc-open-goals.sh"
-      ],
-      "resolution": "open"
-    },
-    {
-      "id": "disc-P-float-sqrt-open-bound-open-vc",
-      "kind": "open_vc",
       "gap_id": "G-lean",
       "backlog_id": "P-float",
-      "summary": "P-float-sqrt-open-bound proved vs open",
+      "summary": "`Li.Discharge.sqrt_open_bound_spec` missing",
       "proof_db_ref": "proof-db/lemmas/P-float-sqrt-open-bound.toml",
-      "reference_ref": "docs/semantics/Discharge.lean:sqrt_open_bound_spec",
-      "evidence": [
-        "Li.Discharge.sqrt_open_bound_spec"
-      ],
-      "resolution": "intentional"
-    },
-    {
-      "id": "disc-P-linalg-dot4-int-closed-missing-lean",
-      "kind": "missing_lemma",
-      "gap_id": "G-math",
-      "backlog_id": "P-linalg",
-      "summary": "`vc_* (discharge_linalg_int_lean.sh)` missing",
-      "proof_db_ref": "proof-db/lemmas/P-linalg-dot4-int-closed.toml",
       "reference_ref": "Discharge.lean",
       "evidence": [
-        "vc_* (discharge_linalg_int_lean.sh)"
+        "Li.Discharge.sqrt_open_bound_spec"
       ],
       "resolution": "open"
     },
@@ -822,6 +1837,19 @@
       "resolution": "open"
     },
     {
+      "id": "disc-std-triangle-ineq-float",
+      "kind": "hardware_axiom",
+      "gap_id": "G-hw",
+      "backlog_id": "P-float",
+      "summary": "Float triangle sorry",
+      "proof_db_ref": "index",
+      "reference_ref": "ProofDB.lean",
+      "evidence": [
+        "sorry"
+      ],
+      "resolution": "wontfix"
+    },
+    {
       "id": "disc-std_add_comm-open-vc",
       "kind": "open_vc",
       "gap_id": null,
@@ -848,17 +1876,30 @@
       "resolution": "intentional"
     },
     {
-      "id": "disc-std_triangle_ineq_scalar-open-vc",
-      "kind": "open_vc",
-      "gap_id": "G-hw: explicit trusted axiom (float order not in Core slice)",
+      "id": "disc-trusted-IO",
+      "kind": "trusted_axiom",
+      "gap_id": "G-trust",
       "backlog_id": null,
-      "summary": "std_triangle_ineq_scalar proved vs open",
-      "proof_db_ref": "index",
-      "reference_ref": "proof-db/lean/ProofDB.lean:std_triangle_ineq_float_scalar",
+      "summary": "Li.Trusted.IO",
+      "proof_db_ref": "trusted.lean",
+      "reference_ref": "docs/semantics/trusted.lean:IO",
       "evidence": [
-        "Li.ProofDB.std_triangle_ineq_float_scalar"
+        "IO"
       ],
-      "resolution": "intentional"
+      "resolution": "wontfix"
+    },
+    {
+      "id": "disc-trusted-Net",
+      "kind": "trusted_axiom",
+      "gap_id": "G-trust",
+      "backlog_id": null,
+      "summary": "Li.Trusted.Net",
+      "proof_db_ref": "trusted.lean",
+      "reference_ref": "docs/semantics/trusted.lean:Net",
+      "evidence": [
+        "Net"
+      ],
+      "resolution": "wontfix"
     }
   ],
   "vote_policy": {

@@ -267,6 +267,177 @@ def github_url(lic: Path, entry: dict) -> str | None:
     return f"https://github.com/{GITHUB_ORG}/{GITHUB_REPO}/blob/main/{rel}"
 
 
+def github_blob(rel: str, line: int | None = None) -> str:
+    url = f"https://github.com/{GITHUB_ORG}/{GITHUB_REPO}/blob/main/{rel}"
+    if line and line > 0:
+        url += f"#L{line}"
+    return url
+
+
+def parse_discharged_from(statement: str) -> list[str]:
+    if not statement:
+        return []
+    return re.findall(r"M-AX-[A-Z0-9-]+|M-LM-[A-Z0-9-]+", statement)
+
+
+def extract_toml_entry_block(lic: Path, toml_rel: str, entry_id: str) -> dict | None:
+    path = lic / toml_rel
+    if not path.is_file():
+        return None
+    text = path.read_text(encoding="utf-8", errors="replace")
+    blocks = re.split(r"(?=^\[\[entry\]\])", text, flags=re.MULTILINE)
+    for block in blocks:
+        if not block.strip():
+            continue
+        m = re.search(r'^id\s*=\s*"([^"]+)"', block, re.MULTILINE)
+        if m and m.group(1) == entry_id:
+            lines = block.strip().splitlines()
+            start = text[: text.find(block.strip())].count("\n") + 1
+            return {
+                "language": "toml",
+                "path": toml_rel,
+                "start_line": start,
+                "highlight_line": start + next(
+                    (i for i, ln in enumerate(lines) if ln.strip().startswith("id =")), 0
+                ),
+                "content": block.strip(),
+                "github_url": github_blob(toml_rel, start),
+            }
+    return None
+
+
+def extract_lean_symbol(lic: Path, lean_rel: str, symbol: str) -> dict | None:
+    path = lic / lean_rel
+    if not path.is_file() or not symbol:
+        return None
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    pat = re.compile(rf"^\s*(axiom|theorem|def)\s+{re.escape(symbol)}\b")
+    for i, line in enumerate(lines):
+        if not pat.match(line):
+            continue
+        start = max(0, i - 1) if i > 0 and lines[i - 1].strip().startswith("namespace") else i
+        end = i + 1
+        while end < len(lines) and not re.match(r"^\s*(axiom|theorem|def|end)\b", lines[end]):
+            end += 1
+        chunk = lines[start:end]
+        return {
+            "language": "lean",
+            "path": lean_rel,
+            "symbol": symbol,
+            "start_line": start + 1,
+            "highlight_line": i + 1,
+            "content": "\n".join(chunk),
+            "github_url": github_blob(lean_rel, i + 1),
+        }
+    return None
+
+
+def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | None:
+    path = lic / li_rel
+    if not path.is_file():
+        return None
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    if symbol:
+        pat = re.compile(rf"^\s*(extern proc|def|proc)\s+{re.escape(symbol)}\b")
+        for i, line in enumerate(lines):
+            if pat.match(line):
+                end = i + 1
+                depth = 0
+                while end < len(lines):
+                    if lines[end].strip() == "=":
+                        depth = 1
+                    if depth and lines[end].strip() and not lines[end].startswith(" ") and end > i + 1:
+                        if not lines[end].strip().startswith(("def ", "extern ", "proc ")):
+                            break
+                    end += 1
+                    if end - i > 24:
+                        break
+                chunk = lines[i:end]
+                return {
+                    "language": "li",
+                    "path": li_rel,
+                    "symbol": symbol,
+                    "start_line": i + 1,
+                    "highlight_line": i + 1,
+                    "content": "\n".join(chunk),
+                    "github_url": github_blob(li_rel, i + 1),
+                }
+    if len(lines) <= 40:
+        return {
+            "language": "li",
+            "path": li_rel,
+            "symbol": None,
+            "start_line": 1,
+            "highlight_line": 1,
+            "content": "\n".join(lines),
+            "github_url": github_blob(li_rel),
+        }
+    return {
+        "language": "li",
+        "path": li_rel,
+        "symbol": None,
+        "start_line": 1,
+        "highlight_line": 1,
+        "content": "\n".join(lines[:40]) + "\n-- …",
+        "github_url": github_blob(li_rel),
+    }
+
+
+def li_symbol_for_entry(entry_id: str, lean_symbol: str | None) -> str | None:
+    mapping = {
+        "M-AX-REAL-ADD-COMM": "proof_db_real_add_comm",
+        "M-AX-REAL-ADD-ASSOC": "proof_db_real_add_assoc",
+        "M-AX-REAL-MUL-DIST": "proof_db_real_mul_distrib",
+        "M-AX-REAL-MUL-ONE": "proof_db_real_mul_one",
+        "M-AX-PEANO-ZERO-NOT-SUCC": "proof_db_peano_zero_not_succ",
+    }
+    if entry_id in mapping:
+        return mapping[entry_id]
+    if entry_id == "M-LM-FLOAT-ADD-COMM":
+        return "add_commutative"
+    return None
+
+
+def build_drilldown(row: dict, lean: dict[str, dict], lic: Path) -> dict | None:
+    lean_sym = lean_ref_name(row)
+    lean_mod = row.get("lean_module")
+    li_spec = row.get("li_specimen")
+    toml_src = row.get("_source_toml")
+    entry_id = str(row.get("id") or "")
+
+    implementations: list[dict] = []
+    if lean_mod and lean_sym:
+        snip = extract_lean_symbol(lic, str(lean_mod), lean_sym)
+        if snip:
+            snip["role"] = "lean_formal"
+            snip["label"] = "Lean formalization"
+            implementations.append(snip)
+    if li_spec:
+        li_sym = li_symbol_for_entry(entry_id, lean_sym)
+        snip = extract_li_snippet(lic, str(li_spec), li_sym)
+        if snip:
+            snip["role"] = "li_specimen"
+            snip["label"] = "Li specimen / contract"
+            implementations.append(snip)
+    if toml_src and entry_id:
+        snip = extract_toml_entry_block(lic, str(toml_src), entry_id)
+        if snip:
+            snip["role"] = "catalog"
+            snip["label"] = "Catalog entry (TOML)"
+            implementations.append(snip)
+
+    if not implementations:
+        return None
+
+    discharged = parse_discharged_from(str(row.get("statement") or ""))
+    return {
+        "discharged_from": discharged,
+        "release_pin": row.get("release_pin"),
+        "backlog_ref": row.get("backlog_ref"),
+        "implementations": implementations,
+    }
+
+
 def merge_entries(toml_rows: list[dict], index_rows: list[dict]) -> list[dict]:
     by_id: dict[str, dict] = {}
     for row in toml_rows + index_rows:
@@ -284,7 +455,7 @@ def build_entry(row: dict, lean: dict[str, dict], lic: Path) -> dict:
     catalog = catalog_status(row)
     lean_st = resolve_lean_status(row, lean)
     div = diverges(catalog, lean_st)
-    return {
+    entry = {
         "id": row.get("id"),
         "kind": row.get("kind", "lemma"),
         "field": row.get("field", ""),
@@ -302,6 +473,10 @@ def build_entry(row: dict, lean: dict[str, dict], lic: Path) -> dict:
         "github_url": github_url(lic, row),
         "notes": row.get("notes"),
     }
+    drill = build_drilldown(row, lean, lic)
+    if drill:
+        entry["drilldown"] = drill
+    return entry
 
 
 def main() -> int:

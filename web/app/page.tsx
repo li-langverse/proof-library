@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/shell/header";
 import { ProofLibraryBoard } from "@/components/proof-library-board";
+import { MathProofDrilldownSection } from "@/components/math-proof-drilldown";
 import { loadLibrary } from "@/lib/library";
 import { loadProofPosture } from "@/lib/proof-posture";
 
@@ -61,13 +62,16 @@ export default function HomePage() {
       ) : null}
 
       {library ? (
-        <ProofLibraryBoard
-          generatedAt={library.generated_at}
-          licCommit={library.lic_commit}
-          summary={library.summary}
-          entries={library.entries}
-          voteNote={library.vote_policy.note}
-        />
+        <>
+          <MathProofDrilldownSection entries={library.entries} />
+          <ProofLibraryBoard
+            generatedAt={library.generated_at}
+            licCommit={library.lic_commit}
+            summary={library.summary}
+            entries={library.entries}
+            voteNote={library.vote_policy.note}
+          />
+        </>
       ) : (
         <section className="placeholder">
           <p>

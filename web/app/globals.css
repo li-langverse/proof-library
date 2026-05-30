@@ -324,3 +324,183 @@ main {
   border: 1px solid var(--border);
   color: var(--muted);
 }
+
+/* Math proof drilldown + Carbon-style code */
+.math-proofs-section {
+  margin: 1.5rem 0 2rem;
+}
+.math-proofs-section h3 {
+  margin: 0 0 0.5rem;
+}
+.math-proofs-intro {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 52rem;
+}
+.math-proofs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.proof-drilldown {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.proof-drilldown-divergent {
+  border-color: color-mix(in srgb, var(--red) 45%, var(--border));
+}
+.proof-drilldown-header {
+  padding: 0.85rem 1rem;
+}
+.proof-drilldown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+}
+.proof-drilldown-id {
+  font-weight: 600;
+}
+.proof-drilldown-chevron {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.proof-drilldown-statement {
+  margin: 0.5rem 0 0.65rem;
+  font-size: 0.92rem;
+}
+.proof-drilldown-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.proof-drilldown-body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
+.proof-drilldown-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 1rem;
+  margin: 0.85rem 0;
+  font-size: 0.85rem;
+}
+.proof-drilldown-meta dt {
+  color: var(--muted);
+  margin: 0;
+}
+.proof-drilldown-meta dd {
+  margin: 0;
+}
+.proof-drilldown-notes {
+  margin: 0 0 0.85rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.proof-drilldown-code-grid {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 960px) {
+  .proof-drilldown-code-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+.carbon-block {
+  margin: 0;
+}
+.carbon-window {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #1f2937;
+  background: linear-gradient(180deg, #0f1419 0%, #0d1117 100%);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.carbon-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  background: linear-gradient(180deg, #1a2332 0%, #151b24 100%);
+  border-bottom: 1px solid #243041;
+}
+.carbon-dots {
+  display: flex;
+  gap: 0.35rem;
+}
+.carbon-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3d4f66;
+}
+.carbon-dots span:nth-child(1) {
+  background: #ff5f57;
+}
+.carbon-dots span:nth-child(2) {
+  background: #febc2e;
+}
+.carbon-dots span:nth-child(3) {
+  background: #28c840;
+}
+.carbon-filename {
+  flex: 1;
+  font-size: 0.75rem;
+  color: #9ba3af;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.carbon-lang {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: #6e7681;
+  font-weight: 600;
+}
+.carbon-code {
+  margin: 0;
+  padding: 0.65rem 0;
+  overflow-x: auto;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+.carbon-line {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0 0.75rem;
+}
+.carbon-line-hi {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-left: 2px solid var(--accent);
+  padding-left: calc(0.75rem - 2px);
+}
+.carbon-ln {
+  min-width: 2rem;
+  text-align: right;
+  color: #484f58;
+  user-select: none;
+  flex-shrink: 0;
+}
+.carbon-line code {
+  color: #e6edf3;
+  white-space: pre;
+}
+.carbon-caption {
+  margin: 0.45rem 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}

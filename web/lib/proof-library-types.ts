@@ -1,3 +1,22 @@
+export type ProofCodeSnippet = {
+  role: string;
+  label: string;
+  language: string;
+  path: string;
+  symbol?: string | null;
+  start_line: number;
+  highlight_line: number;
+  content: string;
+  github_url: string;
+};
+
+export type ProofDrilldown = {
+  discharged_from: string[];
+  release_pin?: string | null;
+  backlog_ref?: string | null;
+  implementations: ProofCodeSnippet[];
+};
+
 export type ProofVoteOption = "catalog" | "lean" | "both" | "undecided";
 
 export type ProofLibraryEntry = {
@@ -17,6 +36,7 @@ export type ProofLibraryEntry = {
   source?: string | null;
   github_url?: string | null;
   notes?: string | null;
+  drilldown?: ProofDrilldown | null;
 };
 
 export type ProofLibrary = {
@@ -55,3 +75,7 @@ export const VOTE_LABELS: Record<ProofVoteOption, string> = {
 };
 
 export const LIBRARY_PUBLIC_URL = "/proof-library/data/library.json";
+
+export function isMathProof(entry: ProofLibraryEntry): boolean {
+  return entry.field === "math" && /^M-(AX|LM)-/.test(entry.id);
+}
