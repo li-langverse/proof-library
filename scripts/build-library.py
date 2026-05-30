@@ -248,9 +248,9 @@ def comparable(catalog: str, lean: str) -> tuple[str, str]:
 
 def diverges(catalog: str, lean: str) -> bool:
     if lean == "unknown":
+        return False
     # discrepancy = catalog already registers a known catalog/Lean gap (triage, not failure)
     if catalog == "discrepancy":
-        return False
         return False
     c, l = comparable(catalog, lean)
     if c == "axiomatic" and l == "axiomatic":
@@ -258,6 +258,7 @@ def diverges(catalog: str, lean: str) -> bool:
     if c == "proved" and l in ("proved", "axiomatic"):
         return False
     return c != l
+
 
 
 def github_url(lic: Path, entry: dict) -> str | None:
