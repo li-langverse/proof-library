@@ -400,20 +400,58 @@ main {
 }
 
 /* Plain code blocks (no Carbon chrome) */
+.proof-code-layout {
+  width: 100%;
+  min-width: 0;
+}
+.proof-code-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.proof-code-matrix {
+  display: none;
+}
+@media (min-width: 960px) {
+  .proof-code-stack {
+    display: none;
+  }
+  .proof-code-matrix {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.45rem 0;
+    width: 100%;
+  }
+  .proof-code-matrix-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+  }
+  .proof-code-matrix-headers {
+    align-items: end;
+  }
+  .proof-code-matrix-bodies {
+    align-items: stretch;
+  }
+  .proof-code-matrix-footers {
+    align-items: start;
+  }
+}
 .proof-code-block {
   margin: 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: 0.45rem;
 }
 .proof-code-header {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
   gap: 0.2rem;
-  min-height: 2.85rem;
-  margin-bottom: 0.45rem;
+  min-height: 3.5rem;
+  margin: 0;
 }
 .proof-code-label {
   font-size: 0.8rem;
@@ -441,7 +479,9 @@ main {
   line-height: 1.55;
   overflow-x: hidden;
   max-width: 100%;
-  flex: 1 1 auto;
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 .proof-code-line {
   display: flex;
@@ -468,19 +508,18 @@ main {
   overflow-wrap: anywhere;
   min-width: 0;
   flex: 1;
+  color: #e6edf3;
 }
+.proof-code-src .tok-keyword { color: #ff7b72; }
 .proof-code-caption {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.25rem;
   min-height: 1.35rem;
-  margin-top: 0.45rem;
+  margin: 0;
   font-size: 0.75rem;
   color: var(--muted);
-}
-.proof-code-caption-spacer {
-  display: block;
-  min-height: 1em;
 }
 .tok-keyword { color: #ff7b72; }
 .tok-type { color: #79c0ff; }
@@ -594,14 +633,4 @@ main {
   font-size: 0.85rem;
   color: var(--muted);
 }
-.proof-drilldown-code-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: stretch;
-}
-@media (min-width: 960px) {
-  .proof-drilldown-code-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
+

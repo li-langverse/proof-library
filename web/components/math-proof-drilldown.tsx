@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { ProofCodeBlock } from "@/components/proof-code-block";
+import { ProofCodeGrid } from "@/components/proof-code-block";
 import { ProofFormalMath } from "@/components/proof-formal-math";
 import {
   proofStatusBadgeClass,
@@ -126,11 +126,7 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
 
           {entry.notes ? <p className="proof-drilldown-notes">{entry.notes}</p> : null}
 
-          <div className="proof-drilldown-code-grid">
-            {drill.implementations.map((snippet) => (
-              <ProofCodeBlock key={`${entry.id}-${snippet.role}`} snippet={snippet} />
-            ))}
-          </div>
+          <ProofCodeGrid snippets={drill.implementations} />
 
           <footer className="proof-export-footer">
             <span className="mono">{entry.id}</span>
