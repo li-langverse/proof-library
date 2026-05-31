@@ -456,6 +456,36 @@ def build_drilldown(row: dict, lean: dict[str, dict], lic: Path) -> dict | None:
     }
 
 
+def load_export_math_overlay(lic: Path) -> dict[str, dict]:
+    """Merge lic export-math rows (Phase 6/7 li_specimen + v3 fields) by entry id."""
+    path = lic / "proof-db/export-math.json"
+    if not path.is_file():
+        script = lic / "scripts/export-math.py"
+        if script.is_file():
+            try:
+                subprocess.run(
+                    [sys.executable, str(script), "--pretty", "-o", str(path)],
+                    cwd=str(lic),
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+            except subprocess.CalledProcessError:
+                return {}
+        else:
+            return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    out: dict[str, dict] = {}
+    for row in payload.get("entries") or []:
+        eid = row.get("id")
+        if eid:
+            out[str(eid)] = row
+    return out
+
+
 def merge_entries(toml_rows: list[dict], index_rows: list[dict]) -> list[dict]:
     by_id: dict[str, dict] = {}
     for row in toml_rows + index_rows:
@@ -469,7 +499,22 @@ def merge_entries(toml_rows: list[dict], index_rows: list[dict]) -> list[dict]:
     return sorted(by_id.values(), key=lambda r: str(r.get("id", "")))
 
 
-def build_entry(row: dict, lean: dict[str, dict], lic: Path) -> dict:
+def build_entry(row: dict, lean: dict[str, dict], lic: Path, export_overlay: dict[str, dict]) -> dict:
+    eid = str(row.get("id") or "")
+    if eid in export_overlay:
+        ex = export_overlay[eid]
+        for key in (
+            "li_specimen",
+            "content_tier",
+            "latex",
+            "context",
+            "sources",
+            "proof_status",
+            "erdos_status",
+            "priority_tier",
+        ):
+            if ex.get(key) is not None:
+                row = {**row, key: ex[key]}
     catalog = catalog_status(row)
     lean_st = resolve_lean_status(row, lean)
     div = diverges(catalog, lean_st)
@@ -493,6 +538,8 @@ def build_entry(row: dict, lean: dict[str, dict], lic: Path) -> dict:
         "lean_theorem": row.get("lean_theorem") or row.get("lean_thm"),
         "lean_module": row.get("lean_module"),
         "li_specimen": row.get("li_specimen"),
+        "content_tier": row.get("content_tier"),
+        "export_math": bool(eid and eid in export_overlay),
         "bench_refs": row.get("bench_refs") or [],
         "source": row.get("_source_toml"),
         "github_url": github_url(lic, row),
@@ -513,8 +560,9 @@ def main() -> int:
     lean = scan_all_lean(lic)
     toml_rows = parse_toml_entries(lic)
     index_rows = parse_index_json(lic)
+    export_overlay = load_export_math_overlay(lic)
     merged = merge_entries(toml_rows, index_rows)
-    entries = [build_entry(r, lean, lic) for r in merged]
+    entries = [build_entry(r, lean, lic, export_overlay) for r in merged]
 
     by_catalog: dict[str, int] = {}
     by_lean: dict[str, int] = {}
@@ -538,9 +586,11 @@ def main() -> int:
         "sources": {
             "toml_entries": "docs/verification/proof-database/entries/",
             "proof_db_index": "proof-db/index.json",
+            "export_math": "proof-db/export-math.json",
             "lean_scan": LEAN_SOURCES,
             "discrepancies": "proof-database/discrepancies.json",
         },
+        "export_math_overlay_count": len(export_overlay),
         "summary": {
             "total": len(entries),
             "divergent": divergent,

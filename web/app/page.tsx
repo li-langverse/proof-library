@@ -43,6 +43,33 @@ export default function HomePage() {
             <strong>Math drilldown</strong> — LaTeX formal statements, source panes, and PNG export
             for each <code>M-AX-*</code> / <code>M-LM-*</code> row
           </li>
+          <li>
+            <strong>Research audit</strong> — claim ledgers with epistemic status vs reviewers (
+            <a
+              href="https://li-langverse.github.io/lic/deploy/research-audit/?problem=E-52"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              E-52
+            </a>
+            ,{" "}
+            <a
+              href="https://li-langverse.github.io/lic/deploy/research-audit/?problem=E-3"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              E-3
+            </a>
+            ,{" "}
+            <a
+              href="https://li-langverse.github.io/lic/deploy/research-audit/?problem=M-CONJ-RH"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              M-CONJ-RH
+            </a>
+            )
+          </li>
         </ul>
         <p>
           Compiler gaps:{" "}

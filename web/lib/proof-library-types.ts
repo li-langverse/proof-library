@@ -39,6 +39,8 @@ export type ProofLibraryEntry = {
   lean_theorem?: string | null;
   lean_module?: string | null;
   li_specimen?: string | null;
+  content_tier?: string | null;
+  export_math?: boolean;
   bench_refs?: string[];
   source?: string | null;
   github_url?: string | null;

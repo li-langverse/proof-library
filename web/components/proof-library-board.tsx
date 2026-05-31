@@ -31,6 +31,11 @@ function StatusBadge({ status }: { status: string }) {
   return <span className={`badge badge-${tone}`}>{status}</span>;
 }
 
+function liSpecimenUrl(path: string): string {
+  const clean = path.replace(/^\//, "");
+  return `https://github.com/li-langverse/lic/blob/main/${clean}`;
+}
+
 function loadVotes(): Record<string, ProofVoteOption> {
   if (typeof window === "undefined") return {};
   try {
@@ -264,8 +269,22 @@ export function ProofLibraryBoard({
                     {entry.notes ? (
                       <p className="proof-notes mono">{entry.notes}</p>
                     ) : null}
+                    {entry.content_tier ? (
+                      <p className="proof-notes">
+                        formalization: <strong>{entry.content_tier}</strong>
+                        {entry.export_math ? " · export-math" : null}
+                      </p>
+                    ) : null}
                     {entry.li_specimen ? (
-                      <p className="proof-notes mono">{entry.li_specimen}</p>
+                      <p className="proof-notes mono">
+                        <a
+                          href={liSpecimenUrl(entry.li_specimen)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {entry.li_specimen}
+                        </a>
+                      </p>
                     ) : null}
                   </td>
                   <td>
