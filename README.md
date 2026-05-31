@@ -1,6 +1,6 @@
-# Li Proof Library
+﻿# Li Proof Library
 
-Dedicated repository for the Li **proof corpus UI** — catalog scientific opinion vs Lean scan, divergence highlighting, and browser-local human votes.
+Dedicated repository for the Li **proof corpus UI** â€” catalog scientific opinion vs Lean scan, divergence highlighting, and browser-local human votes.
 
 **Live site:** [https://proofs.lilangverse.xyz/](https://proofs.lilangverse.xyz/)
 
@@ -10,7 +10,7 @@ Dedicated repository for the Li **proof corpus UI** — catalog scientific opini
 |------|------|
 | **proof-library** (this) | Published UI, `data/library.json`, ingest scripts, human vote UX |
 | **lic** | Canonical proof-db, TOML entries, Lean semantics, specimens |
-| **benchmarks** | Wall-clock perf matrix only — links out to this repo |
+| **benchmarks** | Wall-clock perf matrix only â€” links out to this repo |
 
 ## Rebuild catalog JSON
 
@@ -25,8 +25,8 @@ LIC_ROOT=../lic python3 scripts/build-posture.py
 
 Outputs:
 
-- `data/library.json` — entries with `catalog_status`, `lean_status`, `diverges`
-- `data/posture.json` — G-* rows from `provability-gaps.md`
+- `data/library.json` â€” entries with `catalog_status`, `lean_status`, `diverges`
+- `data/posture.json` â€” G-* rows from `provability-gaps.md`
 
 ## Local web dev
 
@@ -46,5 +46,9 @@ Votes are stored in **browser localStorage** (`li-proof-votes-v1`). Use **Discus
 
 ## Policy
 
-- No `sorry` in proof-db Lean bridge — explicit axioms only (`lic/docs/semantics/trusted.lean`)
+- No `sorry` in proof-db Lean bridge â€” explicit axioms only (`lic/docs/semantics/trusted.lean`)
 - Catalog claims are honest inventory, not a universal proof certificate
+
+## License
+
+Copyright (C) 2026 Julian. Licensed under the [GNU General Public License v3.0](LICENSE).
