@@ -11,6 +11,7 @@ export function Header() {
           <p>Catalog vs Lean — scientific opinion, divergence, human votes</p>
         </div>
         <nav className="site-nav" aria-label="Site">
+          <Link href="/erdos">Erdős explorer</Link>
           <a
             href="https://github.com/li-langverse/proof-library"
             target="_blank"
