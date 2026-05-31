@@ -2,6 +2,7 @@
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import { Header } from "@/components/shell/header";
+import { SiteFooter } from "@/components/shell/site-footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://proofs.lilangverse.xyz"),
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

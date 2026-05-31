@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { ProofCodeGrid } from "@/components/proof-code-block";
@@ -183,31 +184,40 @@ export function MathProofDrilldownSection({ entries }: MathProofDrilldownSection
   );
 }
 
+const ERDOS_HOME_PREVIEW = 5;
+
 export function ErdosProofDrilldownSection({ entries }: MathProofDrilldownSectionProps) {
-  const erdosEntries = entries.filter(
-    (e) => e.field === "erdos" && e.drilldown?.implementations?.length,
-  );
+  const erdosEntries = entries
+    .filter((e) => e.field === "erdos" && e.drilldown?.implementations?.length)
+    .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
 
   if (erdosEntries.length === 0) {
     return null;
   }
 
+  const preview = erdosEntries.slice(0, ERDOS_HOME_PREVIEW);
+
   return (
     <section className="math-proofs-section erdos-proofs-section">
-      <h3>Erdos problems</h3>
+      <h3>Erdős problems</h3>
       <p className="math-proofs-intro">
-        Open and resolved entries from the{" "}
+        <strong>{erdosEntries.length}</strong> problems from the{" "}
         <a href="https://www.erdosproblems.com/" target="_blank" rel="noopener noreferrer">
-          Erdos problem register
+          Erdős register
         </a>
-        . Each row shows <strong>domain</strong> and <strong>priority tier</strong> when cataloged,
-        plus TOML source. Filter the full table by field <code>erdos</code> below.
+        . Preview below — browse all with search on the{" "}
+        <Link href="/erdos">Erdős explorer</Link>.
       </p>
       <div className="math-proofs-list">
-        {erdosEntries.map((entry) => (
+        {preview.map((entry) => (
           <ProofDrilldownPanel key={entry.id} entry={entry} />
         ))}
       </div>
+      {erdosEntries.length > ERDOS_HOME_PREVIEW ? (
+        <p className="erdos-explorer-cta">
+          <Link href="/erdos">Open Erdős explorer →</Link> ({erdosEntries.length} problems)
+        </p>
+      ) : null}
     </section>
   );
 }
