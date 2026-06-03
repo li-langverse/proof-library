@@ -65,7 +65,7 @@ function highlightLean(line: string): string {
 function highlightLi(line: string): string {
   const parts: Array<{ start: number; end: number; cls: string }> = [];
   const rules: Array<[RegExp, string]> = [
-    [/\b(extern|proc|def|requires|ensures|decreases|return|true|int|bool|void)\b/g, "keyword"],
+    [/\b(extern|def|requires|ensures|decreases|return|true|int|bool|void)\b/g, "keyword"],
     [/"([^"\\]|\\.)*"/g, "string"],
     [/\b\d+\b/g, "number"],
   ];
