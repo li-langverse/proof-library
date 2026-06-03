@@ -350,55 +350,87 @@ def extract_lean_symbol(lic: Path, lean_rel: str, symbol: str) -> dict | None:
     return None
 
 
+def strip_extern_proc_lines(content: str) -> str:
+    """Drop extern proc declarations from site-facing Li snippets."""
+    out: list[str] = []
+    skip = False
+    for line in content.splitlines():
+        if re.match(r"^\s*extern proc\b", line):
+            skip = True
+            continue
+        if skip:
+            if line.startswith("  ") or not line.strip():
+                continue
+            skip = False
+        if re.search(r"\bproc\b", line):
+            continue
+        out.append(line)
+    return "\n".join(out).strip()
+
+
 def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | None:
     path = lic / li_rel
     if not path.is_file():
         return None
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
     if symbol:
-        pat = re.compile(rf"^\s*(extern proc|def|proc)\s+{re.escape(symbol)}\b")
+        def_pat = re.compile(rf"^\s*def\s+{re.escape(symbol)}\b")
+        proc_pat = re.compile(rf"^\s*(extern proc|proc)\s+{re.escape(symbol)}\b")
+        start_idx: int | None = None
         for i, line in enumerate(lines):
-            if pat.match(line):
-                end = i + 1
-                depth = 0
-                while end < len(lines):
-                    if lines[end].strip() == "=":
-                        depth = 1
-                    if depth and lines[end].strip() and not lines[end].startswith(" ") and end > i + 1:
-                        if not lines[end].strip().startswith(("def ", "extern ", "proc ")):
-                            break
-                    end += 1
-                    if end - i > 24:
+            if def_pat.match(line):
+                start_idx = i
+                break
+        if start_idx is None:
+            for i, line in enumerate(lines):
+                if proc_pat.match(line):
+                    start_idx = i
+                    break
+        if start_idx is not None:
+            i = start_idx
+            end = i + 1
+            depth = 0
+            while end < len(lines):
+                if lines[end].strip() == "=":
+                    depth = 1
+                if depth and lines[end].strip() and not lines[end].startswith(" ") and end > i + 1:
+                    if not lines[end].strip().startswith(("def ", "extern ", "proc ")):
                         break
-                chunk = lines[i:end]
+                end += 1
+                if end - i > 24:
+                    break
+            chunk = lines[i:end]
+            content = strip_extern_proc_lines("\n".join(chunk))
+            if content:
                 return {
                     "language": "li",
                     "path": li_rel,
                     "symbol": symbol,
                     "start_line": i + 1,
                     "highlight_line": i + 1,
-                    "content": "\n".join(chunk),
+                    "content": content,
                     "github_url": github_blob(li_rel, i + 1),
                 }
-    if len(lines) <= 40:
-        return {
-            "language": "li",
-            "path": li_rel,
-            "symbol": None,
-            "start_line": 1,
-            "highlight_line": 1,
-            "content": "\n".join(lines),
-            "github_url": github_blob(li_rel),
-        }
-    return {
-        "language": "li",
-        "path": li_rel,
-        "symbol": None,
-        "start_line": 1,
-        "highlight_line": 1,
-        "content": "\n".join(lines[:40]) + "\n-- …",
-        "github_url": github_blob(li_rel),
-    }
+    start = 0
+    for i, line in enumerate(lines):
+        if re.match(r"^\s*def\s+\w+", line):
+            start = i
+            break
+    if start or len(lines) <= 40:
+        chunk = lines[start : start + 40] if len(lines) > 40 else lines[start:]
+        suffix = "\n-- …" if len(lines) > start + 40 else ""
+        content = strip_extern_proc_lines("\n".join(chunk) + suffix)
+        if content:
+            return {
+                "language": "li",
+                "path": li_rel,
+                "symbol": None,
+                "start_line": start + 1,
+                "highlight_line": start + 1,
+                "content": content,
+                "github_url": github_blob(li_rel, start + 1),
+            }
+    return None
 
 
 def li_symbol_for_entry(entry_id: str, lean_symbol: str | None) -> str | None:
@@ -561,6 +593,24 @@ def main() -> int:
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {OUT_PATH} ({len(entries)} entries, {divergent} divergent)")
+
+    proc_hits: list[str] = []
+    for entry in entries:
+        drill = entry.get("drilldown") or {}
+        for impl in drill.get("implementations") or []:
+            if impl.get("role") != "li_specimen":
+                continue
+            if re.search(r"\bproc\b", impl.get("content") or ""):
+                proc_hits.append(str(entry.get("id")))
+    if proc_hits:
+        print(
+            f"FAIL: {len(proc_hits)} li_specimen snippet(s) contain proc: "
+            + ", ".join(proc_hits[:12])
+            + (" …" if len(proc_hits) > 12 else ""),
+            file=sys.stderr,
+        )
+        return 1
+
     return 0 if entries else 1
 
 
