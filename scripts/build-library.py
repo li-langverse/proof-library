@@ -373,6 +373,8 @@ def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | Non
     if not path.is_file():
         return None
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    if symbol and symbol.endswith("_axiom_witness"):
+        symbol = None
     if symbol:
         def_pat = re.compile(rf"^\s*def\s+{re.escape(symbol)}\b")
         proc_pat = re.compile(rf"^\s*(extern proc|proc)\s+{re.escape(symbol)}\b")
@@ -433,18 +435,26 @@ def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | Non
     return None
 
 
-def li_symbol_for_entry(entry_id: str, lean_symbol: str | None) -> str | None:
+def li_symbol_for_entry(entry_id: str, lean_symbol: str | None, row: dict | None = None) -> str | None:
+    if row and row.get("li_axiom_symbol"):
+        return str(row["li_axiom_symbol"])
     mapping = {
         "M-AX-REAL-ADD-COMM": "proof_db_real_add_comm",
         "M-AX-REAL-ADD-ASSOC": "proof_db_real_add_assoc",
         "M-AX-REAL-MUL-DIST": "proof_db_real_mul_distrib",
         "M-AX-REAL-MUL-ONE": "proof_db_real_mul_one",
         "M-AX-PEANO-ZERO-NOT-SUCC": "proof_db_peano_zero_not_succ",
+        "M-AX-PEANO-SUCC-INJ": "proof_db_peano_succ_injective",
+        "M-AX-PEANO-IND": "proof_db_peano_induction",
+        "M-AX-ORDER-TRICHOTOMY": "proof_db_order_trichotomy_nat",
+        "M-AX-ORDER-ANTISYM": "proof_db_order_antisym",
     }
     if entry_id in mapping:
         return mapping[entry_id]
     if entry_id == "M-LM-FLOAT-ADD-COMM":
         return "add_commutative"
+    if lean_symbol and not lean_symbol.endswith("_axiom_witness"):
+        return lean_symbol
     return None
 
 
@@ -463,7 +473,7 @@ def build_drilldown(row: dict, lean: dict[str, dict], lic: Path) -> dict | None:
             snip["label"] = "Lean formalization"
             implementations.append(snip)
     if li_spec:
-        li_sym = li_symbol_for_entry(entry_id, lean_sym)
+        li_sym = li_symbol_for_entry(entry_id, lean_sym, row)
         snip = extract_li_snippet(lic, str(li_spec), li_sym)
         if snip:
             snip["role"] = "li_specimen"

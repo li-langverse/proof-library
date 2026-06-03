@@ -31,6 +31,11 @@ function StatusBadge({ status }: { status: string }) {
   return <span className={`badge badge-${tone}`}>{status}</span>;
 }
 
+function KindBadge({ kind }: { kind: string }) {
+  if (kind !== "axiom") return null;
+  return <span className="badge badge-yellow proof-kind-axiom">AXIOM</span>;
+}
+
 function loadVotes(): Record<string, ProofVoteOption> {
   if (typeof window === "undefined") return {};
   try {
@@ -269,7 +274,10 @@ export function ProofLibraryBoard({
                     ) : null}
                   </td>
                   <td>
-                    <StatusBadge status={entry.catalog_status} />
+                    <div className="proof-status-badges">
+                      <StatusBadge status={entry.catalog_status} />
+                      {entry.kind === "axiom" ? <KindBadge kind={entry.kind} /> : null}
+                    </div>
                   </td>
                   <td>
                     <StatusBadge status={entry.lean_status} />
