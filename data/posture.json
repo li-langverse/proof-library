@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-29T19:03Z",
-  "source": "/home/s4il0r/Documents/Cursor/li-langverse/lic-studio-ui/docs/verification/provability-gaps.md",
+  "generated_at": "2026-06-04T21:27Z",
+  "source": "C:\\Users\\Julian\\Documents\\Programming\\li\\.tmp-lic-main\\docs\\verification\\provability-gaps.md",
   "rows": [
     {
       "id": "G-ann",
@@ -18,9 +18,19 @@
       "phase": "OS phase"
     },
     {
+      "id": "G-bio",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
       "id": "G-bnd",
       "status": "Partial",
       "phase": "2e"
+    },
+    {
+      "id": "G-chem",
+      "status": "Stub",
+      "phase": "Doc"
     },
     {
       "id": "G-dec",
@@ -33,9 +43,24 @@
       "phase": "2j"
     },
     {
+      "id": "G-discrete",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
+      "id": "G-erdos",
+      "status": "Partial",
+      "phase": "Doc"
+    },
+    {
       "id": "G-gpu",
-      "status": "Missing",
+      "status": "Partial",
       "phase": "3+"
+    },
+    {
+      "id": "G-graph",
+      "status": "Stub",
+      "phase": "Doc"
     },
     {
       "id": "G-hw",
@@ -63,6 +88,11 @@
       "phase": "long-term"
     },
     {
+      "id": "G-ml",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
       "id": "G-narrow",
       "status": "Partial",
       "phase": "2e"
@@ -71,6 +101,11 @@
       "id": "G-net",
       "status": "Partial",
       "phase": "H"
+    },
+    {
+      "id": "G-num",
+      "status": "Stub",
+      "phase": "Doc"
     },
     {
       "id": "G-oop",
@@ -90,6 +125,11 @@
     {
       "id": "G-proof-db",
       "status": "Partial",
+      "phase": "Doc"
+    },
+    {
+      "id": "G-stats",
+      "status": "Stub",
       "phase": "Doc"
     },
     {
