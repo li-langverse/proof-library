@@ -16,6 +16,16 @@ function StatusBadge({ status }: { status: string }) {
   return <span className={`badge badge-${tone}`}>{status}</span>;
 }
 
+function TargetEpistemicBadge({ entry }: { entry: ProofLibraryEntry }) {
+  if (entry.field !== "erdos" && entry.kind !== "target") return null;
+  const proved =
+    entry.catalog_status === "proved" || entry.lean_status === "proved";
+  if (proved) {
+    return <span className="badge badge-green">proved (catalog)</span>;
+  }
+  return <span className="badge badge-red">open target</span>;
+}
+
 type ProofDrilldownPanelProps = {
   entry: ProofLibraryEntry;
   defaultOpen?: boolean;
@@ -32,7 +42,16 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
   }
 
   const leanSnippet = drill.implementations.find((s) => s.role === "lean_formal");
-  const formalLatex = leanSnippet ? leanFormalToLatex(leanSnippet.content) : null;
+  const formalStatement = drill.implementations.find((s) => s.role === "formal_statement");
+  const codeSnippets = drill.implementations.filter(
+    (s) => s.role !== "formal_statement",
+  );
+  const formalLatex = leanSnippet
+    ? leanFormalToLatex(leanSnippet.content)
+    : formalStatement?.content?.includes("$") ||
+        formalStatement?.content?.includes("\\")
+      ? formalStatement.content
+      : null;
 
   const exportPng = useCallback(async () => {
     const node = exportRef.current;
@@ -92,18 +111,33 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
           </p>
         ) : null}
         <div className="proof-drilldown-badges">
+          <TargetEpistemicBadge entry={entry} />
           <StatusBadge status={entry.catalog_status} />
           <StatusBadge status={entry.lean_status} />
           {entry.diverges ? <span className="badge badge-red">divergent</span> : null}
         </div>
+        {entry.field === "erdos" ? (
+          <p className="proof-erdos-epistemic">
+            Erdős register row — catalog marks{" "}
+            <strong>{entry.erdos_status ?? entry.catalog_status}</strong>; not claimed
+            proved in Lean unless both votes agree.
+          </p>
+        ) : null}
       </header>
 
       {open ? (
         <div className="proof-drilldown-body">
           {formalLatex ? (
             <section className="proof-formal-section" aria-label="Formal statement">
-              <h4 className="proof-formal-heading">Formal (Lean → LaTeX)</h4>
+              <h4 className="proof-formal-heading">
+                {leanSnippet ? "Formal (Lean → LaTeX)" : "Problem statement"}
+              </h4>
               <ProofFormalMath latex={formalLatex} />
+            </section>
+          ) : formalStatement ? (
+            <section className="proof-formal-section" aria-label="Problem statement">
+              <h4 className="proof-formal-heading">{formalStatement.label}</h4>
+              <p className="proof-drilldown-statement">{formalStatement.content}</p>
             </section>
           ) : null}
 
@@ -142,7 +176,7 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
 
           {entry.notes ? <p className="proof-drilldown-notes">{entry.notes}</p> : null}
 
-          <ProofCodeGrid snippets={drill.implementations} />
+          <ProofCodeGrid snippets={codeSnippets} />
 
           <footer className="proof-export-footer">
             <span className="mono">{entry.id}</span>
