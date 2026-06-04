@@ -33,15 +33,68 @@ AX = re.compile(r"^axiom\s+(\w+)")
 SORRY = re.compile(r"\bsorry\b")
 PH = re.compile(r"placeholder", re.I)
 
-LEAN_SOURCES = [
+LEAN_SOURCES_BASE = [
     "docs/semantics/Core.lean",
     "docs/semantics/trusted.lean",
     "docs/semantics/Discharge.lean",
     "proof-db/lean/ProofDB.lean",
     "proof-db/math/axioms/MathAxioms.lean",
     "proof-db/math/axioms/MathLemmas.lean",
+    "proof-db/graph/GraphAxioms.lean",
+    "proof-db/numerics/axioms/NumericsAxioms.lean",
+    "proof-db/discrete/axioms/DiscreteAxioms.lean",
+    "proof-db/chemistry/ChemAxioms.lean",
+    "proof-db/biology/BioAxioms.lean",
+    "proof-db/ml/OptAxioms.lean",
+    "proof-db/ml/Convex.lean",
+    "proof-db/ml/SGD.lean",
+    "proof-db/statistics/StatsAxioms.lean",
     "build/generated/AutoVC.lean",
 ]
+
+NS_FALLBACK = {
+    "Core.lean": "Li",
+    "trusted.lean": "Li.Trusted",
+    "Discharge.lean": "Li.Discharge",
+    "ProofDB.lean": "Li.ProofDB",
+    "MathAxioms.lean": "Li.ProofDb.Math",
+    "MathLemmas.lean": "Li.ProofDb.Math",
+    "GraphAxioms.lean": "Li.ProofDb.Graph",
+    "NumericsAxioms.lean": "Li.ProofDb.Numerics",
+    "DiscreteAxioms.lean": "Li.ProofDb.Discrete",
+    "ChemAxioms.lean": "Li.ProofDb.Chemistry",
+    "BioAxioms.lean": "Li.ProofDb.Biology",
+    "OptAxioms.lean": "Li.ProofDb.Ml",
+    "Convex.lean": "Li.ProofDb.Ml",
+    "SGD.lean": "Li.ProofDb.Ml",
+    "StatsAxioms.lean": "Li.ProofDb.Statistics",
+    "AutoVC.lean": "AutoVC",
+}
+
+
+def discover_lean_sources(lic: Path) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for rel in LEAN_SOURCES_BASE:
+        if rel not in seen and (lic / rel).is_file():
+            seen.add(rel)
+            out.append(rel)
+    proof_db = lic / "proof-db"
+    if proof_db.is_dir():
+        for path in sorted(proof_db.rglob("*.lean")):
+            rel = str(path.relative_to(lic)).replace("\\", "/")
+            if rel not in seen:
+                seen.add(rel)
+                out.append(rel)
+    return out
+
+
+def infer_namespace(path: Path, lines: list[str]) -> str:
+    for line in lines[:40]:
+        m = re.match(r"^\s*namespace\s+([\w.]+)", line)
+        if m:
+            return m.group(1)
+    return NS_FALLBACK.get(path.name, "")
 
 STATUS_RANK = {
     "proved": 0,
@@ -142,25 +195,27 @@ def scan_lean_file(path: Path, namespace: str, lic: Path) -> dict[str, dict]:
     return out
 
 
+def register_lean_aliases(symbols: dict[str, dict], name: str, sym: dict, ns: str) -> None:
+    symbols[name] = sym
+    if not ns:
+        return
+    symbols[f"{ns}.{name}"] = sym
+    parts = ns.split(".")
+    if len(parts) >= 2:
+        symbols[f"{parts[-1]}.{name}"] = sym
+        symbols[f"{parts[-2]}.{parts[-1]}.{name}"] = sym
+
+
 def scan_all_lean(lic: Path) -> dict[str, dict]:
     symbols: dict[str, dict] = {}
-    ns_map = {
-        "Core.lean": "Li",
-        "trusted.lean": "Li.Trusted",
-        "Discharge.lean": "Li.Discharge",
-        "ProofDB.lean": "Li.ProofDB",
-        "MathAxioms.lean": "Li.ProofDb.Math",
-        "MathLemmas.lean": "Li.ProofDb.Math",
-        "AutoVC.lean": "AutoVC",
-    }
-    for rel in LEAN_SOURCES:
+    for rel in discover_lean_sources(lic):
         path = lic / rel
-        ns = ns_map.get(path.name, "")
+        if not path.is_file():
+            continue
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        ns = infer_namespace(path, lines)
         for name, sym in scan_lean_file(path, ns, lic).items():
-            symbols[name] = sym
-            if ns:
-                symbols[f"{ns.split('.')[-1]}.{name}"] = sym
-                symbols[f"{ns}.{name}"] = sym
+            register_lean_aliases(symbols, name, sym, ns)
     return symbols
 
 
@@ -186,8 +241,10 @@ def parse_index_json(lic: Path) -> list[dict]:
     if not path.is_file():
         return []
     data = json.loads(path.read_text(encoding="utf-8"))
+    lean_path = data.get("lean_path") or "proof-db/lean/ProofDB.lean"
     rows = []
     for e in data.get("entries", []):
+        lean_thm = e.get("lean_theorem") or ""
         rows.append(
             {
                 "id": e.get("id"),
@@ -196,9 +253,9 @@ def parse_index_json(lic: Path) -> list[dict]:
                 "statement": e.get("textbook", ""),
                 "proof_status": e.get("status", "open"),
                 "gap_id": (e.get("gap") or "").split(":")[0] if e.get("gap") else None,
-                "lean_thm": (e.get("lean_theorem") or "").split(".")[-1],
-                "lean_module": e.get("lean_path"),
-                "lean_theorem": e.get("lean_theorem"),
+                "lean_thm": lean_thm.split(".")[-1] if lean_thm else None,
+                "lean_module": lean_path,
+                "lean_theorem": lean_thm or None,
                 "discharge_link": e.get("discharge_link"),
                 "_source_toml": "proof-db/index.json",
             }
@@ -222,16 +279,49 @@ def catalog_status(entry: dict) -> str:
     return str(entry.get("proof_status") or entry.get("status") or "unknown").lower()
 
 
-def resolve_lean_status(entry: dict, lean: dict[str, dict]) -> str:
+def lean_lookup_keys(entry: dict) -> list[str]:
+    keys: list[str] = []
     ref = lean_ref_name(entry)
-    if ref and ref in lean:
-        return lean[ref]["status"]
-    kind = entry.get("kind")
-    if catalog_status(entry) == "axiomatic":
+    if ref:
+        keys.append(ref)
+    for key in ("lean_theorem", "lean_thm", "discharge_link"):
+        val = entry.get(key)
+        if not val or not isinstance(val, str):
+            continue
+        val = val.strip()
+        if not val:
+            continue
+        keys.append(val)
+        keys.append(val.split(".")[-1])
+    out: list[str] = []
+    seen: set[str] = set()
+    for k in keys:
+        if k and k not in seen:
+            seen.add(k)
+            out.append(k)
+    return out
+
+
+def catalog_lean_fallback(entry: dict) -> str:
+    catalog = catalog_status(entry)
+    if catalog == "axiomatic" or entry.get("kind") == "axiom":
         return "axiomatic"
-    if kind == "axiom":
-        return "axiomatic"
-    return "unknown"
+    mapping = {
+        "proved": "proved",
+        "open": "open",
+        "target": "open",
+        "sorry": "open",
+        "discrepancy": "open",
+        "placeholder": "placeholder",
+    }
+    return mapping.get(catalog, "unknown")
+
+
+def resolve_lean_status(entry: dict, lean: dict[str, dict]) -> str:
+    for key in lean_lookup_keys(entry):
+        if key in lean:
+            return lean[key]["status"]
+    return catalog_lean_fallback(entry)
 
 
 def comparable(catalog: str, lean: str) -> tuple[str, str]:
@@ -350,6 +440,52 @@ def extract_lean_symbol(lic: Path, lean_rel: str, symbol: str) -> dict | None:
     return None
 
 
+LI_BOILERPLATE_DEFS = frozenset({"main"})
+LI_WITNESS_MARKERS = ("_axiom_witness", "witness_stub")
+
+
+def is_witness_stub_row(row: dict) -> bool:
+    if str(row.get("specimen_role") or "") == "witness_stub":
+        return True
+    sym = row.get("li_axiom_symbol")
+    return isinstance(sym, str) and sym.endswith("_axiom_witness")
+
+
+def is_boilerplate_li_symbol(symbol: str | None) -> bool:
+    if not symbol:
+        return False
+    if symbol in LI_BOILERPLATE_DEFS:
+        return True
+    if symbol.endswith("_axiom_witness"):
+        return True
+    return False
+
+
+def strip_li_boilerplate_blocks(content: str) -> str:
+    """Remove def main / _axiom_witness blocks from site-facing snippets."""
+    lines = content.splitlines()
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        m = re.match(r"^\s*def\s+(\w+)", line)
+        if m and (
+            m.group(1) in LI_BOILERPLATE_DEFS
+            or m.group(1).endswith("_axiom_witness")
+        ):
+            i += 1
+            while i < len(lines) and (
+                not lines[i].strip()
+                or lines[i].startswith(" ")
+                or lines[i].strip() == "="
+            ):
+                i += 1
+            continue
+        out.append(line)
+        i += 1
+    return "\n".join(out).strip()
+
+
 def strip_extern_proc_lines(content: str) -> str:
     """Drop extern proc declarations from site-facing Li snippets."""
     out: list[str] = []
@@ -402,8 +538,8 @@ def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | Non
                 if end - i > 24:
                     break
             chunk = lines[i:end]
-            content = strip_extern_proc_lines("\n".join(chunk))
-            if content:
+            content = strip_li_boilerplate_blocks(strip_extern_proc_lines("\n".join(chunk)))
+            if content and not is_boilerplate_li_symbol(symbol):
                 return {
                     "language": "li",
                     "path": li_rel,
@@ -415,14 +551,20 @@ def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | Non
                 }
     start = 0
     for i, line in enumerate(lines):
-        if re.match(r"^\s*def\s+\w+", line):
-            start = i
-            break
+        m = re.match(r"^\s*def\s+(\w+)", line)
+        if not m:
+            continue
+        if is_boilerplate_li_symbol(m.group(1)):
+            continue
+        start = i
+        break
     if start or len(lines) <= 40:
         chunk = lines[start : start + 40] if len(lines) > 40 else lines[start:]
         suffix = "\n-- …" if len(lines) > start + 40 else ""
-        content = strip_extern_proc_lines("\n".join(chunk) + suffix)
-        if content:
+        content = strip_li_boilerplate_blocks(
+            strip_extern_proc_lines("\n".join(chunk) + suffix)
+        )
+        if content and "_axiom_witness" not in content:
             return {
                 "language": "li",
                 "path": li_rel,
@@ -432,6 +574,43 @@ def extract_li_snippet(lic: Path, li_rel: str, symbol: str | None) -> dict | Non
                 "content": content,
                 "github_url": github_blob(li_rel, start + 1),
             }
+    return None
+
+
+def build_formal_statement_snippet(row: dict) -> dict | None:
+    statement = str(row.get("statement") or "").strip()
+    latex = row.get("latex")
+    if isinstance(latex, str) and latex.strip():
+        body = latex.strip()
+        label = "Formal statement (LaTeX)"
+    elif statement:
+        body = statement
+        label = "Problem statement"
+    else:
+        return None
+    toml_src = row.get("_source_toml")
+    path = str(toml_src) if toml_src else "catalog"
+    return {
+        "language": "text",
+        "path": path,
+        "symbol": None,
+        "start_line": 1,
+        "highlight_line": 1,
+        "content": body,
+        "github_url": github_blob(path, 1) if toml_src else "",
+        "role": "formal_statement",
+        "label": label,
+    }
+
+
+def pick_erdos_li_symbol(li_rel: str, lic: Path) -> str | None:
+    path = lic / li_rel
+    if not path.is_file():
+        return None
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        m = re.match(r"^\s*def\s+(erdos_\w+)\b", line)
+        if m and not is_boilerplate_li_symbol(m.group(1)):
+            return m.group(1)
     return None
 
 
@@ -461,24 +640,36 @@ def li_symbol_for_entry(entry_id: str, lean_symbol: str | None, row: dict | None
 def build_drilldown(row: dict, lean: dict[str, dict], lic: Path) -> dict | None:
     lean_sym = lean_ref_name(row)
     lean_mod = row.get("lean_module")
+    if not lean_mod and row.get("_source_toml") == "proof-db/index.json":
+        lean_mod = "proof-db/lean/ProofDB.lean"
     li_spec = row.get("li_specimen")
     toml_src = row.get("_source_toml")
     entry_id = str(row.get("id") or "")
+    field = str(row.get("field") or "")
 
     implementations: list[dict] = []
-    if lean_mod and lean_sym:
-        snip = extract_lean_symbol(lic, str(lean_mod), lean_sym)
+    formal = build_formal_statement_snippet(row)
+    if formal and field == "erdos":
+        implementations.append(formal)
+
+    lean_rel = str(lean_mod) if lean_mod else ""
+    if lean_rel.endswith(".lean") and lean_sym:
+        snip = extract_lean_symbol(lic, lean_rel, lean_sym)
         if snip:
             snip["role"] = "lean_formal"
             snip["label"] = "Lean formalization"
             implementations.append(snip)
-    if li_spec:
+    if li_spec and not is_witness_stub_row(row):
         li_sym = li_symbol_for_entry(entry_id, lean_sym, row)
+        if field == "erdos" and not li_sym:
+            li_sym = pick_erdos_li_symbol(str(li_spec), lic)
         snip = extract_li_snippet(lic, str(li_spec), li_sym)
         if snip:
-            snip["role"] = "li_specimen"
-            snip["label"] = "Li specimen / contract"
-            implementations.append(snip)
+            content = snip.get("content") or ""
+            if "_axiom_witness" not in content and "def main()" not in content:
+                snip["role"] = "li_specimen"
+                snip["label"] = "Li specimen / contract"
+                implementations.append(snip)
     if toml_src and entry_id:
         snip = extract_toml_entry_block(lic, str(toml_src), entry_id)
         if snip:
@@ -526,7 +717,7 @@ def build_entry(row: dict, lean: dict[str, dict], lic: Path) -> dict:
         "diverges": div,
         "gap_id": row.get("gap_id"),
         "gap_kind": row.get("gap_kind"),
-        "erdos_id": row.get("erdos_id"),
+        "erdos_id": row.get("erdos_id") or row.get("erdos_number"),
         "erdos_status": row.get("erdos_status"),
         "convergence_class": row.get("convergence_class"),
         "benchmark_ref": row.get("benchmark_ref"),
@@ -552,6 +743,7 @@ def main() -> int:
         print(f"FAIL: LIC_ROOT not found: {lic}", file=sys.stderr)
         return 1
 
+    lean_sources = discover_lean_sources(lic)
     lean = scan_all_lean(lic)
     toml_rows = parse_toml_entries(lic)
     index_rows = parse_index_json(lic)
@@ -580,7 +772,7 @@ def main() -> int:
         "sources": {
             "toml_entries": "docs/verification/proof-database/entries/",
             "proof_db_index": "proof-db/index.json",
-            "lean_scan": LEAN_SOURCES,
+            "lean_scan": lean_sources,
             "discrepancies": "proof-database/discrepancies.json",
         },
         "summary": {
@@ -605,18 +797,31 @@ def main() -> int:
     print(f"wrote {OUT_PATH} ({len(entries)} entries, {divergent} divergent)")
 
     proc_hits: list[str] = []
+    witness_hits: list[str] = []
     for entry in entries:
         drill = entry.get("drilldown") or {}
         for impl in drill.get("implementations") or []:
-            if impl.get("role") != "li_specimen":
-                continue
-            if re.search(r"\bproc\b", impl.get("content") or ""):
-                proc_hits.append(str(entry.get("id")))
+            content = impl.get("content") or ""
+            if impl.get("role") == "li_specimen":
+                if re.search(r"\bproc\b", content):
+                    proc_hits.append(str(entry.get("id")))
+                if "_axiom_witness" in content or re.search(
+                    r"def\s+main\s*\(", content
+                ):
+                    witness_hits.append(str(entry.get("id")))
     if proc_hits:
         print(
             f"FAIL: {len(proc_hits)} li_specimen snippet(s) contain proc: "
             + ", ".join(proc_hits[:12])
             + (" …" if len(proc_hits) > 12 else ""),
+            file=sys.stderr,
+        )
+        return 1
+    if witness_hits:
+        print(
+            f"FAIL: {len(witness_hits)} li_specimen snippet(s) contain witness/main boilerplate: "
+            + ", ".join(witness_hits[:12])
+            + (" …" if len(witness_hits) > 12 else ""),
             file=sys.stderr,
         )
         return 1

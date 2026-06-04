@@ -115,6 +115,11 @@ export function ErdosExplorer({ entries }: ErdosExplorerProps) {
         {filtered.length !== erdosEntries.length ? ` (filtered from ${erdosEntries.length})` : ""}
       </p>
 
+      <p className="erdos-explorer-epistemic">
+        Rows are <strong>open targets</strong> unless catalog and Lean both show proved — the
+        site does not mark Erdős problems solved without evidence.
+      </p>
+
       <div className="math-proofs-list">
         {slice.map((entry) => (
           <ProofDrilldownPanel key={entry.id} entry={entry} />
