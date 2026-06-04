@@ -27,7 +27,8 @@ if not gen:
     fail = 1
 else:
     try:
-        ts = datetime.strptime(gen.replace("Z", "+0000"), "%Y-%m-%dT%H:%MZ%z")
+        iso = gen.replace("Z", "+00:00")
+        ts = datetime.strptime(iso, "%Y-%m-%dT%H:%M%z")
         age_days = (datetime.now(timezone.utc) - ts).total_seconds() / 86400
         if age_days > 14:
             print(f"check-library-quality: generated_at stale ({age_days:.1f}d)", file=sys.stderr)
