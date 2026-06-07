@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-07T06:23Z",
-  "source": "C:\\Users\\Julian\\Documents\\Programming\\li\\.worktrees\\lic-rebuild-main\\docs\\verification\\provability-gaps.md",
+  "generated_at": "2026-06-07T20:45Z",
+  "source": "C:\\Users\\Julian\\Documents\\Programming\\li\\lic\\docs\\verification\\provability-gaps.md",
   "rows": [
     {
       "id": "G-ann",
@@ -63,6 +63,11 @@
       "phase": "Doc"
     },
     {
+      "id": "G-hetero",
+      "status": "Partial",
+      "phase": "li-parallel"
+    },
+    {
       "id": "G-hw",
       "status": "Axiomatic",
       "phase": ""
@@ -114,6 +119,11 @@
     },
     {
       "id": "G-par",
+      "status": "Partial",
+      "phase": "7b"
+    },
+    {
+      "id": "G-par-dist",
       "status": "Partial",
       "phase": "7b"
     },
