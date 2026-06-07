@@ -120,16 +120,30 @@ def resolve_lic_root() -> Path:
 
 
 def lic_commit(lic: Path) -> str | None:
-    try:
-        out = subprocess.run(
-            ["git", "-C", str(lic), "rev-parse", "HEAD"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        return out.stdout.strip() or None
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return None
+    env = os.environ.get("LIC_COMMIT", "").strip()
+    if env:
+        return env
+
+    subprocess.run(
+        ["git", "-C", str(lic), "fetch", "origin", "main"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    for ref in ("origin/main", "main", "HEAD"):
+        try:
+            out = subprocess.run(
+                ["git", "-C", str(lic), "rev-parse", ref],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            sha = out.stdout.strip()
+            if sha:
+                return sha
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            continue
+    return None
 
 
 def classify_lean(name: str, body: str, kind: str) -> str:
