@@ -19,6 +19,7 @@ import {
 } from "@/lib/proof-graph-types";
 import {
   aggregateSectionEdges,
+  isHonestDischarge,
   nodeDisplayName,
   searchGraphNodes,
   sectionDisplayName,
@@ -39,12 +40,14 @@ function filterNodes(
   statusFilter: string,
   excludeErdos: boolean,
   sectionFilter: string | null,
+  dischargedOnly: boolean,
 ): ProofGraphNode[] {
   return graph.nodes.filter((n) => {
     if (excludeErdos && n.field === "erdos") return false;
     if (fieldFilter && n.field !== fieldFilter) return false;
     if (statusFilter && (n.proof_status ?? "") !== statusFilter) return false;
     if (sectionFilter && n.section_key !== sectionFilter) return false;
+    if (dischargedOnly && !isHonestDischarge(n)) return false;
     return true;
   });
 }
@@ -96,6 +99,7 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
   const [fieldFilter, setFieldFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [excludeErdos, setExcludeErdos] = useState(true);
+  const [dischargedOnly, setDischargedOnly] = useState(true);
   const [sectionFilter, setSectionFilter] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -123,15 +127,20 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
   }, [graph.layout?.section_frames, fieldFilter, excludeErdos]);
 
   const visibleNodes = useMemo(
-    () => filterNodes(graph, fieldFilter, statusFilter, excludeErdos, sectionFilter),
-    [graph, fieldFilter, statusFilter, excludeErdos, sectionFilter],
+    () => filterNodes(graph, fieldFilter, statusFilter, excludeErdos, sectionFilter, dischargedOnly),
+    [graph, fieldFilter, statusFilter, excludeErdos, sectionFilter, dischargedOnly],
   );
   const visibleEdges = useMemo(() => filterEdges(visibleNodes, graph.edges), [visibleNodes, graph.edges]);
   const sectionEdges = useMemo(() => aggregateSectionEdges(graph), [graph]);
 
   const searchMatches = useMemo(
-    () => searchGraphNodes(filterNodes(graph, fieldFilter, statusFilter, excludeErdos, null), searchQuery, 16),
-    [graph, fieldFilter, statusFilter, excludeErdos, searchQuery],
+    () =>
+      searchGraphNodes(
+        filterNodes(graph, fieldFilter, statusFilter, excludeErdos, null, dischargedOnly),
+        searchQuery,
+        16,
+      ),
+    [graph, fieldFilter, statusFilter, excludeErdos, dischargedOnly, searchQuery],
   );
 
   const selectedNode = useMemo(
@@ -163,7 +172,7 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
       const node = graph.nodes.find((n) => n.id === id);
       if (!node) return;
       nodesRef.current = withLayout(
-        filterNodes(graph, fieldFilter, statusFilter, excludeErdos, null),
+        filterNodes(graph, fieldFilter, statusFilter, excludeErdos, null, dischargedOnly),
         graph.layout?.width ?? size.w,
         graph.layout?.height ?? size.h,
       );
@@ -176,7 +185,7 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
       setActiveSection(node.section_key);
       drawRef.current?.();
     },
-    [graph, fieldFilter, statusFilter, excludeErdos, size.w, size.h],
+    [graph, fieldFilter, statusFilter, excludeErdos, dischargedOnly, size.w, size.h],
   );
 
   const flyToSection = useCallback(
@@ -546,6 +555,18 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
         <label className="proof-graph-check">
           <input
             type="checkbox"
+            checked={dischargedOnly}
+            onChange={(e) => {
+              setDischargedOnly(e.target.checked);
+              setSelectedId(null);
+              fitPendingRef.current = true;
+            }}
+          />
+          Discharged only
+        </label>
+        <label className="proof-graph-check">
+          <input
+            type="checkbox"
             checked={excludeErdos}
             onChange={(e) => {
               setExcludeErdos(e.target.checked);
@@ -556,6 +577,24 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
           Hide Erdős ({graph.summary.by_field.erdos ?? 0})
         </label>
       </div>
+
+      {graph.discharge_stats ? (
+        <p className="proof-graph-discharge-banner">
+          <strong>
+            {graph.discharge_stats.real_discharged} discharged
+          </strong>
+          {" / "}
+          {graph.discharge_stats.catalog_total} catalog
+          {" · "}
+          {graph.discharge_stats.target} open targets
+          {graph.discharge_stats.stub_proved > 0 ? (
+            <span className="proof-graph-discharge-warn">
+              {" "}
+              · {graph.discharge_stats.stub_proved} stub proved
+            </span>
+          ) : null}
+        </p>
+      ) : null}
 
       {searchQuery.trim() ? (
         <ul className="proof-graph-search-results">

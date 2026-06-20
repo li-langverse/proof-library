@@ -95,6 +95,7 @@ export type ProofGraph = {
   lic_root: string;
   lic_commit: string | null;
   explain_llm_hook?: string | null;
+  discharge_stats?: ProofGraphDischargeStats;
   layout?: ProofGraphLayout;
   summary: {
     nodes: number;
@@ -105,6 +106,18 @@ export type ProofGraph = {
   sections: ProofGraphSection[];
   nodes: ProofGraphNode[];
   edges: ProofGraphEdge[];
+};
+
+export type ProofGraphDischargeStats = {
+  catalog_total: number;
+  real_discharged: number;
+  real_proved?: number;
+  stub_proved: number;
+  open: number;
+  target: number;
+  axiomatic?: number;
+  discrepancy?: number;
+  non_target_remaining?: number;
 };
 
 export const EDGE_KIND_LABELS: Record<string, string> = {

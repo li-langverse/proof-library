@@ -1,5 +1,18 @@
 import type { ProofGraph, ProofGraphNode } from "./proof-graph-types";
 
+/** True when catalog row is honestly discharged (not rfl/axiom_layer stub). */
+export function isHonestDischarge(node: ProofGraphNode): boolean {
+  const status = node.proof_status ?? "";
+  const technique = node.proof_technique ?? "";
+  if (status === "axiomatic" || status === "discrepancy") return true;
+  if (status !== "proved") return false;
+  if (technique === "rfl" || technique === "axiom_layer") return false;
+  if (["autovc", "lean_discharge", "hardware_axiom"].includes(technique) && node.lean_snippet) {
+    return true;
+  }
+  return Boolean(node.lean_snippet) && technique !== "open_vc" && technique !== "sorry";
+}
+
 export function edgesForNode(graph: ProofGraph, nodeId: string): ProofGraph["edges"] {
   return graph.edges.filter((e) => e.source === nodeId || e.target === nodeId);
 }

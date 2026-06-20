@@ -259668,5 +259668,16 @@
       "target": "P-LM-MC-140",
       "kind": "theorem_family"
     }
-  ]
+  ],
+  "discharge_stats": {
+    "catalog_total": 4199,
+    "real_discharged": 649,
+    "real_proved": 14,
+    "stub_proved": 1229,
+    "open": 1212,
+    "target": 1078,
+    "axiomatic": 574,
+    "discrepancy": 61,
+    "non_target_remaining": 2441
+  }
 }

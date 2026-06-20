@@ -828,6 +828,18 @@ main {
   border-color: var(--border);
   background: rgba(88, 166, 255, 0.08);
 }
+.proof-graph-discharge-banner {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(88, 166, 255, 0.06);
+}
+.proof-graph-discharge-warn {
+  color: #f0883e;
+}
 .proof-graph-stats {
   color: var(--muted);
   font-size: 0.85rem;
