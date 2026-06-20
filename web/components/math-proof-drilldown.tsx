@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import { CollapsibleText } from "@/components/collapsible-text";
 import { ProofCodeGrid } from "@/components/proof-code-block";
 import { ProofFormalMath } from "@/components/proof-formal-math";
 import {
@@ -102,7 +103,15 @@ export function ProofDrilldownPanel({ entry, defaultOpen = false }: ProofDrilldo
           ) : null}
         </div>
 
-        <p className="proof-drilldown-statement">{entry.statement}</p>
+        {open ? (
+          <p className="proof-drilldown-statement">{entry.statement}</p>
+        ) : (
+          <CollapsibleText
+            text={entry.statement}
+            className="proof-drilldown-statement"
+            maxChars={180}
+          />
+        )}
 
         {entry.catalog_status === "discrepancy" ? (
           <p className="proof-discrepancy-note">

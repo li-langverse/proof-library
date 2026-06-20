@@ -1066,6 +1066,12 @@ main {
   flex: 1 1 100%;
   font-size: 0.8rem;
   color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.45;
+  word-break: break-word;
 }
 .proof-graph-explain-preview {
   margin-top: 1rem;
@@ -1157,9 +1163,229 @@ main {
 }
 
 @media (max-width: 640px) {
-  .proof-graph-explorer {
-    margin: 0 1rem 1.5rem;
+  .site-header {
+    padding: 1rem 1rem 1.1rem;
   }
+  main {
+    padding: 1rem 1rem 2rem;
+  }
+  .site-footer {
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .proof-graph-explorer {
+    margin: 0 0 1.25rem;
+  }
+  .proof-graph-toolbar {
+    gap: 0.65rem 0.85rem;
+  }
+  .proof-graph-toolbar label {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 0;
+    font-size: 0.78rem;
+  }
+  .proof-graph-search-wrap {
+    flex: 1 1 100%;
+  }
+  .proof-graph-search {
+    min-width: 0;
+    width: 100%;
+  }
+  .proof-graph-nav-btn {
+    flex: 1 1 auto;
+  }
+  .proof-graph-discharge-banner {
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+  .proof-graph-canvas-wrap-tall {
+    min-height: min(52vh, 420px);
+  }
+
+  /* Bottom sheet drilldown (graph) */
+  .proof-graph-panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vw;
+    height: min(92dvh, 100%);
+    border-left: none;
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.45);
+  }
+  .proof-graph-panel-header {
+    padding: 0.85rem 1rem 0.75rem;
+  }
+  .proof-graph-panel-body {
+    padding: 0.85rem 1rem 1.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .proof-graph-breadcrumb-full {
+    display: none;
+  }
+  .proof-graph-breadcrumb-compact {
+    display: block;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+  .proof-graph-panel-title {
+    font-size: 0.98rem;
+    word-break: break-word;
+  }
+  .proof-graph-tab-long {
+    display: none;
+  }
+  .proof-graph-tab-short {
+    display: inline;
+  }
+  .proof-graph-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .proof-graph-tab {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    padding: 0.5rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  /* Catalog table → cards */
+  .proof-library-table thead {
+    display: none;
+  }
+  .proof-library-table,
+  .proof-library-table tbody,
+  .proof-library-table tr,
+  .proof-library-table td {
+    display: block;
+    width: 100%;
+  }
+  .proof-library-table tr {
+    margin-bottom: 0.85rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .proof-library-table tr.proof-row-divergent {
+    border-color: color-mix(in srgb, var(--red) 45%, var(--border));
+  }
+  .proof-library-table td {
+    border: none;
+    padding: 0.35rem 0;
+  }
+  .proof-library-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  .proof-library-table td.proof-id-cell::before {
+    content: none;
+  }
+  .proof-id-cell {
+    min-width: 0;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .proof-statement-cell::before {
+    margin-top: 0.15rem;
+  }
+  .proof-statement {
+    max-width: none;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .proof-vote-cell {
+    min-width: 0;
+    padding-top: 0.5rem !important;
+    margin-top: 0.35rem;
+    border-top: 1px solid var(--border);
+  }
+  .proof-drilldown-meta {
+    grid-template-columns: 1fr;
+    gap: 0.15rem 0;
+  }
+  .proof-drilldown-meta dt {
+    margin-top: 0.45rem;
+  }
+  .proof-drilldown-meta dd {
+    padding-left: 0;
+  }
+  .proof-graph-related-btn {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .proof-graph-related-stmt {
+    width: 100%;
+  }
+}
+
+@media (min-width: 641px) {
+  .proof-graph-breadcrumb-compact {
+    display: none;
+  }
+  .proof-graph-breadcrumb-full {
+    display: inline;
+  }
+  .proof-graph-tab-short {
+    display: none;
+  }
+  .proof-graph-tab-long {
+    display: inline;
+  }
+}
+
+/* Readable prose blocks (mobile + desktop) */
+.proof-readable,
+.collapsible-text {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+  font-size: 0.92rem;
+  margin: 0;
+}
+.collapsible-text-toggle {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.collapsible-text-toggle:hover {
+  color: #79c0ff;
+}
+.proof-graph-section + .proof-graph-section {
+  margin-top: 1rem;
+}
+.proof-graph-section h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 640px) {
   .proof-graph-panel {
     width: 100vw;
   }

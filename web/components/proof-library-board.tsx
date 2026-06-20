@@ -250,7 +250,7 @@ export function ProofLibraryBoard({
                   key={entry.id}
                   className={entry.diverges ? "proof-row-divergent" : undefined}
                 >
-                  <td className="mono proof-id-cell">
+                  <td className="mono proof-id-cell" data-label="ID">
                     <div>{entry.id}</div>
                     <div className="proof-id-meta">
                       {entry.field}
@@ -264,7 +264,7 @@ export function ProofLibraryBoard({
                       </a>
                     ) : null}
                   </td>
-                  <td>
+                  <td data-label="Statement" className="proof-statement-cell">
                     <p className="proof-statement">{entry.statement}</p>
                     {entry.notes ? (
                       <p className="proof-notes mono">{entry.notes}</p>
@@ -273,25 +273,25 @@ export function ProofLibraryBoard({
                       <p className="proof-notes mono">{entry.li_specimen}</p>
                     ) : null}
                   </td>
-                  <td>
+                  <td data-label="Catalog">
                     <div className="proof-status-badges">
                       <StatusBadge status={entry.catalog_status} />
                       {entry.kind === "axiom" ? <KindBadge kind={entry.kind} /> : null}
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Lean">
                     <StatusBadge status={entry.lean_status} />
                     {entry.diverges ? (
                       <span className="badge badge-red proof-diverge-tag">≠</span>
                     ) : null}
                   </td>
-                  <td className="mono">
+                  <td className="mono" data-label="Gap">
                     {entry.gap_id ?? "—"}
                     {entry.gap_kind ? (
                       <div className="proof-id-meta">{entry.gap_kind}</div>
                     ) : null}
                   </td>
-                  <td className="proof-vote-cell">
+                  <td className="proof-vote-cell" data-label="Your vote">
                     <div className="proof-vote-buttons">
                       {(Object.keys(VOTE_LABELS) as ProofVoteOption[]).map((opt) => (
                         <button

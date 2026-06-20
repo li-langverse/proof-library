@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { CollapsibleText } from "@/components/collapsible-text";
 import { ProofCodeBlock } from "@/components/proof-code-block";
 import { ProofFormalMath } from "@/components/proof-formal-math";
 import { ProofMarkdown } from "@/components/proof-markdown";
@@ -17,14 +18,14 @@ import type { ProofCodeSnippet } from "@/lib/proof-library-types";
 
 type TabId = "overview" | "proof" | "lean" | "latex" | "li" | "related" | "explain";
 
-const TABS: { id: TabId; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "proof", label: "How we proved it" },
-  { id: "lean", label: "Formal (Lean)" },
-  { id: "latex", label: "Formal (LaTeX)" },
-  { id: "li", label: "Li code" },
-  { id: "related", label: "Related" },
-  { id: "explain", label: "Explain" },
+const TABS: { id: TabId; label: string; shortLabel: string }[] = [
+  { id: "overview", label: "Overview", shortLabel: "Overview" },
+  { id: "proof", label: "How we proved it", shortLabel: "Proof" },
+  { id: "lean", label: "Formal (Lean)", shortLabel: "Lean" },
+  { id: "latex", label: "Formal (LaTeX)", shortLabel: "LaTeX" },
+  { id: "li", label: "Li code", shortLabel: "Li" },
+  { id: "related", label: "Related", shortLabel: "Links" },
+  { id: "explain", label: "Explain", shortLabel: "Explain" },
 ];
 
 function snippetFromGraph(
@@ -110,14 +111,17 @@ export function ProofGraphDrilldown({
       <aside className="proof-graph-panel" role="dialog" aria-labelledby="graph-panel-title">
         <header className="proof-graph-panel-header">
           <nav className="proof-graph-breadcrumb mono" aria-label="Breadcrumb">
-            {node.breadcrumb.map((crumb, i) => (
-              <span key={`${crumb}-${i}`}>
-                {i > 0 ? <span className="proof-graph-breadcrumb-sep"> › </span> : null}
-                <span className={i === node.breadcrumb.length - 1 ? "proof-graph-breadcrumb-current" : ""}>
-                  {crumb}
+            <span className="proof-graph-breadcrumb-compact">{node.breadcrumb_label ?? node.id}</span>
+            <span className="proof-graph-breadcrumb-full" aria-hidden="true">
+              {node.breadcrumb.map((crumb, i) => (
+                <span key={`${crumb}-${i}`}>
+                  {i > 0 ? <span className="proof-graph-breadcrumb-sep"> › </span> : null}
+                  <span className={i === node.breadcrumb.length - 1 ? "proof-graph-breadcrumb-current" : ""}>
+                    {crumb}
+                  </span>
                 </span>
-              </span>
-            ))}
+              ))}
+            </span>
           </nav>
           <div className="proof-graph-panel-title-row">
             <div>
@@ -149,7 +153,8 @@ export function ProofGraphDrilldown({
               className={tab === t.id ? "proof-graph-tab proof-graph-tab-active" : "proof-graph-tab"}
               onClick={() => setTab(t.id)}
             >
-              {t.label}
+              <span className="proof-graph-tab-long">{t.label}</span>
+              <span className="proof-graph-tab-short">{t.shortLabel}</span>
             </button>
           ))}
         </div>
@@ -164,14 +169,18 @@ export function ProofGraphDrilldown({
                 onNavigateToNode={onSelectNode}
               />
               {node.context ? (
-                <section>
+                <section className="proof-graph-section">
                   <h3>Context</h3>
-                  <p>{node.context}</p>
+                  <CollapsibleText text={node.context} className="proof-readable" maxChars={280} />
                 </section>
               ) : null}
-              <section>
+              <section className="proof-graph-section">
                 <h3>What it claims</h3>
-                <p>{node.statement ?? "No statement recorded."}</p>
+                <CollapsibleText
+                  text={node.statement ?? "No statement recorded."}
+                  className="proof-readable"
+                  maxChars={320}
+                />
               </section>
               <section>
                 <h3>Why it matters</h3>
@@ -347,7 +356,7 @@ export function ProofGraphDrilldown({
                         {edge ? (
                           <span className="proof-graph-edge-kind">{EDGE_KIND_LABELS[edge.kind] ?? edge.kind}</span>
                         ) : null}
-                        <span className="proof-graph-related-stmt">{(r.statement ?? "").slice(0, 100)}</span>
+                        <span className="proof-graph-related-stmt">{r.statement ?? ""}</span>
                       </button>
                     </li>
                   );
