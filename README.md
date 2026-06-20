@@ -27,6 +27,7 @@ Outputs:
 
 - `data/library.json` â€” entries with `catalog_status`, `lean_status`, `diverges`
 - `data/posture.json` â€” G-* rows from `provability-gaps.md`
+- `data/proof-graph.json` â€” relationship graph for `/graph` (regenerate via `scripts/build-proof-graph.py`)
 
 ## Local web dev
 
