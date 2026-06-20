@@ -27,6 +27,10 @@ export type ProofGraphNode = {
   lean_thm_prefix?: string | null;
   theorem_family?: string | null;
   li_specimen?: string | null;
+  li_axiom_symbol?: string | null;
+  specimen_role?: string | null;
+  li_package_impl?: string | null;
+  li_package_snippet?: ProofGraphSnippet | null;
   source_toml?: string | null;
   corpus_file?: string | null;
   breadcrumb: string[];

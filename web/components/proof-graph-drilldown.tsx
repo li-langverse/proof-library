@@ -226,11 +226,27 @@ export function ProofGraphDrilldown({
 
           {tab === "li" ? (
             <div className="proof-graph-tab-panel">
+              {node.specimen_role ? (
+                <p className="proof-graph-kw-hint">
+                  Specimen role: <strong>{node.specimen_role}</strong>
+                  {node.li_axiom_symbol ? (
+                    <>
+                      {" "}
+                      · axiom symbol <code className="mono">{node.li_axiom_symbol}</code>
+                    </>
+                  ) : null}
+                </p>
+              ) : null}
               {node.li_specimen ? (
                 <p className="mono proof-graph-path-line">{node.li_specimen}</p>
               ) : null}
               {node.li_snippet ? (
-                <ProofCodeBlock snippet={snippetFromGraph(node.li_snippet, "li", "Li specimen")} />
+                <>
+                  <h3>Proof-db specimen (axiom contract / witness)</h3>
+                  <ProofCodeBlock
+                    snippet={snippetFromGraph(node.li_snippet, "li", "Catalog specimen")}
+                  />
+                </>
               ) : (
                 <p className="proof-graph-empty">
                   {node.li_specimen
@@ -238,6 +254,24 @@ export function ProofGraphDrilldown({
                     : "No li_specimen linked for this entry."}
                 </p>
               )}
+              {node.li_package_impl && node.li_package_snippet ? (
+                <>
+                  <h3>Package implementation</h3>
+                  <p className="mono proof-graph-path-line">{node.li_package_impl}</p>
+                  <ProofCodeBlock
+                    snippet={snippetFromGraph(
+                      node.li_package_snippet,
+                      "li",
+                      "Runtime package API",
+                    )}
+                  />
+                </>
+              ) : node.proof_status === "axiomatic" ? (
+                <p className="proof-graph-empty">
+                  Axiomatic rows should link a built Li axiom layer via <code>li_specimen</code> and{" "}
+                  <code>li_package_impl</code>.
+                </p>
+              ) : null}
             </div>
           ) : null}
 
