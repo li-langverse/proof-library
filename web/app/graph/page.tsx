@@ -17,8 +17,8 @@ export default function ProofGraphPage() {
         <h2>Proof relationship graph</h2>
         <p>
           Explore how catalog entries connect — shared Lean modules, theorem prefixes, corpus subsections,
-          and theorem families. Colours follow field and subsection; Erdős register is hidden by default
-          for performance.
+          and theorem families. Layout is <strong>precomputed at build time</strong> (section clusters); use
+          the legend, search, or drilldown to navigate. Erdős register is hidden by default.
         </p>
         <p>
           <Link href="/">← Back to full proof library</Link>

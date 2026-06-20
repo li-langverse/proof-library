@@ -36,6 +36,32 @@ export type ProofGraphNode = {
   context?: string | null;
   notes?: string | null;
   related_ids: string[];
+  /** Precomputed layout coordinate (build-time). */
+  x?: number;
+  y?: number;
+};
+
+export type ProofGraphSectionFrame = {
+  section_key: string;
+  field: string;
+  subsection: string;
+  color: string;
+  count: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  cx: number;
+  cy: number;
+};
+
+export type ProofGraphLayout = {
+  version: number;
+  precomputed: boolean;
+  width: number;
+  height: number;
+  bounds: { x: number; y: number; width: number; height: number };
+  section_frames: ProofGraphSectionFrame[];
 };
 
 export type ProofGraphEdge = {
@@ -57,6 +83,7 @@ export type ProofGraph = {
   lic_root: string;
   lic_commit: string | null;
   explain_llm_hook?: string | null;
+  layout?: ProofGraphLayout;
   summary: {
     nodes: number;
     edges: number;

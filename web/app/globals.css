@@ -758,6 +758,76 @@ main {
   font-size: 0.9rem;
   color: var(--muted);
 }
+.proof-graph-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.proof-graph-search {
+  min-width: 220px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+}
+.proof-graph-nav-btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.proof-graph-nav-btn:hover {
+  border-color: var(--accent);
+}
+.proof-graph-search-results {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.proof-graph-search-hit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.proof-graph-search-hit strong {
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+}
+.proof-graph-search-hit span {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.proof-graph-legend-btn {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+.proof-graph-legend-btn:hover,
+.proof-graph-legend-active {
+  border-color: var(--border);
+  background: rgba(88, 166, 255, 0.08);
+}
 .proof-graph-stats {
   color: var(--muted);
   font-size: 0.85rem;
