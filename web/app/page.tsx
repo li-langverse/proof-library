@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import { Header } from "@/components/shell/header";
 import { ProofLibraryBoard } from "@/components/proof-library-board";
@@ -32,6 +33,10 @@ export default function HomePage() {
           <strong>Lean scan</strong>, then vote what you believe.
         </p>
         <ul className="intro-list">
+          <li>
+            <strong>Proof graph</strong> —{" "}
+            <Link href="/graph">interactive relationship map</Link> coloured by corpus section
+          </li>
           <li>
             <strong>Catalog</strong> — <code>proof_status</code> in{" "}
             <code>lic/docs/verification/proof-database/</code>
