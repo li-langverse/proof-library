@@ -39,7 +39,13 @@ Open at [proofs.lilangverse.xyz](https://proofs.lilangverse.xyz/) (site root). F
 
 ## Deploy
 
-GitHub Actions workflow `.github/workflows/pages.yml` builds `web/` and publishes to GitHub Pages.
+**Primary:** GitLab CI **Pages** (`.gitlab-ci.yml`) on `main` → [proofs.lilangverse.xyz](https://proofs.lilangverse.xyz/). GitLab is source of truth; push to `origin` only.
+
+**Backup:** `.github/workflows/pages.yml` mirrors to GitHub Pages for redundancy. Optional one-way sync:
+
+```powershell
+powershell -File scripts/sync-github-main.ps1   # GitLab main → GitHub copy only
+```
 
 ## Human votes
 

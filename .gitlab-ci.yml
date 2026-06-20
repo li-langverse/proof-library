@@ -1,0 +1,36 @@
+# GitLab-primary: Pages host for proofs.lilangverse.xyz
+# GitHub Actions pages.yml is legacy backup only — do not develop on GitHub.
+
+stages:
+  - publish
+
+variables:
+  GIT_DEPTH: "1"
+
+pages:
+  stage: publish
+  image: node:22-bookworm
+  timeout: 30m
+  script:
+    - cd web
+    - npm ci
+    - NEXT_PUBLIC_BASE_PATH="" npm run build
+    - mkdir -p out/data
+    - cp ../data/library.json out/data/ 2>/dev/null || true
+    - cp ../data/posture.json out/data/ 2>/dev/null || true
+    - cp ../data/proof-graph.json out/data/ 2>/dev/null || true
+    - echo "proofs.lilangverse.xyz" > out/CNAME
+    - test -s out/index.html
+    - cd ..
+    - rm -rf public && mkdir -p public && cp -a web/out/. public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      changes:
+        - web/**
+        - data/**
+        - scripts/**
+        - .gitlab-ci.yml
+    - if: $CI_PIPELINE_SOURCE == "web"

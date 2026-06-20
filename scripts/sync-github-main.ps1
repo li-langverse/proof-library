@@ -1,5 +1,5 @@
-# Push GitLab primary main -> GitHub li-langverse/proof-library (Pages host).
-# GitHub remote is fetch-only locally; this uses org PAT from k8s secret or GH_MIRROR_TOKEN.
+# Optional backup: push GitLab primary main → GitHub li-langverse/proof-library (read-only mirror).
+# Production Pages host is GitLab CI (.gitlab-ci.yml) → proofs.lilangverse.xyz
 param(
     [string]$KubeConfig = "$env:USERPROFILE\.kube\config-homelab",
     [string]$SecretNamespace = "li-swarm",
@@ -34,9 +34,9 @@ try {
 
     if (-not $SkipWorkflow) {
         gh workflow run "Deploy proof library site" --ref main
-        Write-Host "Triggered GitHub Pages deploy workflow"
+        Write-Host "Triggered GitHub Pages backup workflow (GitLab Pages is primary)"
     }
-    Write-Host "OK: GitLab main synced to github.com/li-langverse/proof-library main"
+    Write-Host "OK: GitLab main copied to github.com/li-langverse/proof-library (backup mirror)"
 } finally {
     Pop-Location
 }
