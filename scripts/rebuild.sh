@@ -14,4 +14,5 @@ fi
 export LIC_ROOT="${LIC:-$ROOT/../lic}"
 python3 "$ROOT/scripts/build-library.py"
 python3 "$ROOT/scripts/build-posture.py"
+python3 "$ROOT/scripts/build-proof-graph.py"
 echo "ok: $ROOT/data/library.json"

@@ -42,6 +42,7 @@ jobs:
           mkdir -p out/data
           cp ../data/library.json out/data/ 2>/dev/null || true
           cp ../data/posture.json out/data/ 2>/dev/null || true
+          cp ../data/proof-graph.json out/data/ 2>/dev/null || true
           echo "proofs.lilangverse.xyz" > out/CNAME
 
       - name: Verify artifact
