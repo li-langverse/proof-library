@@ -18,7 +18,14 @@ const UNICODE_TO_LATEX: Record<string, string> = {
   "\u211d": "\\mathbb{R}",
   "\u2115": "\\mathbb{N}",
   "\u2124": "\\mathbb{Z}",
-  "\u211a": "\\mathbb{Q}",
+  "\u03b3": "\\gamma",
+  "\u03b2": "\\beta",
+  "\u03b1": "\\alpha",
+  "\u03c4": "\\tau",
+  "\u221a": "\\sqrt",
+  "\u2212": "-",
+  "\u00b2": "^2",
+  "\u00b3": "^3",
 };
 
 function replaceUnicodeMath(input: string): string {
@@ -65,4 +72,17 @@ export function leanFormalToLatex(content: string): string | null {
   const expr = extractLeanTypeExpr(content);
   if (!expr) return null;
   return replaceLeanTokens(replaceUnicodeMath(expr));
+}
+
+/** Convert catalog statement text (unicode physics/math) to KaTeX. */
+export function statementToLatex(statement: string | null | undefined): string | null {
+  if (!statement?.trim()) return null;
+  const text = statement.trim();
+  if (text.includes("\\") || text.includes("$")) {
+    return text.replace(/\$/g, "").trim();
+  }
+  let latex = replaceUnicodeMath(text);
+  latex = latex.replace(/O\(h\^2\)/g, "O(h^{2})");
+  latex = latex.replace(/mc²/g, "mc^2");
+  return latex.replace(/\s+/g, " ").trim() || null;
 }

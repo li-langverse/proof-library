@@ -41,6 +41,8 @@ export type ProofGraphNode = {
   breadcrumb_label: string;
   lean_snippet?: ProofGraphSnippet | null;
   li_snippet?: ProofGraphSnippet | null;
+  /** KaTeX-ready formal statement (build-time). */
+  formal_latex?: string | null;
   context?: string | null;
   notes?: string | null;
   related_ids: string[];

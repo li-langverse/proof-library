@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { ProofCodeBlock } from "@/components/proof-code-block";
+import { ProofFormalMath } from "@/components/proof-formal-math";
 import { ProofMarkdown } from "@/components/proof-markdown";
 import {
   EDGE_KIND_LABELS,
@@ -10,15 +11,17 @@ import {
   type ProofGraphNode,
 } from "@/lib/proof-graph-types";
 import { buildExplainMarkdown, edgesForNode, nodeDisplayName } from "@/lib/proof-graph-utils";
+import { leanFormalToLatex, statementToLatex } from "@/lib/lean-formal-latex";
 import { proofStatusBadgeClass } from "@/lib/proof-library-types";
 import type { ProofCodeSnippet } from "@/lib/proof-library-types";
 
-type TabId = "overview" | "proof" | "lean" | "li" | "related" | "explain";
+type TabId = "overview" | "proof" | "lean" | "latex" | "li" | "related" | "explain";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "overview", label: "Overview" },
   { id: "proof", label: "How we proved it" },
   { id: "lean", label: "Formal (Lean)" },
+  { id: "latex", label: "Formal (LaTeX)" },
   { id: "li", label: "Li code" },
   { id: "related", label: "Related" },
   { id: "explain", label: "Explain" },
@@ -75,6 +78,14 @@ export function ProofGraphDrilldown({
   const edgeDetails = useMemo(() => edgesForNode(graph, node.id), [graph, node.id]);
 
   const explainMd = useMemo(() => buildExplainMarkdown(node, related), [node, related]);
+
+  const formalLatex = useMemo(() => {
+    if (node.formal_latex) return node.formal_latex;
+    if (node.lean_snippet?.content) {
+      return leanFormalToLatex(node.lean_snippet.content);
+    }
+    return statementToLatex(node.statement);
+  }, [node.formal_latex, node.lean_snippet, node.statement]);
 
   const copyContext = useCallback(async () => {
     try {
@@ -229,6 +240,35 @@ export function ProofGraphDrilldown({
                   No Lean snippet extracted
                   {node.lean_module ? ` from ${node.lean_module}` : ""}.
                   Rebuild graph data after adding <code>lean_thm</code>.
+                </p>
+              )}
+            </div>
+          ) : null}
+
+          {tab === "latex" ? (
+            <div className="proof-graph-tab-panel">
+              {formalLatex ? (
+                <>
+                  <p className="proof-graph-kw-hint">
+                    Rendered with KaTeX
+                    {node.lean_snippet?.symbol ? (
+                      <>
+                        {" "}
+                        from Lean symbol <code className="mono">{node.lean_snippet.symbol}</code>
+                      </>
+                    ) : node.formal_latex ? (
+                      <> from build-time <code className="mono">formal_latex</code></>
+                    ) : (
+                      <> from catalog statement</>
+                    )}
+                    .
+                  </p>
+                  <ProofFormalMath latex={formalLatex} />
+                </>
+              ) : (
+                <p className="proof-graph-empty">
+                  No formal LaTeX available. Rebuild graph data after adding{" "}
+                  <code>lean_thm</code> or a math-rich <code>statement</code>.
                 </p>
               )}
             </div>
