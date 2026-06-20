@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { ProofCodeBlock } from "@/components/proof-code-block";
+import { ProofMarkdown } from "@/components/proof-markdown";
 import {
   EDGE_KIND_LABELS,
   TECHNIQUE_LABELS,
@@ -140,7 +141,7 @@ export function ProofGraphDrilldown({
         <div className="proof-graph-panel-body">
           {tab === "overview" ? (
             <div className="proof-graph-tab-panel">
-              <p className="proof-graph-summary">{node.plain_summary}</p>
+              <ProofMarkdown source={node.plain_summary} className="proof-graph-summary-md" />
               {node.context ? (
                 <section>
                   <h3>Context</h3>
@@ -285,7 +286,7 @@ export function ProofGraphDrilldown({
               <button type="button" className="proof-export-btn" onClick={() => void copyContext()}>
                 {copied ? "Copied!" : "Copy context for ChatGPT / Claude / Cursor"}
               </button>
-              <pre className="proof-graph-explain-preview mono">{explainMd}</pre>
+              <ProofMarkdown source={explainMd} className="proof-graph-explain-md" />
             </div>
           ) : null}
         </div>

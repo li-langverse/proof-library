@@ -1031,6 +1031,73 @@ main {
   overflow: auto;
   white-space: pre-wrap;
 }
+.proof-markdown {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+.proof-markdown-h1,
+.proof-markdown-h2,
+.proof-markdown-h3 {
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.proof-markdown-h1:first-child,
+.proof-markdown-h2:first-child,
+.proof-markdown-h3:first-child {
+  margin-top: 0;
+}
+.proof-markdown-h1 {
+  font-size: 1.05rem;
+}
+.proof-markdown-h2 {
+  font-size: 0.95rem;
+}
+.proof-markdown-h3 {
+  font-size: 0.9rem;
+}
+.proof-markdown-p {
+  margin: 0.5rem 0;
+}
+.proof-markdown-ul,
+.proof-markdown-ol {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.25rem;
+}
+.proof-markdown-li {
+  margin: 0.25rem 0;
+}
+.proof-markdown-inline {
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(110, 118, 129, 0.2);
+  font-size: 0.85em;
+}
+.proof-markdown-pre {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  overflow: auto;
+  max-height: 280px;
+  font-size: 0.78rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.proof-markdown-link {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.proof-graph-explain-md,
+.proof-graph-summary-md {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-height: min(60vh, 520px);
+  overflow: auto;
+}
 .proof-graph-llm-hook {
   font-size: 0.75rem;
   color: var(--muted);
