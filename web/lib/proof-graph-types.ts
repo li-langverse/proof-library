@@ -138,6 +138,7 @@ export const TECHNIQUE_LABELS: Record<string, string> = {
   autovc: "AutoVC discharge",
   open_vc: "Open VC",
   lean_discharge: "Lean discharge",
+  erdos_target: "Erdős open target (literature anchor)",
   unknown: "Unknown",
 };
 
