@@ -20,6 +20,10 @@ export type ProofGraphNode = {
   gap_kind?: string | null;
   gap_id?: string | null;
   statement?: string | null;
+  /** Human-readable title (usually trimmed statement). */
+  display_name?: string | null;
+  /** Lowercase blob for full-text search (build-time). */
+  search_text?: string | null;
   plain_summary: string;
   proof_technique: string;
   lean_module?: string | null;
@@ -57,6 +61,8 @@ export type ProofGraphSectionFrame = {
   height: number;
   cx: number;
   cy: number;
+  /** Human label e.g. "physics · relativity". */
+  label?: string | null;
 };
 
 export type ProofGraphLayout = {

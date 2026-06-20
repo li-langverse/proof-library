@@ -9,7 +9,7 @@ import {
   type ProofGraph,
   type ProofGraphNode,
 } from "@/lib/proof-graph-types";
-import { buildExplainMarkdown, edgesForNode } from "@/lib/proof-graph-utils";
+import { buildExplainMarkdown, edgesForNode, nodeDisplayName } from "@/lib/proof-graph-utils";
 import { proofStatusBadgeClass } from "@/lib/proof-library-types";
 import type { ProofCodeSnippet } from "@/lib/proof-library-types";
 
@@ -50,6 +50,7 @@ function StatusBadge({ status }: { status: string }) {
 type ProofGraphDrilldownProps = {
   graph: ProofGraph;
   node: ProofGraphNode;
+  knownNodeIds?: Set<string>;
   onClose: () => void;
   onSelectNode: (id: string) => void;
   explainLlmUrl?: string | null;
@@ -58,6 +59,7 @@ type ProofGraphDrilldownProps = {
 export function ProofGraphDrilldown({
   graph,
   node,
+  knownNodeIds,
   onClose,
   onSelectNode,
   explainLlmUrl,
@@ -107,9 +109,12 @@ export function ProofGraphDrilldown({
             ))}
           </nav>
           <div className="proof-graph-panel-title-row">
-            <h2 id="graph-panel-title" className="mono proof-graph-panel-id">
-              {node.id}
-            </h2>
+            <div>
+              <h2 id="graph-panel-title" className="proof-graph-panel-title">
+                {nodeDisplayName(node)}
+              </h2>
+              <p className="mono proof-graph-panel-id">{node.id}</p>
+            </div>
             <button type="button" className="proof-graph-panel-close" onClick={onClose} aria-label="Close">
               ×
             </button>
@@ -141,7 +146,12 @@ export function ProofGraphDrilldown({
         <div className="proof-graph-panel-body">
           {tab === "overview" ? (
             <div className="proof-graph-tab-panel">
-              <ProofMarkdown source={node.plain_summary} className="proof-graph-summary-md" />
+              <ProofMarkdown
+                source={node.plain_summary}
+                className="proof-graph-summary-md"
+                knownNodeIds={knownNodeIds}
+                onNavigateToNode={onSelectNode}
+              />
               {node.context ? (
                 <section>
                   <h3>Context</h3>
@@ -291,7 +301,8 @@ export function ProofGraphDrilldown({
                   return (
                     <li key={r.id}>
                       <button type="button" className="proof-graph-related-btn" onClick={() => onSelectNode(r.id)}>
-                        <span className="mono">{r.id}</span>
+                        <span className="proof-graph-related-title">{nodeDisplayName(r)}</span>
+                        <span className="mono proof-graph-related-id">{r.id}</span>
                         <StatusBadge status={r.proof_status ?? "?"} />
                         {edge ? (
                           <span className="proof-graph-edge-kind">{EDGE_KIND_LABELS[edge.kind] ?? edge.kind}</span>
@@ -320,7 +331,12 @@ export function ProofGraphDrilldown({
               <button type="button" className="proof-export-btn" onClick={() => void copyContext()}>
                 {copied ? "Copied!" : "Copy context for ChatGPT / Claude / Cursor"}
               </button>
-              <ProofMarkdown source={explainMd} className="proof-graph-explain-md" />
+              <ProofMarkdown
+                source={explainMd}
+                className="proof-graph-explain-md"
+                knownNodeIds={knownNodeIds}
+                onNavigateToNode={onSelectNode}
+              />
             </div>
           ) : null}
         </div>

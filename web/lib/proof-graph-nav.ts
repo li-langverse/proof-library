@@ -31,11 +31,12 @@ export function fitTransform(
   viewW: number,
   viewH: number,
   padding = 32,
+  maxScale = 8,
 ): GraphTransform {
   const scale = Math.min(
     (viewW - padding * 2) / Math.max(bounds.width, 1),
     (viewH - padding * 2) / Math.max(bounds.height, 1),
-    2.5,
+    maxScale,
   );
   const cx = bounds.x + bounds.width / 2;
   const cy = bounds.y + bounds.height / 2;

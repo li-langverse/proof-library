@@ -17,8 +17,15 @@ import {
   type ProofGraphNode,
   type ProofGraphSectionFrame,
 } from "@/lib/proof-graph-types";
+import {
+  aggregateSectionEdges,
+  nodeDisplayName,
+  searchGraphNodes,
+  sectionDisplayName,
+} from "@/lib/proof-graph-utils";
 
 type DrawNode = ProofGraphNode & { x: number; y: number };
+type ViewMode = "corpus" | "proofs";
 
 const DEFAULT_EXCLUDE_FIELDS = new Set(["erdos"]);
 
@@ -31,11 +38,13 @@ function filterNodes(
   fieldFilter: string,
   statusFilter: string,
   excludeErdos: boolean,
+  sectionFilter: string | null,
 ): ProofGraphNode[] {
   return graph.nodes.filter((n) => {
     if (excludeErdos && n.field === "erdos") return false;
     if (fieldFilter && n.field !== fieldFilter) return false;
     if (statusFilter && (n.proof_status ?? "") !== statusFilter) return false;
+    if (sectionFilter && n.section_key !== sectionFilter) return false;
     return true;
   });
 }
@@ -65,28 +74,37 @@ function withLayout(nodes: ProofGraphNode[], width: number, height: number): Dra
   });
 }
 
+function sectionRadius(count: number): number {
+  return Math.min(72, Math.max(28, 16 + Math.sqrt(count) * 5));
+}
+
 export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const nodesRef = useRef<DrawNode[]>([]);
   const edgesRef = useRef<ProofGraphEdge[]>([]);
   const transformRef = useRef<GraphTransform>({ x: 0, y: 0, scale: 1 });
-  const dragRef = useRef<{ mode: "pan" | "node" | null; id?: string; lastX: number; lastY: number }>({
+  const dragRef = useRef<{ mode: "pan" | "node" | "section" | null; id?: string; lastX: number; lastY: number }>({
     mode: null,
     lastX: 0,
     lastY: 0,
   });
   const fitPendingRef = useRef(true);
+  const hoverRef = useRef<{ kind: "node" | "section" | null; id?: string }>({ kind: null });
 
+  const [viewMode, setViewMode] = useState<ViewMode>("corpus");
   const [fieldFilter, setFieldFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [excludeErdos, setExcludeErdos] = useState(true);
+  const [sectionFilter, setSectionFilter] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [size, setSize] = useState({ w: 900, h: 520 });
+  const [hoverCursor, setHoverCursor] = useState<"default" | "pointer" | "grab" | "grabbing">("grab");
+  const [size, setSize] = useState({ w: 900, h: 560 });
 
   const precomputed = graphHasPrecomputedLayout(graph);
+  const knownNodeIds = useMemo(() => new Set(graph.nodes.map((n) => n.id)), [graph.nodes]);
 
   const fields = useMemo(
     () => [...new Set(graph.nodes.map((n) => n.field))].filter(Boolean).sort(),
@@ -97,46 +115,24 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     [graph.nodes],
   );
 
+  const sectionFrames = useMemo(() => {
+    let frames = graph.layout?.section_frames ?? [];
+    if (fieldFilter) frames = frames.filter((f) => f.field === fieldFilter);
+    if (excludeErdos) frames = frames.filter((f) => f.field !== "erdos");
+    return frames;
+  }, [graph.layout?.section_frames, fieldFilter, excludeErdos]);
+
   const visibleNodes = useMemo(
-    () => filterNodes(graph, fieldFilter, statusFilter, excludeErdos),
-    [graph, fieldFilter, statusFilter, excludeErdos],
+    () => filterNodes(graph, fieldFilter, statusFilter, excludeErdos, sectionFilter),
+    [graph, fieldFilter, statusFilter, excludeErdos, sectionFilter],
   );
   const visibleEdges = useMemo(() => filterEdges(visibleNodes, graph.edges), [visibleNodes, graph.edges]);
+  const sectionEdges = useMemo(() => aggregateSectionEdges(graph), [graph]);
 
-  const sectionFrames = useMemo(() => {
-    const frames = graph.layout?.section_frames ?? [];
-    if (!fieldFilter) return frames;
-    return frames.filter((f) => f.field === fieldFilter);
-  }, [graph.layout?.section_frames, fieldFilter]);
-
-  const visibleSections = useMemo(() => {
-    const counts = new Map<string, { color: string; label: string; count: number; section_key: string }>();
-    for (const n of visibleNodes) {
-      const cur = counts.get(n.section_key);
-      if (cur) cur.count += 1;
-      else
-        counts.set(n.section_key, {
-          color: n.color,
-          label: n.section_key,
-          count: 1,
-          section_key: n.section_key,
-        });
-    }
-    return [...counts.values()].sort((a, b) => a.label.localeCompare(b.label));
-  }, [visibleNodes]);
-
-  const searchMatches = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return [];
-    return visibleNodes
-      .filter(
-        (n) =>
-          n.id.toLowerCase().includes(q) ||
-          (n.statement ?? "").toLowerCase().includes(q) ||
-          (n.lean_thm ?? "").toLowerCase().includes(q),
-      )
-      .slice(0, 12);
-  }, [searchQuery, visibleNodes]);
+  const searchMatches = useMemo(
+    () => searchGraphNodes(filterNodes(graph, fieldFilter, statusFilter, excludeErdos, null), searchQuery, 16),
+    [graph, fieldFilter, statusFilter, excludeErdos, searchQuery],
+  );
 
   const selectedNode = useMemo(
     () => (selectedId ? graph.nodes.find((n) => n.id === selectedId) ?? null : null),
@@ -144,58 +140,62 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
   );
 
   const applyFit = useCallback(
-    (nodes: DrawNode[], viewW: number, viewH: number) => {
-      const bounds = boundsForNodes(nodes) ?? defaultGraphBounds(graph);
+    (bounds: { x: number; y: number; width: number; height: number } | null, viewW: number, viewH: number) => {
       if (!bounds) return;
-      transformRef.current = fitTransform(bounds, viewW, viewH);
+      transformRef.current = fitTransform(bounds, viewW, viewH, 40, viewMode === "corpus" ? 1.2 : 4);
       fitPendingRef.current = false;
     },
-    [graph],
+    [viewMode],
   );
+
+  const fitCorpus = useCallback(() => {
+    const bounds = defaultGraphBounds(graph);
+    if (bounds) applyFit(bounds, size.w, size.h);
+    setActiveSection(null);
+    setSectionFilter(null);
+    drawRef.current?.();
+  }, [applyFit, graph, size.w, size.h]);
 
   const flyToNode = useCallback(
     (id: string) => {
-      const node = nodesRef.current.find((n) => n.id === id);
+      setViewMode("proofs");
+      setSectionFilter(null);
+      const node = graph.nodes.find((n) => n.id === id);
       if (!node) return;
-      const t = focusNodeTransform(node, size.w, size.h);
-      if (t) transformRef.current = t;
+      nodesRef.current = withLayout(
+        filterNodes(graph, fieldFilter, statusFilter, excludeErdos, null),
+        graph.layout?.width ?? size.w,
+        graph.layout?.height ?? size.h,
+      );
+      const placed = nodesRef.current.find((n) => n.id === id);
+      if (placed) {
+        const t = focusNodeTransform(placed, size.w, size.h, 1.5);
+        if (t) transformRef.current = t;
+      }
       setSelectedId(id);
       setActiveSection(node.section_key);
       drawRef.current?.();
     },
-    [size.w, size.h],
+    [graph, fieldFilter, statusFilter, excludeErdos, size.w, size.h],
   );
 
   const flyToSection = useCallback(
-    (frame: ProofGraphSectionFrame | { section_key: string }) => {
-      const full =
-        graph.layout?.section_frames.find((f) => f.section_key === frame.section_key) ??
-        (frame as ProofGraphSectionFrame);
-      if (full && typeof full.x === "number") {
-        transformRef.current = fitTransform(
-          { x: full.x, y: full.y, width: full.width, height: full.height },
-          size.w,
-          size.h,
-          24,
-        );
-      } else {
-        const sectionNodes = nodesRef.current.filter((n) => n.section_key === frame.section_key);
-        const bounds = boundsForNodes(sectionNodes);
-        if (bounds) transformRef.current = fitTransform(bounds, size.w, size.h);
-      }
+    (frame: ProofGraphSectionFrame) => {
+      setViewMode("proofs");
+      setSectionFilter(frame.section_key);
       setActiveSection(frame.section_key);
       setSelectedId(null);
+      fitPendingRef.current = true;
       drawRef.current?.();
     },
-    [graph.layout?.section_frames, size.w, size.h],
+    [],
   );
 
   const drawRef = useRef<(() => void) | null>(null);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
-    const sim = nodesRef.current;
-    if (!canvas || !sim.length) return;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const dpr = window.devicePixelRatio || 1;
@@ -213,52 +213,88 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     ctx.translate(tx, ty);
     ctx.scale(scale, scale);
 
-    if (precomputed && graph.layout?.section_frames) {
-      for (const frame of graph.layout.section_frames) {
-        if (fieldFilter && frame.field !== fieldFilter) continue;
+    if (viewMode === "corpus") {
+      const frameIds = new Set(sectionFrames.map((f) => f.section_key));
+      const secEdges = sectionEdges.filter(
+        (e) => frameIds.has(e.source) && frameIds.has(e.target),
+      );
+      const frameByKey = new Map(sectionFrames.map((f) => [f.section_key, f]));
+
+      for (const e of secEdges) {
+        const a = frameByKey.get(e.source);
+        const b = frameByKey.get(e.target);
+        if (!a || !b) continue;
+        ctx.strokeStyle = "rgba(88, 166, 255, 0.15)";
+        ctx.lineWidth = Math.min(3, 0.5 + e.weight / 8) / scale;
+        ctx.beginPath();
+        ctx.moveTo(a.cx, a.cy);
+        ctx.lineTo(b.cx, b.cy);
+        ctx.stroke();
+      }
+
+      for (const frame of sectionFrames) {
+        const r = sectionRadius(frame.count);
         const isActive = activeSection === frame.section_key;
-        ctx.strokeStyle = isActive ? "rgba(88, 166, 255, 0.55)" : "rgba(48, 54, 61, 0.35)";
-        ctx.lineWidth = isActive ? 2 / scale : 1 / scale;
-        ctx.setLineDash(isActive ? [] : [6 / scale, 4 / scale]);
-        ctx.strokeRect(frame.x, frame.y, frame.width, frame.height);
-        ctx.setLineDash([]);
-        if (scale > 0.35) {
-          ctx.fillStyle = "rgba(139, 148, 158, 0.85)";
-          ctx.font = `${Math.max(10, 12 / scale)}px ui-monospace, monospace`;
-          ctx.fillText(frame.section_key, frame.x + 8 / scale, frame.y + 16 / scale);
+        const isHover = hoverRef.current.kind === "section" && hoverRef.current.id === frame.section_key;
+        ctx.beginPath();
+        ctx.fillStyle = frame.color + (isActive || isHover ? "ee" : "99");
+        ctx.arc(frame.cx, frame.cy, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = isActive ? "#e6edf3" : "rgba(48, 54, 61, 0.8)";
+        ctx.lineWidth = (isActive ? 2.5 : 1) / scale;
+        ctx.stroke();
+
+        const label = frame.label ?? sectionDisplayName(frame.section_key);
+        ctx.fillStyle = "#e6edf3";
+        ctx.font = `600 ${Math.max(11, 13 / scale)}px system-ui, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText(label, frame.cx, frame.cy - 4 / scale);
+        ctx.fillStyle = "rgba(139, 148, 158, 0.95)";
+        ctx.font = `${Math.max(9, 11 / scale)}px system-ui, sans-serif`;
+        ctx.fillText(`${frame.count} proofs`, frame.cx, frame.cy + 12 / scale);
+        ctx.textAlign = "left";
+      }
+    } else {
+      const sim = nodesRef.current;
+      const byId = new Map(sim.map((n) => [n.id, n]));
+
+      ctx.lineWidth = 1 / scale;
+      for (const e of edgesRef.current) {
+        const a = byId.get(e.source);
+        const b = byId.get(e.target);
+        if (!a || !b) continue;
+        ctx.strokeStyle = "rgba(48, 54, 61, 0.85)";
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+
+      for (const n of sim) {
+        const isSel = selectedId === n.id;
+        const isHover = hoverRef.current.kind === "node" && hoverRef.current.id === n.id;
+        const r = (isSel || isHover ? 10 : 7) / scale;
+        ctx.beginPath();
+        ctx.fillStyle = n.color;
+        ctx.arc(n.x, n.y, Math.max(r, 3), 0, Math.PI * 2);
+        ctx.fill();
+        if (isSel || isHover) {
+          ctx.strokeStyle = "#e6edf3";
+          ctx.lineWidth = 2 / scale;
+          ctx.stroke();
+        }
+        if (scale > 0.55 || isSel || isHover) {
+          const label = nodeDisplayName(n);
+          const short = label.length > 42 ? `${label.slice(0, 39)}…` : label;
+          ctx.fillStyle = "#e6edf3";
+          ctx.font = `${Math.max(9, 10 / scale)}px system-ui, sans-serif`;
+          ctx.fillText(short, n.x + 10 / scale, n.y + 3 / scale);
         }
       }
     }
 
-    const byId = new Map(sim.map((n) => [n.id, n]));
-
-    ctx.lineWidth = 1 / scale;
-    for (const e of edgesRef.current) {
-      const a = byId.get(e.source);
-      const b = byId.get(e.target);
-      if (!a || !b) continue;
-      ctx.strokeStyle = "rgba(48, 54, 61, 0.85)";
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
-    }
-
-    for (const n of sim) {
-      const r = (selectedId === n.id ? 9 : 6) / scale;
-      ctx.beginPath();
-      ctx.fillStyle = n.color;
-      ctx.arc(n.x, n.y, Math.max(r, 3), 0, Math.PI * 2);
-      ctx.fill();
-      if (selectedId === n.id) {
-        ctx.strokeStyle = "#e6edf3";
-        ctx.lineWidth = 2 / scale;
-        ctx.stroke();
-      }
-    }
-
     ctx.restore();
-  }, [size.w, size.h, selectedId, precomputed, graph.layout?.section_frames, fieldFilter, activeSection]);
+  }, [size.w, size.h, selectedId, viewMode, sectionFrames, sectionEdges, activeSection]);
 
   drawRef.current = draw;
 
@@ -266,32 +302,54 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     const el = containerRef.current;
     if (!el) return;
     const ro = new ResizeObserver(() => {
-      setSize({ w: el.clientWidth, h: Math.max(420, Math.min(640, el.clientWidth * 0.55)) });
+      setSize({ w: el.clientWidth, h: Math.max(480, Math.min(window.innerHeight * 0.72, 820)) });
     });
     ro.observe(el);
-    setSize({ w: el.clientWidth, h: Math.max(420, Math.min(640, el.clientWidth * 0.55)) });
+    setSize({ w: el.clientWidth, h: Math.max(480, Math.min(window.innerHeight * 0.72, 820)) });
     return () => ro.disconnect();
   }, []);
 
   useEffect(() => {
+    if (viewMode === "corpus") {
+      nodesRef.current = [];
+      edgesRef.current = [];
+      fitPendingRef.current = true;
+      return;
+    }
     nodesRef.current = withLayout(visibleNodes, graph.layout?.width ?? size.w, graph.layout?.height ?? size.h);
     edgesRef.current = visibleEdges;
     fitPendingRef.current = true;
-  }, [visibleNodes, visibleEdges, graph.layout?.width, graph.layout?.height, size.w, size.h]);
+  }, [visibleNodes, visibleEdges, graph.layout?.width, graph.layout?.height, size.w, size.h, viewMode]);
 
   useEffect(() => {
-    if (fitPendingRef.current && nodesRef.current.length) {
-      applyFit(nodesRef.current, size.w, size.h);
+    if (!fitPendingRef.current) {
+      draw();
+      return;
+    }
+    if (viewMode === "corpus") {
+      applyFit(defaultGraphBounds(graph), size.w, size.h);
+    } else if (nodesRef.current.length) {
+      applyFit(boundsForNodes(nodesRef.current) ?? defaultGraphBounds(graph), size.w, size.h);
     }
     draw();
-  }, [applyFit, draw, size.w, size.h, visibleNodes, visibleEdges]);
+  }, [applyFit, draw, size.w, size.h, visibleNodes, visibleEdges, viewMode, graph, sectionFrames]);
 
   const screenToWorld = (sx: number, sy: number) => {
     const { x: tx, y: ty, scale } = transformRef.current;
     return { x: (sx - tx) / scale, y: (sy - ty) / scale };
   };
 
-  const hitTest = (wx: number, wy: number): string | null => {
+  const hitTestSection = (wx: number, wy: number): string | null => {
+    let best: { id: string; d: number } | null = null;
+    for (const frame of sectionFrames) {
+      const r = sectionRadius(frame.count);
+      const d = Math.hypot(frame.cx - wx, frame.cy - wy);
+      if (d <= r && (!best || d < best.d)) best = { id: frame.section_key, d };
+    }
+    return best?.id ?? null;
+  };
+
+  const hitTestNode = (wx: number, wy: number): string | null => {
     const scale = transformRef.current.scale;
     const hitR = 14 / scale;
     let best: { id: string; d: number } | null = null;
@@ -302,30 +360,67 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     return best?.id ?? null;
   };
 
+  const updateHover = (sx: number, sy: number) => {
+    const { x, y } = screenToWorld(sx, sy);
+    if (viewMode === "corpus") {
+      const sec = hitTestSection(x, y);
+      hoverRef.current = sec ? { kind: "section", id: sec } : { kind: null };
+      setHoverCursor(sec ? "pointer" : dragRef.current.mode === "pan" ? "grabbing" : "grab");
+    } else {
+      const node = hitTestNode(x, y);
+      hoverRef.current = node ? { kind: "node", id: node } : { kind: null };
+      setHoverCursor(node ? "pointer" : dragRef.current.mode === "pan" ? "grabbing" : "grab");
+    }
+    draw();
+  };
+
   const onPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
     const sx = e.clientX - rect.left;
     const sy = e.clientY - rect.top;
     const { x, y } = screenToWorld(sx, sy);
-    const hit = hitTest(x, y);
-    dragRef.current = {
-      mode: hit ? "node" : "pan",
-      id: hit ?? undefined,
-      lastX: e.clientX,
-      lastY: e.clientY,
-    };
-    if (hit) {
-      setSelectedId(hit);
-      const node = nodesRef.current.find((n) => n.id === hit);
-      if (node) setActiveSection(node.section_key);
+
+    if (viewMode === "corpus") {
+      const sec = hitTestSection(x, y);
+      if (sec) {
+        const frame = sectionFrames.find((f) => f.section_key === sec);
+        if (frame) flyToSection(frame);
+        return;
+      }
+    } else {
+      const hit = hitTestNode(x, y);
+      dragRef.current = {
+        mode: hit ? "node" : "pan",
+        id: hit ?? undefined,
+        lastX: e.clientX,
+        lastY: e.clientY,
+      };
+      if (hit) {
+        setSelectedId(hit);
+        const node = nodesRef.current.find((n) => n.id === hit);
+        if (node) setActiveSection(node.section_key);
+      }
+      (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
+      return;
     }
+
+    dragRef.current = { mode: "pan", lastX: e.clientX, lastY: e.clientY };
     (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const sx = e.clientX - rect.left;
+    const sy = e.clientY - rect.top;
     const drag = dragRef.current;
-    if (!drag.mode) return;
+
+    if (!drag.mode) {
+      updateHover(sx, sy);
+      return;
+    }
+
     const dx = e.clientX - drag.lastX;
     const dy = e.clientY - drag.lastY;
     drag.lastX = e.clientX;
@@ -333,22 +428,14 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     if (drag.mode === "pan") {
       transformRef.current.x += dx;
       transformRef.current.y += dy;
-      draw();
-      return;
-    }
-    if (drag.mode === "node" && drag.id && !precomputed) {
-      const scale = transformRef.current.scale;
-      const node = nodesRef.current.find((n) => n.id === drag.id);
-      if (node) {
-        node.x += dx / scale;
-        node.y += dy / scale;
-      }
+      setHoverCursor("grabbing");
       draw();
     }
   };
 
   const onPointerUp = () => {
     dragRef.current.mode = null;
+    setHoverCursor("grab");
   };
 
   const onWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
@@ -361,7 +448,7 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     const t = transformRef.current;
     const wx = (sx - t.x) / t.scale;
     const wy = (sy - t.y) / t.scale;
-    t.scale = Math.max(0.06, Math.min(4, t.scale * factor));
+    t.scale = Math.max(0.04, Math.min(6, t.scale * factor));
     t.x = sx - wx * t.scale;
     t.y = sy - wy * t.scale;
     draw();
@@ -371,6 +458,23 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     <div className="proof-graph-explorer">
       <div className="proof-graph-toolbar">
         <label>
+          View
+          <select
+            className="erdos-explorer-select"
+            value={viewMode}
+            onChange={(e) => {
+              const mode = e.target.value as ViewMode;
+              setViewMode(mode);
+              setSelectedId(null);
+              if (mode === "corpus") setSectionFilter(null);
+              fitPendingRef.current = true;
+            }}
+          >
+            <option value="corpus">Corpus map (sections)</option>
+            <option value="proofs">Proof detail (nodes)</option>
+          </select>
+        </label>
+        <label>
           Domain
           <select
             className="erdos-explorer-select"
@@ -379,10 +483,11 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
               setFieldFilter(e.target.value);
               setSelectedId(null);
               setActiveSection(null);
+              setSectionFilter(null);
               fitPendingRef.current = true;
             }}
           >
-            <option value="">All (filtered)</option>
+            <option value="">All domains</option>
             {fields.map((f) => (
               <option key={f} value={f}>
                 {f} ({graph.summary.by_field[f] ?? 0})
@@ -410,30 +515,34 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
           </select>
         </label>
         <label className="proof-graph-search-wrap">
-          Jump to proof
+          Search corpus
           <input
             className="proof-graph-search"
             type="search"
-            placeholder="ID, theorem, statement…"
+            placeholder="Plain language, statement, ID, theorem…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && searchMatches[0]) flyToNode(searchMatches[0].id);
+              if (e.key === "Enter" && searchMatches[0]) flyToNode(searchMatches[0].node.id);
             }}
           />
         </label>
-        <button
-          type="button"
-          className="proof-graph-nav-btn"
-          onClick={() => {
-            fitPendingRef.current = true;
-            applyFit(nodesRef.current, size.w, size.h);
-            setActiveSection(null);
-            draw();
-          }}
-        >
-          Fit all
+        <button type="button" className="proof-graph-nav-btn" onClick={fitCorpus}>
+          Fit whole corpus
         </button>
+        {sectionFilter ? (
+          <button
+            type="button"
+            className="proof-graph-nav-btn"
+            onClick={() => {
+              setSectionFilter(null);
+              setViewMode("corpus");
+              fitPendingRef.current = true;
+            }}
+          >
+            ← Back to map
+          </button>
+        ) : null}
         <label className="proof-graph-check">
           <input
             type="checkbox"
@@ -448,62 +557,59 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
         </label>
       </div>
 
-      {searchMatches.length > 0 ? (
+      {searchQuery.trim() ? (
         <ul className="proof-graph-search-results">
-          {searchMatches.map((n) => (
-            <li key={n.id}>
-              <button type="button" className="proof-graph-search-hit" onClick={() => flyToNode(n.id)}>
-                <strong>{n.id}</strong>
-                <span>{n.section_key}</span>
-              </button>
-            </li>
-          ))}
+          {searchMatches.length === 0 ? (
+            <li className="proof-graph-empty">No matches for “{searchQuery.trim()}”.</li>
+          ) : (
+            searchMatches.map(({ node }) => (
+              <li key={node.id}>
+                <button type="button" className="proof-graph-search-hit" onClick={() => flyToNode(node.id)}>
+                  <strong>{nodeDisplayName(node)}</strong>
+                  <span>
+                    {node.id} · {sectionDisplayName(node.section_key)}
+                  </span>
+                </button>
+              </li>
+            ))
+          )}
         </ul>
       ) : null}
 
-      <p className="proof-graph-stats mono">
-        {visibleNodes.length} nodes · {visibleEdges.length} edges ·{" "}
-        {precomputed ? "precomputed layout" : "fallback layout"} · pan · scroll zoom · click section or node
+      <p className="proof-graph-stats">
+        {viewMode === "corpus"
+          ? `${sectionFrames.length} sections · ${visibleNodes.length} proofs in filter`
+          : `${visibleNodes.length} nodes · ${visibleEdges.length} edges`}
+        {" · "}
+        {precomputed ? "stable layout" : "fallback layout"}
+        {sectionFilter ? ` · zoomed: ${sectionDisplayName(sectionFilter)}` : null}
       </p>
 
-      <div className="proof-graph-legend" aria-label="Section color legend — click to navigate">
-        {visibleSections.slice(0, 20).map((s) => (
-          <button
-            key={s.section_key}
-            type="button"
-            className={`proof-graph-legend-item proof-graph-legend-btn${activeSection === s.section_key ? " proof-graph-legend-active" : ""}`}
-            onClick={() => {
-              const frame = sectionFrames.find((f) => f.section_key === s.section_key);
-              if (frame) flyToSection(frame);
-              else flyToSection({ section_key: s.section_key });
-            }}
-          >
-            <span className="proof-graph-legend-swatch" style={{ background: s.color }} />
-            {s.label} ({s.count})
-          </button>
-        ))}
-        {visibleSections.length > 20 ? (
-          <span className="proof-graph-legend-more">+{visibleSections.length - 20} sections</span>
-        ) : null}
-      </div>
-
       <div className="proof-graph-edge-legend mono">
-        {Object.entries(EDGE_KIND_LABELS).map(([k, v]) => (
-          <span key={k}>{v}</span>
-        ))}
+        {viewMode === "corpus" ? (
+          <span>Click a section bubble to drill into proofs · scroll to zoom · drag to pan</span>
+        ) : (
+          Object.entries(EDGE_KIND_LABELS).map(([k, v]) => <span key={k}>{v}</span>)
+        )}
       </div>
 
-      <div ref={containerRef} className="proof-graph-canvas-wrap">
+      <div ref={containerRef} className="proof-graph-canvas-wrap proof-graph-canvas-wrap-tall">
         <canvas
           ref={canvasRef}
           className="proof-graph-canvas"
+          style={{ cursor: hoverCursor }}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
-          onPointerLeave={onPointerUp}
+          onPointerLeave={() => {
+            onPointerUp();
+            hoverRef.current = { kind: null };
+            setHoverCursor("grab");
+            draw();
+          }}
           onWheel={onWheel}
           role="img"
-          aria-label="Proof relationship graph with precomputed layout"
+          aria-label="Proof relationship graph"
         />
       </div>
 
@@ -511,14 +617,11 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
         <ProofGraphDrilldown
           graph={graph}
           node={selectedNode}
+          knownNodeIds={knownNodeIds}
           onClose={() => setSelectedId(null)}
           onSelectNode={flyToNode}
           explainLlmUrl={graph.explain_llm_hook}
         />
-      ) : null}
-
-      {selectedId && !selectedNode ? (
-        <p className="proof-graph-empty">Selected node not in current filter.</p>
       ) : null}
     </div>
   );
