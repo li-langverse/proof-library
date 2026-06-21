@@ -115,6 +115,7 @@ export type ProofGraphDischargeStats = {
   stub_proved: number;
   open: number;
   target: number;
+  witness?: number;
   axiomatic?: number;
   discrepancy?: number;
   non_target_remaining?: number;
@@ -139,6 +140,7 @@ export const TECHNIQUE_LABELS: Record<string, string> = {
   open_vc: "Open VC",
   lean_discharge: "Lean discharge",
   erdos_target: "Erdős open target (literature anchor)",
+  literature_witness: "Literature / register witness (not formal proof)",
   unknown: "Unknown",
 };
 
