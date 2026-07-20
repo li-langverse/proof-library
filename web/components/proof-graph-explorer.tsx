@@ -11,7 +11,10 @@ import {
   type GraphTransform,
 } from "@/lib/proof-graph-nav";
 import {
+  DEFAULT_EDGE_LAYERS,
   EDGE_KIND_LABELS,
+  EDGE_LAYER_LABELS,
+  edgeLayer,
   type ProofGraph,
   type ProofGraphEdge,
   type ProofGraphNode,
@@ -52,9 +55,25 @@ function filterNodes(
   });
 }
 
-function filterEdges(nodes: ProofGraphNode[], edges: ProofGraphEdge[]): ProofGraphEdge[] {
-  const ids = new Set(nodes.map((n) => n.id));
-  return edges.filter((e) => ids.has(e.source) && ids.has(e.target));
+function filterEdges(
+  nodes: ProofGraphNode[],
+  edges: ProofGraphEdge[],
+  enabledLayers: Set<string>,
+  crossSectionOnly: boolean,
+): ProofGraphEdge[] {
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  const ids = new Set(byId.keys());
+  return edges.filter((e) => {
+    if (!ids.has(e.source) || !ids.has(e.target)) return false;
+    const layer = edgeLayer(e);
+    if (!enabledLayers.has(layer)) return false;
+    if (crossSectionOnly) {
+      const a = byId.get(e.source);
+      const b = byId.get(e.target);
+      if (!a || !b || a.section_key === b.section_key) return false;
+    }
+    return true;
+  });
 }
 
 function withLayout(nodes: ProofGraphNode[], width: number, height: number): DrawNode[] {
@@ -100,6 +119,10 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
   const [statusFilter, setStatusFilter] = useState("");
   const [excludeErdos, setExcludeErdos] = useState(true);
   const [dischargedOnly, setDischargedOnly] = useState(true);
+  const [crossSectionOnly, setCrossSectionOnly] = useState(false);
+  const [enabledLayers, setEnabledLayers] = useState<Set<string>>(
+    () => new Set(DEFAULT_EDGE_LAYERS),
+  );
   const [sectionFilter, setSectionFilter] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -130,8 +153,23 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
     () => filterNodes(graph, fieldFilter, statusFilter, excludeErdos, sectionFilter, dischargedOnly),
     [graph, fieldFilter, statusFilter, excludeErdos, sectionFilter, dischargedOnly],
   );
-  const visibleEdges = useMemo(() => filterEdges(visibleNodes, graph.edges), [visibleNodes, graph.edges]);
-  const sectionEdges = useMemo(() => aggregateSectionEdges(graph), [graph]);
+  const visibleEdges = useMemo(
+    () => filterEdges(visibleNodes, graph.edges, enabledLayers, crossSectionOnly),
+    [visibleNodes, graph.edges, enabledLayers, crossSectionOnly],
+  );
+  const sectionEdges = useMemo(() => {
+    const layered = filterEdges(graph.nodes, graph.edges, enabledLayers, crossSectionOnly);
+    return aggregateSectionEdges({ ...graph, edges: layered });
+  }, [graph, enabledLayers, crossSectionOnly]);
+
+  const toggleLayer = useCallback((layer: string) => {
+    setEnabledLayers((prev) => {
+      const next = new Set(prev);
+      if (next.has(layer)) next.delete(layer);
+      else next.add(layer);
+      return next;
+    });
+  }, []);
 
   const searchMatches = useMemo(
     () =>
@@ -576,6 +614,45 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
           />
           Hide Erdős ({graph.summary.by_field.erdos ?? 0})
         </label>
+        <label className="proof-graph-check">
+          <input
+            type="checkbox"
+            checked={crossSectionOnly}
+            onChange={(e) => setCrossSectionOnly(e.target.checked)}
+          />
+          Cross-section bridges only
+        </label>
+      </div>
+
+      <div className="proof-graph-toolbar proof-graph-layer-toggles">
+        <span className="proof-graph-layer-label mono">Layers</span>
+        {Object.entries(EDGE_LAYER_LABELS).map(([layer, label]) => (
+          <label key={layer} className="proof-graph-check">
+            <input
+              type="checkbox"
+              checked={enabledLayers.has(layer)}
+              onChange={() => toggleLayer(layer)}
+            />
+            {label}
+            {graph.summary.by_layer?.[layer] != null
+              ? ` (${graph.summary.by_layer[layer]})`
+              : ""}
+          </label>
+        ))}
+        <button
+          type="button"
+          className="proof-graph-chip"
+          onClick={() => setEnabledLayers(new Set(DEFAULT_EDGE_LAYERS))}
+        >
+          Discover (L1+L2+L4)
+        </button>
+        <button
+          type="button"
+          className="proof-graph-chip"
+          onClick={() => setEnabledLayers(new Set(Object.keys(EDGE_LAYER_LABELS)))}
+        >
+          All layers
+        </button>
       </div>
 
       {graph.discharge_stats ? (
@@ -591,6 +668,25 @@ export function ProofGraphExplorer({ graph }: ProofGraphExplorerProps) {
             <span className="proof-graph-discharge-warn">
               {" "}
               · {graph.discharge_stats.stub_proved} stub proved
+            </span>
+          ) : null}
+        </p>
+      ) : null}
+
+      {graph.hub_bridge ? (
+        <p className="proof-graph-discharge-banner">
+          <strong>{graph.hub_bridge.cross_section_bridge_count ?? 0}</strong>
+          {" cross-section bridges"}
+          {graph.hub_bridge.l1_in_degree_hubs?.[0] ? (
+            <span>
+              {" · top L1 hub "}
+              <button
+                type="button"
+                className="proof-graph-chip"
+                onClick={() => flyToNode(graph.hub_bridge!.l1_in_degree_hubs![0].id)}
+              >
+                {graph.hub_bridge.l1_in_degree_hubs[0].id}
+              </button>
             </span>
           ) : null}
         </p>

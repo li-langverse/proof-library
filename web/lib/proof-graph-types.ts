@@ -45,6 +45,8 @@ export type ProofGraphNode = {
   formal_latex?: string | null;
   context?: string | null;
   notes?: string | null;
+  mathlib_deps?: string[];
+  tags?: string[];
   related_ids: string[];
   /** Precomputed layout coordinate (build-time). */
   x?: number;
@@ -80,6 +82,10 @@ export type ProofGraphEdge = {
   source: string;
   target: string;
   kind: string;
+  /** Relationship layer L1–L5 (optional for older graphs). */
+  layer?: string;
+  /** True for mathlib_dep (A uses B). */
+  directed?: boolean;
 };
 
 export type ProofGraphSection = {
@@ -90,18 +96,41 @@ export type ProofGraphSection = {
   count: number;
 };
 
+export type ProofGraphHubBridge = {
+  l1_in_degree_hubs?: Array<{
+    id: string;
+    degree: number;
+    field?: string | null;
+    section_key?: string | null;
+    proof_status?: string | null;
+  }>;
+  cross_section_bridge_count?: number;
+  cross_section_bridges_sample?: Array<{
+    source: string;
+    target: string;
+    kind: string;
+    layer?: string;
+    source_section?: string;
+    target_section?: string;
+  }>;
+  notes?: string;
+};
+
 export type ProofGraph = {
   generated_at: string;
   lic_root: string;
   lic_commit: string | null;
   explain_llm_hook?: string | null;
   discharge_stats?: ProofGraphDischargeStats;
+  hub_bridge?: ProofGraphHubBridge;
   layout?: ProofGraphLayout;
+  layers?: Record<string, string>;
   summary: {
     nodes: number;
     edges: number;
     by_field: Record<string, number>;
     by_edge_kind: Record<string, number>;
+    by_layer?: Record<string, number>;
   };
   sections: ProofGraphSection[];
   nodes: ProofGraphNode[];
@@ -122,11 +151,39 @@ export type ProofGraphDischargeStats = {
 };
 
 export const EDGE_KIND_LABELS: Record<string, string> = {
-  shared_lean_module: "Same Lean module",
-  shared_lean_thm_prefix: "Shared theorem prefix",
-  same_subsection: "Same catalog subsection",
-  theorem_family: "Same theorem family",
+  mathlib_dep: "Catalog Mathlib dep (L1)",
+  shared_li_specimen: "Shared Li specimen (L2)",
+  same_li_package: "Same Li package (L2)",
+  shared_lean_module: "Same Lean module (L3)",
+  shared_lean_thm_prefix: "Shared theorem prefix (L3)",
+  same_subsection: "Same catalog subsection (L3)",
+  theorem_family: "Same theorem family (L3)",
+  same_gap_id: "Same gap id (L4)",
+  same_domain: "Same domain, cross-field (L4)",
+  shared_tag: "Shared tag, cross-field (L4)",
+  status_cohort: "Status cohort (L5)",
 };
+
+/** Default layers shown when discovering structural relationships. */
+export const DEFAULT_EDGE_LAYERS = new Set(["L1", "L2", "L4"]);
+
+export const EDGE_LAYER_LABELS: Record<string, string> = {
+  L1: "L1 · catalog deps",
+  L2: "L2 · Li specimen",
+  L3: "L3 · Lean co-occurrence",
+  L4: "L4 · semantic bridges",
+  L5: "L5 · status cohort",
+};
+
+export function edgeLayer(edge: { kind: string; layer?: string }): string {
+  if (edge.layer) return edge.layer;
+  const k = edge.kind;
+  if (k === "mathlib_dep") return "L1";
+  if (k === "shared_li_specimen" || k === "same_li_package") return "L2";
+  if (k === "same_gap_id" || k === "same_domain" || k === "shared_tag") return "L4";
+  if (k === "status_cohort") return "L5";
+  return "L3";
+}
 
 export const TECHNIQUE_LABELS: Record<string, string> = {
   rfl: "rfl / trivial",

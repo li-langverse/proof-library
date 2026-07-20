@@ -1,0 +1,2101 @@
+{
+  "generated_at": "2026-07-20T06:16:32Z",
+  "l1_in_degree_hubs": [
+    {
+      "id": "M-LM-MC-005",
+      "degree": 1209,
+      "field": "math",
+      "section_key": "math/math-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "M-LM-MC-150",
+      "degree": 14,
+      "field": "math",
+      "section_key": "math/math-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4324",
+      "degree": 9,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CTRL-LM-MC-050",
+      "degree": 6,
+      "field": "control",
+      "section_key": "control/control-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CTRL-LM-MC-060",
+      "degree": 5,
+      "field": "control",
+      "section_key": "control/control-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CTRL-LM-MC-120",
+      "degree": 4,
+      "field": "control",
+      "section_key": "control/control-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CTRL-LM-MC-180",
+      "degree": 4,
+      "field": "control",
+      "section_key": "control/control-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4540",
+      "degree": 4,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4546",
+      "degree": 4,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "INFO-LM-MC-020",
+      "degree": 4,
+      "field": "info",
+      "section_key": "info/info-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "INFO-LM-MC-080",
+      "degree": 4,
+      "field": "info",
+      "section_key": "info/info-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "INFO-LM-MC-120",
+      "degree": 4,
+      "field": "info",
+      "section_key": "info/info-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "ML-LM-MC-050",
+      "degree": 4,
+      "field": "ml",
+      "section_key": "ml/ml-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "N-LM-MC-150",
+      "degree": 4,
+      "field": "numerics",
+      "section_key": "numerics/numerics-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "P-LM-MC-040",
+      "degree": 4,
+      "field": "physics",
+      "section_key": "physics/physics-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "PDE-LM-MC-070",
+      "degree": 4,
+      "field": "pde",
+      "section_key": "pde/pde-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "SIG-LM-MC-040",
+      "degree": 4,
+      "field": "signal",
+      "section_key": "signal/signal-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "SIG-LM-MC-100",
+      "degree": 4,
+      "field": "signal",
+      "section_key": "signal/signal-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-012",
+      "degree": 3,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4378",
+      "degree": 3,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4501",
+      "degree": 3,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4516",
+      "degree": 3,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-4522",
+      "degree": 3,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "PDE-LM-MC-110",
+      "degree": 3,
+      "field": "pde",
+      "section_key": "pde/pde-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "SIG-LM-MC-160",
+      "degree": 3,
+      "field": "signal",
+      "section_key": "signal/signal-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "ST-LM-MC-087",
+      "degree": 3,
+      "field": "statistics",
+      "section_key": "statistics/statistics-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "BIO-LM-MC-070",
+      "degree": 2,
+      "field": "biology",
+      "section_key": "biology/biology-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CHEM-LM-MC-050",
+      "degree": 2,
+      "field": "chemistry",
+      "section_key": "chemistry/chemistry-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CHEM-LM-MC-120",
+      "degree": 2,
+      "field": "chemistry",
+      "section_key": "chemistry/chemistry-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "D-LM-MC-060",
+      "degree": 2,
+      "field": "discrete",
+      "section_key": "discrete/discrete-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-030",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-090",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-100",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-146",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-3736",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-3770",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-3788",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-3790",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-3844",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-LM-MC-3873",
+      "degree": 2,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    }
+  ],
+  "total_degree_hubs": [
+    {
+      "id": "E-1",
+      "degree": 1218,
+      "field": "erdos",
+      "section_key": "erdos/register",
+      "proof_status": "proved"
+    },
+    {
+      "id": "M-LM-MC-005",
+      "degree": 1211,
+      "field": "math",
+      "section_key": "math/math-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "GT-AX-BC-GR-005",
+      "degree": 1013,
+      "field": "graph",
+      "section_key": "graph/basic-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "GT-LM-MC-004",
+      "degree": 779,
+      "field": "graph",
+      "section_key": "graph/graph-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "LOG-AX-MC-001",
+      "degree": 278,
+      "field": "logic",
+      "section_key": "logic/logic-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "CTRL-AX-MC-001",
+      "degree": 277,
+      "field": "control",
+      "section_key": "control/control-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "OPT-AX-MC-001",
+      "degree": 259,
+      "field": "optimization",
+      "section_key": "optimization/optimization-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "INFO-AX-MC-001",
+      "degree": 238,
+      "field": "info",
+      "section_key": "info/info-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "PDE-AX-MC-001",
+      "degree": 238,
+      "field": "pde",
+      "section_key": "pde/pde-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "SIG-AX-MC-001",
+      "degree": 238,
+      "field": "signal",
+      "section_key": "signal/signal-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "CHEM-AX-BC-AX-005",
+      "degree": 220,
+      "field": "chemistry",
+      "section_key": "chemistry/basic-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "D-AX-BC-LOG-005",
+      "degree": 220,
+      "field": "discrete",
+      "section_key": "discrete/basic-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "ST-AX-BC-EX-002",
+      "degree": 213,
+      "field": "statistics",
+      "section_key": "statistics/basic-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "N-AX-FP-ROUND",
+      "degree": 204,
+      "field": "numerics",
+      "section_key": "numerics/axioms",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "D-LM-DOT4-INT-CLOSED",
+      "degree": 196,
+      "field": "discrete",
+      "section_key": "discrete/lemmas",
+      "proof_status": "proved"
+    },
+    {
+      "id": "ML-AX-MC-001",
+      "degree": 163,
+      "field": "ml",
+      "section_key": "ml/ml-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "M-AX-MC-001",
+      "degree": 157,
+      "field": "math",
+      "section_key": "math/math-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "BIO-AX-ALIGNMENT-SCORING",
+      "degree": 154,
+      "field": "biology",
+      "section_key": "biology/axioms",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "M-LM-MC-007",
+      "degree": 109,
+      "field": "math",
+      "section_key": "math/math-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CHEM-LM-BC-EQ-003",
+      "degree": 98,
+      "field": "chemistry",
+      "section_key": "chemistry/basic-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "OPT-LM-MC-007",
+      "degree": 90,
+      "field": "optimization",
+      "section_key": "optimization/optimization-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "P-LM-MC-003",
+      "degree": 75,
+      "field": "physics",
+      "section_key": "physics/physics-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "M-LM-ADD-ASSOC",
+      "degree": 74,
+      "field": "math",
+      "section_key": "math/lemmas",
+      "proof_status": "proved"
+    },
+    {
+      "id": "CHEM-LM-MC-007",
+      "degree": 62,
+      "field": "chemistry",
+      "section_key": "chemistry/chemistry-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "N-AX-MC-001",
+      "degree": 60,
+      "field": "numerics",
+      "section_key": "numerics/numerics-mega-corpus",
+      "proof_status": "axiomatic"
+    },
+    {
+      "id": "CTRL-LM-MC-002",
+      "degree": 59,
+      "field": "control",
+      "section_key": "control/control-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "INFO-LM-MC-009",
+      "degree": 50,
+      "field": "info",
+      "section_key": "info/info-mega-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "D-LM-BC-NT-003",
+      "degree": 49,
+      "field": "discrete",
+      "section_key": "discrete/basic-corpus",
+      "proof_status": "proved"
+    },
+    {
+      "id": "P-par-affine-dependent-index",
+      "degree": 46,
+      "field": "parallel",
+      "section_key": "parallel/parallel-li-par",
+      "proof_status": "proved"
+    },
+    {
+      "id": "P-discharge-trivial",
+      "degree": 45,
+      "field": "compiler",
+      "section_key": "compiler/contracts-verify",
+      "proof_status": "proved"
+    }
+  ],
+  "cross_section_bridges": [
+    {
+      "source": "D-LM-ADD-ASSOC-INT",
+      "target": "M-LM-MC-233",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "discrete/lemmas",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "D-LM-ADD-COMM-INT",
+      "target": "M-LM-MC-251",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "discrete/lemmas",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "D-LM-MC-007",
+      "target": "D-LM-BC-CMB-022",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "discrete/discrete-mega-corpus",
+      "target_section": "discrete/basic-corpus"
+    },
+    {
+      "source": "D-LM-MUL-DIST-INT",
+      "target": "M-LM-MC-300",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "discrete/lemmas",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-10",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-100",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1000",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1001",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1002",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1003",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1004",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1005",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1006",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1007",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1008",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1009",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-101",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1010",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1011",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1012",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1013",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1014",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1015",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1016",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1017",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1018",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1019",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-102",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1020",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1021",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1022",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1023",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1024",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1025",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1026",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1027",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1028",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1029",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-103",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1030",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1031",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1032",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1033",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1034",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1035",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1036",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1037",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1038",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1039",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-104",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1040",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1041",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1042",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1043",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1044",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1045",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1046",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1047",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1048",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1049",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-105",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1050",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1051",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1052",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1053",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1054",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1055",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1056",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1057",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1058",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1059",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-106",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1060",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1061",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1062",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1063",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1064",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1065",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1066",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1067",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1068",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1069",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-107",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1070",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1071",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1072",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1073",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1074",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1075",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1076",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1077",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1078",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1079",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-108",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1080",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1081",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1082",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1083",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1084",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1085",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1086",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1087",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1088",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1089",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-109",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1090",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1091",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1092",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1093",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1094",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1095",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1096",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1097",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1098",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1099",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-11",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-110",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1100",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1101",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1102",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1103",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1104",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1106",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1107",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1108",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1109",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-111",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1110",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1111",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1112",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1113",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1114",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1115",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1116",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1117",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1118",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1119",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-112",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1120",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1121",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1122",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1123",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1124",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1125",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1126",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1127",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1128",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1129",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-113",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1130",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1131",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1132",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1133",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1134",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1135",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1136",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1137",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1138",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1139",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-114",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1140",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1141",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1142",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1143",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1144",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1145",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1146",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1147",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1148",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1149",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-115",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1150",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1151",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1152",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1153",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1154",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1155",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1156",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1157",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1158",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1159",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-116",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1160",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1161",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1162",
+      "target": "M-LM-MC-002",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1163",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1164",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1165",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1166",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1167",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1168",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1169",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-117",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1170",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1171",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1172",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1173",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1174",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    },
+    {
+      "source": "E-1175",
+      "target": "M-LM-MC-005",
+      "kind": "mathlib_dep",
+      "layer": "L1",
+      "source_section": "erdos/register",
+      "target_section": "math/math-mega-corpus"
+    }
+  ],
+  "cross_section_bridge_count": 1370,
+  "notes": "Hubs = high L1 in-degree (cited by many mathlib_deps). Bridges = edges whose endpoints sit in different section_key (L1/L4)."
+}

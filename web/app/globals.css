@@ -751,6 +751,26 @@ main {
   align-items: center;
   margin-bottom: 0.75rem;
 }
+.proof-graph-layer-toggles {
+  margin-top: -0.25rem;
+}
+.proof-graph-layer-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-right: 0.25rem;
+}
+.proof-graph-chip {
+  border: 1px solid var(--border, #30363d);
+  background: transparent;
+  color: var(--fg, inherit);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.proof-graph-chip:hover {
+  border-color: var(--accent, #58a6ff);
+}
 .proof-graph-check {
   display: flex;
   align-items: center;

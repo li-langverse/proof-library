@@ -5,7 +5,10 @@ import type { ProofGraph } from "./proof-graph-types";
 export type { ProofGraph, ProofGraphNode, ProofGraphEdge } from "./proof-graph-types";
 export {
   EDGE_KIND_LABELS,
+  EDGE_LAYER_LABELS,
+  DEFAULT_EDGE_LAYERS,
   TECHNIQUE_LABELS,
+  edgeLayer,
   proofGraphPublicUrl,
 } from "./proof-graph-types";
 export { edgesForNode, buildExplainMarkdown } from "./proof-graph-utils";
