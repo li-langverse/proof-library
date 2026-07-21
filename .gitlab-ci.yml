@@ -6,31 +6,39 @@ stages:
 
 variables:
   GIT_DEPTH: "1"
+  # Avoid silent empty pipelines when `changes:` fails to match large data pushes.
+  FF_SCRIPT_SECTIONS: "true"
 
 pages:
   stage: publish
   image: node:22-bookworm
   timeout: 30m
+  resource_group: proof-library-pages
   script:
+    - set -euxo pipefail
+    - echo "CI_COMMIT_SHA=$CI_COMMIT_SHA"
     - cd web
     - npm ci
     - NEXT_PUBLIC_BASE_PATH="" npm run build
     - mkdir -p out/data
-    - cp ../data/library.json out/data/ 2>/dev/null || true
-    - cp ../data/posture.json out/data/ 2>/dev/null || true
-    - cp ../data/proof-graph.json out/data/ 2>/dev/null || true
+    - cp ../data/library.json out/data/
+    - cp ../data/posture.json out/data/
+    - cp ../data/proof-graph.json out/data/
+    - cp ../data/proof-graph-hub-bridge.json out/data/ 2>/dev/null || true
     - echo "proofs.lilangverse.xyz" > out/CNAME
     - test -s out/index.html
+    - test -s out/data/proof-graph.json
+    - python3 -c "import json; g=json.load(open('out/data/proof-graph.json')); print('graph', g.get('generated_at'), 'nodes', len(g.get('nodes',[])), 'edges', len(g.get('edges',[])))"
     - cd ..
     - rm -rf public && mkdir -p public && cp -a web/out/. public/
+    - du -sh public public/data/proof-graph.json
+    - echo "pages artifact ready → proofs.lilangverse.xyz"
   artifacts:
     paths:
       - public
+    expire_in: 1 week
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
-      changes:
-        - web/**
-        - data/**
-        - scripts/**
-        - .gitlab-ci.yml
+    # Always publish on main (push/web/api/schedule). Do not gate on `changes:` —
+    # empty pipelines were failing Pages updates after data-only commits.
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE =~ /^(push|web|api|schedule)$/
     - if: $CI_PIPELINE_SOURCE == "web"
