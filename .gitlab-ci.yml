@@ -13,7 +13,6 @@ pages:
   stage: publish
   image: node:22-bookworm
   timeout: 30m
-  resource_group: proof-library-pages
   script:
     - set -euxo pipefail
     - echo "CI_COMMIT_SHA=$CI_COMMIT_SHA"
