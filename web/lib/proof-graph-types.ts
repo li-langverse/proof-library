@@ -8,6 +8,16 @@ export type ProofGraphSnippet = {
   content: string;
 };
 
+/** One labeled step from a multi-def Li specimen (`# Step N of M: …`). */
+export type ProofGraphDerivationStep = {
+  index: number;
+  of?: number | null;
+  title: string;
+  def?: string | null;
+  start_line: number;
+  def_line?: number | null;
+};
+
 export type ProofGraphNode = {
   id: string;
   field: string;
@@ -35,6 +45,11 @@ export type ProofGraphNode = {
   specimen_role?: string | null;
   li_package_impl?: string | null;
   li_package_snippet?: ProofGraphSnippet | null;
+  li_defs?: string[];
+  li_def_count?: number;
+  /** Labeled `# Step N of M` derivation from the Li specimen (build-time). */
+  li_derivation_steps?: ProofGraphDerivationStep[];
+  specimen_pattern?: string | null;
   source_toml?: string | null;
   corpus_file?: string | null;
   breadcrumb: string[];

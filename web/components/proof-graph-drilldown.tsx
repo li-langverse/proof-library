@@ -9,6 +9,7 @@ import {
   EDGE_KIND_LABELS,
   TECHNIQUE_LABELS,
   type ProofGraph,
+  type ProofGraphDerivationStep,
   type ProofGraphNode,
 } from "@/lib/proof-graph-types";
 import { buildExplainMarkdown, edgesForNode, nodeDisplayName } from "@/lib/proof-graph-utils";
@@ -49,6 +50,34 @@ function snippetFromGraph(
 function StatusBadge({ status }: { status: string }) {
   const tone = proofStatusBadgeClass(status);
   return <span className={`badge badge-${tone}`}>{status}</span>;
+}
+
+function LiDerivationSteps({ steps }: { steps: ProofGraphDerivationStep[] }) {
+  if (!steps.length) return null;
+  return (
+    <section className="proof-graph-derivation" aria-label="Li derivation steps">
+      <h3>Li derivation steps</h3>
+      <p className="proof-graph-kw-hint">
+        Finite constructive witness — named <code className="mono">def</code>s composed by{" "}
+        <code className="mono">main</code>. Lean still holds the Mathlib / decide-pack claim;
+        Li does not assert the full ∀ Erdős statement.
+      </p>
+      <ol className="proof-graph-derivation-list">
+        {steps.map((step) => (
+          <li key={`${step.index}-${step.def ?? step.title}`}>
+            <span className="proof-graph-derivation-index mono">
+              Step {step.index}
+              {step.of != null ? ` of ${step.of}` : ""}
+            </span>
+            <span className="proof-graph-derivation-title">{step.title}</span>
+            {step.def ? (
+              <code className="mono proof-graph-derivation-def">{step.def}</code>
+            ) : null}
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
 }
 
 type ProofGraphDrilldownProps = {
@@ -226,7 +255,16 @@ export function ProofGraphDrilldown({
                 <dd className="mono">{node.lean_module ?? "—"}</dd>
                 <dt>lean_thm</dt>
                 <dd className="mono">{node.lean_thm ?? "—"}</dd>
+                {node.li_def_count != null && node.li_def_count > 0 ? (
+                  <>
+                    <dt>Li defs</dt>
+                    <dd className="mono">{node.li_def_count}</dd>
+                  </>
+                ) : null}
               </dl>
+              {node.li_derivation_steps && node.li_derivation_steps.length > 0 ? (
+                <LiDerivationSteps steps={node.li_derivation_steps} />
+              ) : null}
             </div>
           ) : null}
 
@@ -299,9 +337,12 @@ export function ProofGraphDrilldown({
               {node.li_specimen ? (
                 <p className="mono proof-graph-path-line">{node.li_specimen}</p>
               ) : null}
+              {node.li_derivation_steps && node.li_derivation_steps.length > 0 ? (
+                <LiDerivationSteps steps={node.li_derivation_steps} />
+              ) : null}
               {node.li_snippet ? (
                 <>
-                  <h3>Proof-db specimen (axiom contract / witness)</h3>
+                  <h3>Proof-db specimen (multi-step witness)</h3>
                   <ProofCodeBlock
                     snippet={snippetFromGraph(node.li_snippet, "li", "Catalog specimen")}
                   />

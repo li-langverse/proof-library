@@ -139,6 +139,15 @@ export function buildExplainMarkdown(node: ProofGraphNode, related: ProofGraphNo
   }
   if (node.li_specimen) {
     lines.push(`## Li specimen`, `- path: \`${node.li_specimen}\``, "");
+    if (node.li_derivation_steps && node.li_derivation_steps.length > 0) {
+      lines.push("### Derivation steps");
+      for (const step of node.li_derivation_steps) {
+        const ofBit = step.of != null ? ` of ${step.of}` : "";
+        const defBit = step.def ? ` (\`${step.def}\`)` : "";
+        lines.push(`- Step ${step.index}${ofBit}: ${step.title}${defBit}`);
+      }
+      lines.push("");
+    }
     if (node.li_snippet?.content) {
       lines.push("```li", node.li_snippet.content, "```", "");
     }

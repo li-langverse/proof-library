@@ -1046,6 +1046,43 @@ main {
   font-size: 0.85rem;
   margin-bottom: 0.75rem;
 }
+.proof-graph-derivation {
+  margin: 1rem 0 1.25rem;
+}
+.proof-graph-derivation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.proof-graph-derivation-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.65rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--border, #444) 80%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--panel, #1a1a1a) 92%, transparent);
+}
+.proof-graph-derivation-index {
+  grid-column: 1;
+  font-size: 0.75rem;
+  color: var(--muted);
+  align-self: start;
+  padding-top: 0.1rem;
+}
+.proof-graph-derivation-title {
+  grid-column: 2;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+.proof-graph-derivation-def {
+  grid-column: 2;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
 .proof-graph-path-line {
   font-size: 0.8rem;
   margin-bottom: 0.75rem;
