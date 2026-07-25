@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-07T20:45Z",
-  "source": "C:\\Users\\Julian\\Documents\\Programming\\li\\lic\\docs\\verification\\provability-gaps.md",
+  "generated_at": "2026-07-25T16:59Z",
+  "source": "C:\\Users\\Julian\\Documents\\Programming\\li\\lic-gpu-paper-wt\\docs\\verification\\provability-gaps.md",
   "rows": [
     {
       "id": "G-ann",
@@ -33,6 +33,11 @@
       "phase": "Doc"
     },
     {
+      "id": "G-control",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
       "id": "G-dec",
       "status": "Partial",
       "phase": "7d"
@@ -44,7 +49,7 @@
     },
     {
       "id": "G-discrete",
-      "status": "Stub",
+      "status": "Partial",
       "phase": "Doc"
     },
     {
@@ -73,13 +78,23 @@
       "phase": ""
     },
     {
+      "id": "G-info",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
       "id": "G-lean",
-      "status": "Partial",
+      "status": "Done",
       "phase": "2f"
     },
     {
+      "id": "G-logic",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
       "id": "G-math",
-      "status": "Partial",
+      "status": "Done",
       "phase": "2i"
     },
     {
@@ -118,14 +133,24 @@
       "phase": "2j"
     },
     {
+      "id": "G-opt",
+      "status": "Stub",
+      "phase": "Doc"
+    },
+    {
       "id": "G-par",
-      "status": "Partial",
+      "status": "Done",
       "phase": "7b"
     },
     {
       "id": "G-par-dist",
       "status": "Partial",
       "phase": "7b"
+    },
+    {
+      "id": "G-pde",
+      "status": "Stub",
+      "phase": "Doc"
     },
     {
       "id": "G-physics",
@@ -135,6 +160,11 @@
     {
       "id": "G-proof-db",
       "status": "Partial",
+      "phase": "Doc"
+    },
+    {
+      "id": "G-signal",
+      "status": "Stub",
       "phase": "Doc"
     },
     {
@@ -159,7 +189,7 @@
     },
     {
       "id": "G-vc",
-      "status": "Partial",
+      "status": "Done",
       "phase": "2e"
     },
     {

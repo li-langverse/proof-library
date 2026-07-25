@@ -19,8 +19,10 @@ function StatusBadge({ status }: { status: string }) {
 
 function TargetEpistemicBadge({ entry }: { entry: ProofLibraryEntry }) {
   if (entry.field !== "erdos" && entry.kind !== "target") return null;
-  const proved =
-    entry.catalog_status === "proved" || entry.lean_status === "proved";
+  // Catalog/erdos opinion only — lean_status alone must not imply "proved"
+  // (return-1 Li theater can still have a Lean discharge pack / diverge).
+  const epistemic = (entry.erdos_status ?? entry.catalog_status ?? "").toLowerCase();
+  const proved = epistemic === "proved" || entry.catalog_status === "proved";
   if (proved) {
     return <span className="badge badge-green">proved (catalog)</span>;
   }
